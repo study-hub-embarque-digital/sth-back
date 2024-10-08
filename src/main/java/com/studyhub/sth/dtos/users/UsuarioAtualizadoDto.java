@@ -1,6 +1,5 @@
 package com.studyhub.sth.dtos.users;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NovoUsuarioDto {
+public class UsuarioAtualizadoDto {
     String nome;
     String email;
     String senha;

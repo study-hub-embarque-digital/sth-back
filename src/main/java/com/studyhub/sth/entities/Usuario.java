@@ -1,6 +1,7 @@
 package com.studyhub.sth.entities;
 
 import com.studyhub.sth.dtos.users.NovoUsuarioDto;
+import com.studyhub.sth.dtos.users.UsuarioAtualizadoDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,4 +27,11 @@ public class Usuario {
 
     private String senha;
     private Date dataNascimento;
+
+    public void atualizar(UsuarioAtualizadoDto usuarioAtualizadoDto) {
+        this.nome = usuarioAtualizadoDto.getNome();
+        this.email = usuarioAtualizadoDto.getEmail();
+        this.senha = usuarioAtualizadoDto.getSenha();
+        this.dataNascimento = usuarioAtualizadoDto.getDataNascimento();
+    }
 }

@@ -1,15 +1,13 @@
 package com.studyhub.sth.libs.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Mapper implements IMapper {
-    private final ModelMapper mapper;
-
-    public Mapper(ModelMapper mapper) {
-        this.mapper = mapper;
-    }
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     public <T, U> U map(T source, Class<U> destination) {
