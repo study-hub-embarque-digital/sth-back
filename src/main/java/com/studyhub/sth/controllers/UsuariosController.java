@@ -30,4 +30,9 @@ public class UsuariosController {
     public ResponseEntity<UsuarioDto> atualizar(@PathVariable UUID usuarioId, @RequestBody UsuarioAtualizadoDto usuarioAtualizadoDto) throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.usuarioService.atualizar(usuarioId, usuarioAtualizadoDto), HttpStatus.OK);
     }
+
+    @GetMapping("{usuarioId}")
+    public ResponseEntity<UsuarioDto> detalhar(@PathVariable UUID usuarioId) throws ElementoNaoEncontradoExcecao {
+        return new ResponseEntity<>(this.usuarioService.detalhar(usuarioId), HttpStatus.OK);
+    }
 }
