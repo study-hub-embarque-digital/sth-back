@@ -46,9 +46,4 @@ public class UsuarioService implements IUsuarioService {
 
         return this.mapper.map(usuario, UsuarioDto.class);
     }
-
-    @Override
-    public Usuario listar() {
-        return null;
-    }
 }

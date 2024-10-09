@@ -12,5 +12,4 @@ public interface IUsuarioService {
     public UsuarioDto criar(NovoUsuarioDto novoUsuarioDto);
     public UsuarioDto atualizar(UUID usuarioId, UsuarioAtualizadoDto usuarioAtualizadoDto) throws ElementoNaoEncontradoExcecao;
     public UsuarioDto detalhar(UUID usuarioId) throws ElementoNaoEncontradoExcecao;
-    public Usuario listar();
 }
