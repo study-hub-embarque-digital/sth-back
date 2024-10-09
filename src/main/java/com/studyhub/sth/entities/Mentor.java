@@ -1,5 +1,6 @@
 package com.studyhub.sth.entities;
 
+import com.studyhub.sth.dtos.mentor.NovoMentorDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,4 +23,5 @@ public class Mentor {
 
 //    @OneToMany(mappedBy = "mentor")
 //    private List<Squad> squads;
+
 }
