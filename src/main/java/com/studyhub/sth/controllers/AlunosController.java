@@ -1,5 +1,6 @@
 package com.studyhub.sth.controllers;
 
+import com.studyhub.sth.dtos.alunos.AlunoAtualizadoDto;
 import com.studyhub.sth.dtos.alunos.NovoAlunoDto;
 import com.studyhub.sth.dtos.users.NovoUsuarioDto;
 import com.studyhub.sth.dtos.users.UsuarioAtualizadoDto;
@@ -28,10 +29,10 @@ public class AlunosController {
         return new ResponseEntity<>(this.alunoService.criar(usuarioId, novoAlunoDto), HttpStatus.CREATED);
     }
 
-//    @PutMapping("{usuarioId}")
-//    public ResponseEntity<UsuarioDto> atualizar(@PathVariable UUID usuarioId, @RequestBody UsuarioAtualizadoDto usuarioAtualizadoDto) throws ElementoNaoEncontradoExcecao {
-//        return new ResponseEntity<>(this.alunoService.atualizar(usuarioId, usuarioAtualizadoDto), HttpStatus.OK);
-//    }
+    @PutMapping("{alunoId}")
+    public ResponseEntity<Aluno> atualizar(@PathVariable UUID alunoId, @RequestBody AlunoAtualizadoDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao {
+        return new ResponseEntity<>(this.alunoService.atualizar(alunoId, alunoAtualizadoDto), HttpStatus.OK);
+    }
 //
 //    @GetMapping("{usuarioId}")
 //    public ResponseEntity<UsuarioDto> detalhar(@PathVariable UUID usuarioId) throws ElementoNaoEncontradoExcecao {
