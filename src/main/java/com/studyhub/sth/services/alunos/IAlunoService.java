@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IAlunoService {
-    public AlunoDto criar(NovoAlunoDto novoAlunoDto);
+    public AlunoDto criar(NovoAlunoDto novoAlunoDto) throws ElementoNaoEncontradoExcecao;
     public AlunoDto atualizar(UUID alunoId, AlunoAtualizadoDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao;
     public AlunoDto detalhar(UUID alunoId) throws ElementoNaoEncontradoExcecao;
     public List<AlunoDto> listarTodos();

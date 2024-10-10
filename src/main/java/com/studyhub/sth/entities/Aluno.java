@@ -28,7 +28,10 @@ public class Aluno {
     @JoinColumn(name = "instituicao_ensino_id")
     private InstituicaoEnsino instituicaoEnsino;
 //    private Ciclo ciclo;
-//    private Squad squad;
+
+    @ManyToOne()
+    @JoinColumn(name = "squad_id")
+    private Squad squad;
 
     public void atualizar(AlunoAtualizadoDto alunoAtualizadoDto) {
         this.periodo = alunoAtualizadoDto.getPeriodo();

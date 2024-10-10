@@ -27,7 +27,7 @@ public class InstituicaoEnsinoController {
         }
     
         @PostMapping
-        public InstituicaoEnsino create(@RequestBody InstituicaoEnsino instituicao) {
+        public InstituicaoEnsino create(@RequestBody InstituicaoEnsinoDto instituicao) {
             return instituicaoEnsinoService.save(instituicao);
         }
     
