@@ -11,9 +11,9 @@ import java.util.UUID;
 public interface IMentorService {
     MentorDTO criar(NovoMentorDTO dto);
     List<MentorDTO> listar();
-    MentorDTO encontrarPorId(UUID id);
+    MentorDTO buscarPorId(UUID id) throws ElementoNaoEncontradoExcecao;
     void deletarPorId(UUID id) throws ElementoNaoEncontradoExcecao;
     MentorDTO atualizar(UUID id , MentorAtualizadoDTO dto) throws ElementoNaoEncontradoExcecao;
-    MentorDTO listarSquads(UUID id);
+    //List<SquadDto> listarSquads(UUID id);
     MentorDTO buscarPorNome(String nome) throws ElementoNaoEncontradoExcecao;
 }
