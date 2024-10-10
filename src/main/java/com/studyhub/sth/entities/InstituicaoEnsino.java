@@ -23,7 +23,7 @@ public class InstituicaoEnsino {
     private String endereco;
     private String coordenador;
 
-    @OneToMany(mappedBy = "instituicaoEnsino", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany()
     private List<Aluno> alunos = new ArrayList<>();
     
     //@OneToMany(mappedBy = "instituicaoEnsino")
