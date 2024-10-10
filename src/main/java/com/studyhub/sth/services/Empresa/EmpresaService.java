@@ -50,18 +50,8 @@ public class EmpresaService implements IEmpresaService {
     }
 
 
-    public EmpresaDto save(NovoEmpresaDto empresaDto) {
-        Empresa empresa = this.mapper.map(empresaDto, Empresa.class);
-        this.empresaRepository.save(empresa);
-        return this.mapper.map(empresa, EmpresaDto.class);
-    }
-   // public UsuarioDto criar(NovoUsuarioDto novoUsuarioDto) {
-    //        Usuario usuario = this.mapper.map(novoUsuarioDto, Usuario.class);
-    //
-    //        this.usuarioRepositorio.save(usuario);
-    //
-    //        return this.mapper.map(usuario, UsuarioDto.class);
-    //    }
+    public Empresa save(Empresa empresa) {
+        return empresaRepository.save(empresa);}
 
     public void delete(UUID id) {
         empresaRepository.deleteById(id);

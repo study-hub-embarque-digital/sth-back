@@ -13,6 +13,6 @@ public interface IEmpresaService {
     public List<Empresa> findAll();
     public Optional<Empresa> findById(UUID id);
     public Empresa update(UUID empresaId, UpdateEmpresaDto empresaDto);
-    public EmpresaDto save(NovoEmpresaDto empresaDto);
+    public Empresa save(Empresa empresa);
     public void delete(UUID id);
 }
