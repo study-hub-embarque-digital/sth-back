@@ -7,8 +7,6 @@ import lombok.*;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity(name = "instituicao_ensino")
 @Table(name = "instituicao_ensino")
 @Getter
