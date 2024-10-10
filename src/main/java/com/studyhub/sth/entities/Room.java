@@ -17,9 +17,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID roomId;
 
+    @OneToMany(mappedBy = "room")
+    private List<ConteudoEstudo> conteudosRecomendados;
 
-    //private List<ConteudoEstudo> conteudosRecomendados;
-
+    // obs: entidades que serão criadas futuramente para PI
     //private Ciclo ciclo;
     //private Formulario formulario;
 }

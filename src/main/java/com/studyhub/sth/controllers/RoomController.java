@@ -8,8 +8,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,18 +21,31 @@ public class RoomController {
     @Autowired
     private IRoomService roomService;
 
-    @PostMapping()
+    @PostMapping
+    @Transactional
     public ResponseEntity<RoomDto> criar(@RequestBody RoomDto novoRoomDto) {
         return new ResponseEntity<>(this.roomService.criar(novoRoomDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("{roomId}")
+    @PutMapping("/{roomId}")
+    @Transactional
     public ResponseEntity<RoomDto> atualizar(@PathVariable UUID roomId, @RequestBody RoomAtualizadaDto roomAtualizadaDto) throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.roomService.atualizar(roomId, roomAtualizadaDto), HttpStatus.OK);
     }
 
-    @GetMapping("{roomId}")
+    @GetMapping("/{roomId}")
     public ResponseEntity<RoomDto> detalhar(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.roomService.detalhar(roomId), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RoomDto>> listar() {
+        return new ResponseEntity<>(this.roomService.listar(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{roomId}")
+    public ResponseEntity deletar(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
+        this.roomService.deletar(roomId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
