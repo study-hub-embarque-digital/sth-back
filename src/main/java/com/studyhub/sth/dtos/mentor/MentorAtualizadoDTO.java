@@ -2,8 +2,15 @@ package com.studyhub.sth.dtos.mentor;
 
 import com.studyhub.sth.dtos.users.UsuarioDto;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record MentorAtualizadoDTO(
-       @Valid UsuarioDto usuarioDto
-) {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class MentorAtualizadoDTO{
+    @Valid  UsuarioDto usuarioDto;
 }
