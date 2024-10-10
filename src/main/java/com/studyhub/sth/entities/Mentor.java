@@ -4,6 +4,7 @@ import com.studyhub.sth.dtos.mentor.NovoMentorDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +22,7 @@ public class Mentor {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-//    @OneToMany(mappedBy = "mentor")
-//    private List<Squad> squads;
+    @OneToMany(mappedBy = "mentor")
+    private List<Squad> squads;
 
 }

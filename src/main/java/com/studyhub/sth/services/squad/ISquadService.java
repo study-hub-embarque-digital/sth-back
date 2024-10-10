@@ -2,6 +2,7 @@ package com.studyhub.sth.services.squad;
 
 import com.studyhub.sth.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.dtos.squad.SquadDTO;
+import com.studyhub.sth.dtos.squad.SquadUpdateDTO;
 
 import java.util.List;
 import java.util.Optional;

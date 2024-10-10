@@ -2,6 +2,7 @@ package com.studyhub.sth.controllers;
 
 import com.studyhub.sth.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.dtos.squad.SquadDTO;
+import com.studyhub.sth.dtos.squad.SquadUpdateDTO;
 import com.studyhub.sth.services.squad.ISquadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

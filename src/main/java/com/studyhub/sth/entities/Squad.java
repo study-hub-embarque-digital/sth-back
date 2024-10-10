@@ -26,9 +26,9 @@ public class Squad {
     @Enumerated(EnumType.STRING)
     private TipoSquad tipo;
 
-    //@ManyToOne
-    //@JoinColumn(name = "mentor_id")
-    //private Mentor mentor;
+    @ManyToOne
+    @JoinColumn(name = "mentor_id")
+    private Mentor mentor;
 
     @ManyToOne
     @JoinColumn(name = "empresa_id")
