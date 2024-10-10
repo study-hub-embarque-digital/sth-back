@@ -9,7 +9,7 @@ public interface IInstituicaoEnsinoService {
     public List<InstituicaoEnsino> findAll();
     public InstituicaoEnsino findById(UUID id);
     public InstituicaoEnsino update(UUID InstituicaoEnsinoId, UpdateInstituicaoEnsinoDto InstituicaoEnsinoDto);
-    public InstituicaoEnsino save(InstituicaoEnsino instituicao);
+    public InstituicaoEnsino save(InstituicaoEnsinoDto instituicao);
     public void delete(UUID id) ;
 }
 

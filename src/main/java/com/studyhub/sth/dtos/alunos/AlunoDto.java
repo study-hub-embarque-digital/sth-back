@@ -1,5 +1,6 @@
 package com.studyhub.sth.dtos.alunos;
 
+import com.studyhub.sth.dtos.InstituicaoEnsino.InstituicaoEnsinoDto;
 import com.studyhub.sth.dtos.users.UsuarioDto;
 import com.studyhub.sth.entities.Usuario;
 import lombok.AllArgsConstructor;
@@ -18,4 +19,5 @@ public class AlunoDto {
     private int periodo;
     private String curso;
     private UsuarioDto usuario;
+    private InstituicaoEnsinoDto instituicaoEnsino;
 }
