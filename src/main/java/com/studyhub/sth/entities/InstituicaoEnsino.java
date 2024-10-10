@@ -7,6 +7,8 @@ import lombok.*;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity(name = "instituicao_ensino")
 @Table(name = "instituicao_ensino")
 @Getter
@@ -23,9 +25,10 @@ public class InstituicaoEnsino {
     private String endereco;
     private String coordenador;
 
-    //@OneToMany(mappedBy = "instituicaoEnsino")
-    //private List<Aluno> alunos;
-
+    @OneToMany(mappedBy = "instituicaoEnsino", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Aluno> alunos = new ArrayList<>();
+    
     //@OneToMany(mappedBy = "instituicaoEnsino")
     //private List<Squad> squads;
 

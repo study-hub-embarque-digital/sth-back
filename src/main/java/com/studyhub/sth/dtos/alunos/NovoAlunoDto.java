@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,4 +17,5 @@ public class NovoAlunoDto {
     private NovoUsuarioDto novoUsuarioDto;
     private int periodo;
     private String curso;
+    private UUID instituicaoEnsinoId;
 }

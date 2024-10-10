@@ -24,15 +24,19 @@ public class InstituicaoEnsinoService implements IInstituicaoEnsinoService{
         return instituicaoEnsinoRepository.findById(id).orElse(null);
     }
 
-    public InstituicaoEnsino save(InstituicaoEnsino instituicao) {
-        return instituicaoEnsinoRepository.save(instituicao);
+    public InstituicaoEnsino save(InstituicaoEnsinoDto instituicao) {
+        InstituicaoEnsino newInstituicaoEnsino = new InstituicaoEnsino();
+        newInstituicaoEnsino.setNome(instituicao.getNome());
+        newInstituicaoEnsino.setEndereco(instituicao.getEndereco());
+        newInstituicaoEnsino.setCoordenador(instituicao.getCoordenador());
+        return instituicaoEnsinoRepository.save(newInstituicaoEnsino);
     }
 
     public void delete(UUID id) {
         instituicaoEnsinoRepository.deleteById(id);
     }
 
-    // Método para atualizar a Intituão de ensino com o DTO
+    // Método para atualizar a IntituicaoEnsinoDto
     public InstituicaoEnsino update(UUID InstituicaoEnsinoId, UpdateInstituicaoEnsinoDto InstituicaoEnsinoDto) {
         Optional<InstituicaoEnsino> optionalInstituicaoEnsino = instituicaoEnsinoRepository.findById(InstituicaoEnsinoId);
         

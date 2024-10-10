@@ -1,5 +1,6 @@
 package com.studyhub.sth.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.studyhub.sth.dtos.alunos.AlunoAtualizadoDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,7 @@ public class Aluno {
 
     @ManyToOne()
     @JoinColumn(name = "instituicao_ensino_id")
+    @JsonBackReference
     private InstituicaoEnsino instituicaoEnsino;
 //    private Ciclo ciclo;
 
