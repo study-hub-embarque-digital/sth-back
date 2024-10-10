@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface IConteudoEstudoRepository extends JpaRepository<ConteudoEstudo, UUID> {
-    List<ConteudoEstudo> findByRoom_Id(UUID roomId);
+    //List<ConteudoEstudo> findByRoom_RoomId(UUID roomId);
 }

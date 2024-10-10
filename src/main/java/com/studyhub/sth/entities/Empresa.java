@@ -17,7 +17,7 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "empresaId")
 public class Empresa {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID empresaId;
 
     @Column(length = 350, nullable = false)
