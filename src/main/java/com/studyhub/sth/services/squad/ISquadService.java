@@ -16,5 +16,7 @@ public interface ISquadService {
     SquadDTO save(SquadCreateDTO squadCreateDTO);
 
     void deleteById(UUID id);
+
+    Optional<SquadDTO> update(UUID id, SquadUpdateDTO squadUpdateDTO);
 }
 

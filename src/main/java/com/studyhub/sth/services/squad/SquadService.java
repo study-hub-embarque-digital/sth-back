@@ -32,6 +32,7 @@ public class SquadService implements ISquadService {
     }
 
     @Override
+    @Transactional
     public SquadDTO save(SquadCreateDTO squadCreateDTO) {
         Squad squad = new Squad();
         squad.setNome(squadCreateDTO.getNome());
@@ -43,6 +44,21 @@ public class SquadService implements ISquadService {
     }
 
     @Override
+    @Transactional
+    public Optional<SquadDTO> update(UUID id, SquadUpdateDTO squadUpdateDTO) {
+        return squadRepository.findById(id).map(squad -> {
+            squad.setNome(squadUpdateDTO.getNome());
+            squad.setTipo(squadUpdateDTO.getTipo());
+
+           
+            Squad updatedSquad = squadRepository.save(squad);
+            return convertToDTO(updatedSquad);
+        });
+    }
+
+
+    @Override
+    @Transactional
     public void deleteById(UUID id) {
         squadRepository.deleteById(id);
     }

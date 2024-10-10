@@ -37,6 +37,14 @@ public class SquadController {
         return ResponseEntity.ok(newSquad);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<SquadDTO> updateSquad(@PathVariable UUID id, @RequestBody SquadUpdateDTO squadUpdateDTO) {
+        Optional<SquadDTO> updatedSquad = squadService.update(id, squadUpdateDTO);
+        return updatedSquad.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSquad(@PathVariable UUID id) {
         squadService.deleteById(id);
