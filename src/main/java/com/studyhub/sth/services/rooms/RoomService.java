@@ -1,8 +1,11 @@
 package com.studyhub.sth.services.rooms;
 
+import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoDto;
+import com.studyhub.sth.dtos.rooms.NovoRoomDto;
 import com.studyhub.sth.dtos.rooms.RoomAtualizadaDto;
 import com.studyhub.sth.dtos.rooms.RoomDto;
 import com.studyhub.sth.dtos.users.UsuarioDto;
+import com.studyhub.sth.entities.ConteudoEstudo;
 import com.studyhub.sth.entities.Room;
 import com.studyhub.sth.entities.Usuario;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
@@ -28,7 +31,7 @@ public class RoomService implements IRoomService {
     private IMapper mapper;
 
     @Override
-    public RoomDto criar(RoomDto novoRoomDto) {
+    public RoomDto criar(NovoRoomDto novoRoomDto) {
         Room room = this.mapper.map(novoRoomDto, Room.class);
         this.roomRepository.save(room);
         return this.mapper.map(room, RoomDto.class);
@@ -67,5 +70,14 @@ public class RoomService implements IRoomService {
     public List<RoomDto> listar() {
         var lista = this.roomRepository.findAll();
         return lista.stream().map(room -> this.mapper.map(room, RoomDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ConteudoEstudoDto> addConteudoRecomendado(UUID roomId,ConteudoEstudoDto conteudoEstudoDto) throws ElementoNaoEncontradoExcecao {
+        var room = this.roomRepository.findById(roomId).orElseThrow(()-> new ElementoNaoEncontradoExcecao("O room não foi encontrado!"));
+        room.getConteudosRecomendados().add(this.mapper.map(conteudoEstudoDto, ConteudoEstudo.class));
+        this.roomRepository.save(room);
+        var lista = room.getConteudosRecomendados();
+        return lista.stream().map( conteudo -> this.mapper.map(conteudo, ConteudoEstudoDto.class)).collect(Collectors.toList());
     }
 }

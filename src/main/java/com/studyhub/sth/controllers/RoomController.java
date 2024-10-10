@@ -1,5 +1,7 @@
 package com.studyhub.sth.controllers;
 
+import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoDto;
+import com.studyhub.sth.dtos.rooms.NovoRoomDto;
 import com.studyhub.sth.dtos.rooms.RoomAtualizadaDto;
 import com.studyhub.sth.dtos.rooms.RoomDto;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
@@ -23,7 +25,7 @@ public class RoomController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<RoomDto> criar(@RequestBody RoomDto novoRoomDto) {
+    public ResponseEntity<RoomDto> criar(@RequestBody NovoRoomDto novoRoomDto) {
         return new ResponseEntity<>(this.roomService.criar(novoRoomDto), HttpStatus.CREATED);
     }
 
@@ -47,5 +49,12 @@ public class RoomController {
     public ResponseEntity deletar(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
         this.roomService.deletar(roomId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/conteudos-recomendados/{id}")
+    @Transactional
+    public  ResponseEntity<List<ConteudoEstudoDto>> addConteudos(@PathVariable UUID roomId, @RequestBody ConteudoEstudoDto conteudoEstudoDto) throws ElementoNaoEncontradoExcecao {
+        var lista = this.roomService.addConteudoRecomendado(roomId,conteudoEstudoDto);
+        return  ResponseEntity.ok(lista);
     }
 }

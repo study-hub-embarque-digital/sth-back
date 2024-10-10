@@ -20,6 +20,8 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<ConteudoEstudo> conteudosRecomendados;
 
+    private UUID criador;
+
     // obs: entidades que serão criadas futuramente para PI
     //private Ciclo ciclo;
     //private Formulario formulario;
