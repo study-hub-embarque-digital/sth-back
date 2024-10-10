@@ -23,7 +23,7 @@ public class Representante {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
