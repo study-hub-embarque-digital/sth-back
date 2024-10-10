@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.studyhub.sth.dtos.Empresas.EmpresaDto;
+import com.studyhub.sth.dtos.Empresas.NovoEmpresaDto;
+import com.studyhub.sth.libs.mapper.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,9 @@ public class EmpresaService implements IEmpresaService {
     @Autowired
     private EmpresaRepository empresaRepository;
 
+    @Autowired
+    private IMapper mapper;
+
     public List<Empresa> findAll() {
         return empresaRepository.findAll();
     }
@@ -26,7 +32,7 @@ public class EmpresaService implements IEmpresaService {
         return empresaRepository.findById(id);
     }
 
-    // Método para atualizar a empresa com o DTO
+
     public Empresa update(UUID empresaId, UpdateEmpresaDto empresaDto) {
         Optional<Empresa> optionalEmpresa = empresaRepository.findById(empresaId);
         
@@ -45,8 +51,7 @@ public class EmpresaService implements IEmpresaService {
 
 
     public Empresa save(Empresa empresa) {
-        return empresaRepository.save(empresa);
-    }
+        return empresaRepository.save(empresa);}
 
     public void delete(UUID id) {
         empresaRepository.deleteById(id);

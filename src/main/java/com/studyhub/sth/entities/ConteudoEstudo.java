@@ -19,7 +19,7 @@ public class ConteudoEstudo {
 
     private String link;
 
-    // @ManyToOne
-    // @JoinColumn(name = "room_id", nullable = false)
-    // private Room room;
+     @ManyToOne
+     @JoinColumn(name = "room_id", nullable = false)
+     private Room room;
 }
