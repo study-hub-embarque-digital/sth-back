@@ -50,4 +50,9 @@ public class EmpresaController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{nomeFantasia}")
+    public List<Empresa> buscarPorNomeFantasia(@PathVariable String nomeFantasia) {
+        return empresaRepository.findByNomeFantasiaContaining(nomeFantasia);
+    }
+
 }

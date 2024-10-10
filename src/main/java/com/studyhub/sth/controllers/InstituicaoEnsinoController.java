@@ -41,6 +41,11 @@ public class InstituicaoEnsinoController {
             InstituicaoEnsino updatedInstituicao = instituicaoEnsinoService.update(id, instituicaoEnsinoDto);
             return ResponseEntity.ok(updatedInstituicao);
     }
+
+        @GetMapping("/{nome}")
+        public List<InstituicaoEnsino> buscarPorNome(@PathVariable String nome) {
+            return instituicaoEnsinoRepository.findByNomeContaining(nome);
+    }
     }
     
 
