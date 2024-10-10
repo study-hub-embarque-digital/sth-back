@@ -13,7 +13,7 @@ public interface IMentorService {
     List<MentorDTO> listar();
     MentorDTO encontrarPorId(UUID id);
     void deletarPorId(UUID id) throws ElementoNaoEncontradoExcecao;
-    MentorDTO atualizar(UUID id , MentorAtualizadoDTO dto);
+    MentorDTO atualizar(UUID id , MentorAtualizadoDTO dto) throws ElementoNaoEncontradoExcecao;
     MentorDTO listarSquads(UUID id);
-    MentorDTO buscarPorNome(String nome);
+    MentorDTO buscarPorNome(String nome) throws ElementoNaoEncontradoExcecao;
 }

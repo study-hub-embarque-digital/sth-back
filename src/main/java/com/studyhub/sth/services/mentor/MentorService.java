@@ -46,23 +46,39 @@ public class MentorService implements  IMentorService{
     public void deletarPorId(UUID id) throws ElementoNaoEncontradoExcecao {
         var mentor = this.mentorRepository.findById(id).orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Mentor não foi encontrado!"));
 //        var squads = this.mentorRepository.getAllSquad(id);
-        this.mentorRepository.deleteById(id);
-
+        //// deleteAllInBatch
+        this.mentorRepository.delete(mentor);
 
     }
 
     @Override
-    public MentorDTO atualizar(UUID id, MentorAtualizadoDTO dto) {
-        return null;
+    public MentorDTO atualizar(UUID id, MentorAtualizadoDTO dto) throws ElementoNaoEncontradoExcecao {
+        var mentor = this.mentorRepository.findById(id).orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Mentor não foi encontrado!"));
+        if (dto.getUsuarioDto().getNome() != null){
+            mentor.getUsuario().setNome(dto.getUsuarioDto().getNome());
+        }
+        if (dto.getUsuarioDto().getEmail() != null){
+            mentor.getUsuario().setEmail(dto.getUsuarioDto().getEmail());
+        }
+        if (dto.getUsuarioDto().getSenha() != null){
+            mentor.getUsuario().setSenha(dto.getUsuarioDto().getSenha());
+        }
+        if (dto.getUsuarioDto().getDataNascimento() != null){
+            mentor.getUsuario().setDataNascimento(dto.getUsuarioDto().getDataNascimento());
+        }
+        this.mentorRepository.save(mentor);
+        return this.mapper.map(mentor, MentorDTO.class);
     }
 
     @Override
     public MentorDTO listarSquads(UUID id) {
+      //  var squads = this.mentorRepository.getAllSquad(id);
         return null;
     }
 
     @Override
-    public MentorDTO buscarPorNome(String nome) {
-        return null;
+    public MentorDTO buscarPorNome(String nome) throws ElementoNaoEncontradoExcecao {
+        var mentor = this.mentorRepository.findByUsuarioNomeContainsIgnoreCase(nome).orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Mentor não foi encontrado!"));;
+        return this.mapper.map(mentor, MentorDTO.class);
     }
 }
