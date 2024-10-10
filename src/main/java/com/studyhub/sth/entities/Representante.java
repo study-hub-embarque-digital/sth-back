@@ -27,7 +27,7 @@ public class Representante {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-//    @OneToMany(mappedBy = "representante", cascade = CascadeType.ALL)
-//    private List<Squad> squads;
-    
+    @ManyToMany(mappedBy = "representantes")
+    private List<Squad> squads;
+
 }
