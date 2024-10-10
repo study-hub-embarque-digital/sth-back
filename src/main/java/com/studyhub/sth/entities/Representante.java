@@ -23,11 +23,11 @@ public class Representante {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-//    @OneToMany(mappedBy = "representante", cascade = CascadeType.ALL)
-//    private List<Squad> squads;
-    
+    @ManyToMany(mappedBy = "representantes")
+    private List<Squad> squads;
+
 }

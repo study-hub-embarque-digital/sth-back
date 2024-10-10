@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name = "squads")
+@Entity
 @Table(name = "squads")
 @Getter
 @Setter
@@ -34,8 +34,12 @@ public class Squad {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-    @OneToMany(mappedBy = "squad")
+    @ManyToMany
+    @JoinTable(name = "squad_representante",
+            joinColumns = @JoinColumn(name = "squad_id"),
+            inverseJoinColumns = @JoinColumn(name = "representante_id"))
     private List<Representante> representantes;
+
 
     @OneToMany(mappedBy = "squad")
     private List<Aluno> alunos;
