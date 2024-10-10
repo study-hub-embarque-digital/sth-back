@@ -2,6 +2,7 @@ package com.studyhub.sth.controllers;
 
 import com.studyhub.sth.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.dtos.squad.SquadDTO;
+import com.studyhub.sth.dtos.squad.SquadUpdateDTO;
 import com.studyhub.sth.services.squad.ISquadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,14 @@ public class SquadController {
         SquadDTO newSquad = squadService.save(squadCreateDTO);
         return ResponseEntity.ok(newSquad);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SquadDTO> updateSquad(@PathVariable UUID id, @RequestBody SquadUpdateDTO squadUpdateDTO) {
+        Optional<SquadDTO> updatedSquad = squadService.update(id, squadUpdateDTO);
+        return updatedSquad.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSquad(@PathVariable UUID id) {
