@@ -7,8 +7,8 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Entity(name = "instituicaoEnsino")
-@Table(name = "instituicaoEnsino")
+@Entity(name = "instituicao_ensino")
+@Table(name = "instituicao_ensino")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,8 +16,7 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "instituicaoEnsinoId")
 public class InstituicaoEnsino {
     
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID instituicaoEnsinoId;
 
     private String nome;

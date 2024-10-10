@@ -1,5 +1,6 @@
 package com.studyhub.sth.dtos.representante;
 
+import com.studyhub.sth.dtos.users.NovoUsuarioDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class NovoRepresentanteDto {
-    private UUID usuarioId;
+    private NovoUsuarioDto novoUsuarioDto;
     private UUID empresaId;
-    private List<UUID> squads;
 }
