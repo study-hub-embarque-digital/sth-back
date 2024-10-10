@@ -23,9 +23,9 @@ public class InstituicaoEnsino {
     private String endereco;
     private String coordenador;
 
-    //@OneToMany(mappedBy = "instituicaoEnsino")
-    //private List<Aluno> alunos;
-
+    @OneToMany(mappedBy = "instituicaoEnsino", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Aluno> alunos = new ArrayList<>();
+    
     //@OneToMany(mappedBy = "instituicaoEnsino")
     //private List<Squad> squads;
 
