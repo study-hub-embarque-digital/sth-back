@@ -2,7 +2,9 @@ package com.studyhub.sth.controllers;
 
 import com.studyhub.sth.dtos.representante.NovoRepresentanteDto;
 import com.studyhub.sth.entities.Representante;
+import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.services.representantes.IRepresentanteService;
+import com.studyhub.sth.services.representantes.RepresentanteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,7 @@ public class RepresentanteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Representante criarRepresentante(@RequestBody NovoRepresentanteDto dto) {
+    public Representante criarRepresentante(@RequestBody NovoRepresentanteDto dto) throws ElementoNaoEncontradoExcecao {
         return representanteService.criarRepresentante(dto);
     }
 

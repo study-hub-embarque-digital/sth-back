@@ -23,7 +23,10 @@ public class Aluno {
 
     private int periodo;
     private String curso;
-//    private InstituicaoEnsino instituicaoEnsino;
+
+    @ManyToOne()
+    @JoinColumn(name = "instituicao_ensino_id")
+    private InstituicaoEnsino instituicaoEnsino;
 //    private Ciclo ciclo;
 //    private Squad squad;
 

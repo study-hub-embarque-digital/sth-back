@@ -1,7 +1,9 @@
 package com.studyhub.sth.services.alunos;
 
 import com.studyhub.sth.dtos.alunos.AlunoAtualizadoDto;
+import com.studyhub.sth.dtos.alunos.AlunoDto;
 import com.studyhub.sth.dtos.alunos.NovoAlunoDto;
+import com.studyhub.sth.dtos.users.UsuarioDto;
 import com.studyhub.sth.entities.Aluno;
 import com.studyhub.sth.entities.Usuario;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
@@ -9,9 +11,11 @@ import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.repositories.IAlunoRepositorio;
 import com.studyhub.sth.repositories.IUsuarioRepositorio;
 import com.studyhub.sth.services.usuarios.IUsuarioService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,30 +28,54 @@ public class AlunoService implements IAlunoService {
     private IMapper mapper;
 
     @Override
-    public Aluno criar(UUID usuarioId, NovoAlunoDto novoAlunoDto) throws ElementoNaoEncontradoExcecao {
-        Usuario usuario = this.usuarioRepositorio.findById(usuarioId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível cadastrar o aluno."));
+    @Transactional
+    public AlunoDto criar(NovoAlunoDto novoAlunoDto) {
+        Usuario usuario = this.mapper.map(novoAlunoDto.getNovoUsuarioDto(), Usuario.class);
+        this.usuarioRepositorio.save(usuario);
 
         Aluno aluno = this.mapper.map(novoAlunoDto, Aluno.class);
         aluno.setUsuario(usuario);
 
         this.alunoRepositorio.save(aluno);
-
-        return aluno;
+        return this.mapper.map(aluno, AlunoDto.class);
     }
 
     @Override
-    public Aluno atualizar(UUID alunoId, AlunoAtualizadoDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao {
+    @Transactional
+    public AlunoDto atualizar(UUID alunoId, AlunoAtualizadoDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao {
         Aluno aluno = this.alunoRepositorio.findById(alunoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível atualizar o aluno."));
-        aluno.atualizar(alunoAtualizadoDto);
+        Usuario usuario = aluno.getUsuario();
 
+        aluno.atualizar(alunoAtualizadoDto);
+        usuario.atualizar(alunoAtualizadoDto.getUsuarioAtualizadoDto());
+
+        this.usuarioRepositorio.save(usuario);
         this.alunoRepositorio.save(aluno);
-        return aluno;
+
+        AlunoDto alunoDto = this.mapper.map(aluno, AlunoDto.class);
+        alunoDto.setUsuario(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
+
+        return alunoDto;
     }
 
     @Override
-    public Aluno detalhar(UUID alunoId) throws ElementoNaoEncontradoExcecao {
+    public AlunoDto detalhar(UUID alunoId) throws ElementoNaoEncontradoExcecao {
         Aluno aluno = this.alunoRepositorio.findById(alunoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar o aluno."));
+        AlunoDto alunoDto = this.mapper.map(aluno, AlunoDto.class);
+        alunoDto.setUsuario(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
 
-        return aluno;
+        return alunoDto;
+    }
+
+    @Override
+    public List<AlunoDto> listarTodos() {
+        List<Aluno> alunos = this.alunoRepositorio.findAll();
+
+        return alunos.stream().map(aluno -> {
+            AlunoDto alunoDto = this.mapper.map(aluno, AlunoDto.class);
+            alunoDto.setUsuario(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
+
+            return alunoDto;
+        }).toList();
     }
 }

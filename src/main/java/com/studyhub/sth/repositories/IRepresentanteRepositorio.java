@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface IRepresentanteRepositorio extends JpaRepository<Representante, UUID> {
     // Método extra
-    List<Representante> findByUsuario_Email(String email);
+    //List<Representante> findByUsuario_Email(String email);
 
-    Representante criarRepresentante(NovoRepresentanteDto dto);
+    //Representante criarRepresentante(NovoRepresentanteDto dto);
 }
