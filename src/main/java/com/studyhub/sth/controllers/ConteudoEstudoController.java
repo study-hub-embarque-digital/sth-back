@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudSemRoomoDto;
+
 @RestController
 @RequestMapping("api/conteudos-estudo")
 public class ConteudoEstudoController {
@@ -24,7 +26,7 @@ public class ConteudoEstudoController {
     }
 
     @GetMapping
-    public List<ConteudoEstudo> listarConteudosEstudo() {
+    public List<ConteudoEstudSemRoomoDto> listarConteudosEstudo() {
         return conteudoEstudoService.listarConteudosEstudo();
     }
 
