@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.studyhub.sth.dtos.Empresas.EmpresaDto;
+import com.studyhub.sth.dtos.Empresas.NovoEmpresaDto;
 import com.studyhub.sth.dtos.Empresas.UpdateEmpresaDto;
 import com.studyhub.sth.entities.Empresa;
 
