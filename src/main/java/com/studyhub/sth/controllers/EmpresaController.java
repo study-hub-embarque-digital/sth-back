@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.studyhub.sth.repositories.EmpresaRepository;
+import com.studyhub.sth.dtos.Empresas.NovoEmpresaDto;
 import com.studyhub.sth.dtos.Empresas.UpdateEmpresaDto;
 import com.studyhub.sth.entities.Empresa;
 import com.studyhub.sth.services.Empresa.EmpresaService;
@@ -42,8 +43,8 @@ public class EmpresaController {
     }
 
     @PostMapping
-    public Empresa createEmpresa(@RequestBody Empresa empresa) {
-        return empresaService.save(empresa);
+    public Empresa createEmpresa(@RequestBody NovoEmpresaDto empresaDto) {
+        return empresaService.save(empresaDto);
     }
 
     @DeleteMapping("/{id}")

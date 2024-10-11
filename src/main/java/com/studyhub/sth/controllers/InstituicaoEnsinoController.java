@@ -15,7 +15,8 @@ import java.util.UUID;
 public class InstituicaoEnsinoController {
         @Autowired
         private InstituicaoEnsinoService instituicaoEnsinoService;
-
+        
+        @Autowired
         private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
     
         @GetMapping

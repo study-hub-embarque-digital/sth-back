@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.studyhub.sth.dtos.Empresas.UpdateEmpresaDto;
 import com.studyhub.sth.entities.Empresa;
+import com.studyhub.sth.entities.Usuario;
 import com.studyhub.sth.repositories.EmpresaRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -49,9 +50,10 @@ public class EmpresaService implements IEmpresaService {
         }
     }
 
-
-    public Empresa save(Empresa empresa) {
-        return empresaRepository.save(empresa);}
+    public Empresa save(NovoEmpresaDto novoEmpresaDto) {
+        Empresa newEmpresa = this.mapper.map(novoEmpresaDto, Empresa.class);
+        return empresaRepository.save(newEmpresa);
+    }
 
     public void delete(UUID id) {
         empresaRepository.deleteById(id);
