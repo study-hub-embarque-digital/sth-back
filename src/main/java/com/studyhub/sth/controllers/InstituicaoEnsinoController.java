@@ -1,5 +1,6 @@
 package com.studyhub.sth.controllers;
 
+import com.studyhub.sth.repositories.InstituicaoEnsinoRepository;
 import com.studyhub.sth.dtos.InstituicaoEnsino.*;
 import com.studyhub.sth.entities.InstituicaoEnsino;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import java.util.UUID;
 public class InstituicaoEnsinoController {
         @Autowired
         private InstituicaoEnsinoService instituicaoEnsinoService;
+        
+        @Autowired
+        private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
     
         @GetMapping
         public List<InstituicaoEnsino> getAll() {
@@ -40,6 +44,11 @@ public class InstituicaoEnsinoController {
         public ResponseEntity<InstituicaoEnsino> update(@PathVariable("id") UUID id, @RequestBody UpdateInstituicaoEnsinoDto instituicaoEnsinoDto) {
             InstituicaoEnsino updatedInstituicao = instituicaoEnsinoService.update(id, instituicaoEnsinoDto);
             return ResponseEntity.ok(updatedInstituicao);
+    }
+
+        @GetMapping("/{nome}")
+        public List<InstituicaoEnsino> buscarPorNome(@PathVariable String nome) {
+            return instituicaoEnsinoRepository.findByNomeContaining(nome);
     }
     }
     

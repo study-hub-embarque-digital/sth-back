@@ -12,7 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NovoEmpresaDto {
-    private UUID empresaId;
     private String razaoSocial;
     private String nomeFantasia;
     private String telefone;
