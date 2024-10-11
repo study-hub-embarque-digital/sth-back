@@ -1,5 +1,6 @@
 package com.studyhub.sth.services.conteudoEstudo;
 
+import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudSemRoomoDto;
 import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoDto;
 import com.studyhub.sth.entities.ConteudoEstudo;
 
@@ -10,7 +11,7 @@ public interface IConteudoEstudoService {
 
     ConteudoEstudo criarConteudoEstudo(ConteudoEstudoDto dto);
 
-    List<ConteudoEstudo> listarConteudosEstudo();
+    public List<ConteudoEstudSemRoomoDto> listarConteudosEstudo();
 
     ConteudoEstudo obterConteudoEstudoPorId(UUID id);
 

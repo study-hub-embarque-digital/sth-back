@@ -1,24 +1,18 @@
 package com.studyhub.sth.dtos.conteudoEstudo;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.UUID;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ConteudoEstudoDto {
+    private UUID conteudoEstudoId;
     private String link;
     private UUID roomId;
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public UUID getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(UUID roomId) {
-        this.roomId = roomId;
-    }
 }
