@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+import com.studyhub.sth.repositories.EmpresaRepository;
+import com.studyhub.sth.dtos.Empresas.NovoEmpresaDto;
 import com.studyhub.sth.dtos.Empresas.UpdateEmpresaDto;
 import com.studyhub.sth.entities.Empresa;
 import com.studyhub.sth.services.Empresa.EmpresaService;
@@ -16,6 +17,8 @@ import java.util.UUID;
 public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
     @GetMapping
     public List<Empresa> getAllEmpresas() {
@@ -40,14 +43,19 @@ public class EmpresaController {
     }
 
     @PostMapping
-    public Empresa createEmpresa(@RequestBody Empresa empresa) {
-        return empresaService.save(empresa);
+    public Empresa createEmpresa(@RequestBody NovoEmpresaDto empresaDto) {
+        return empresaService.save(empresaDto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmpresa(@PathVariable UUID id) {
         empresaService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{nomeFantasia}")
+    public List<Empresa> buscarPorNomeFantasia(@PathVariable String nomeFantasia) {
+        return empresaRepository.findByNomeFantasiaContaining(nomeFantasia);
     }
 
 }

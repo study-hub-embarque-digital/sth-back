@@ -42,9 +42,8 @@ public class ConteudoEstudoService implements IConteudoEstudoService {
 
     @Override
     public List<ConteudoEstudSemRoomoDto> listarConteudosEstudo() {
-        var lista = conteudoEstudoRepository.findAll();
-        return lista.stream().map(conteudo -> this.mapper.map(conteudo, ConteudoEstudSemRoomoDto.class))
-                .collect(Collectors.toList());
+        List<ConteudoEstudo> lista = this.conteudoEstudoRepository.findAll();
+        return lista.stream().map(conteudo -> this.mapper.map(conteudo, ConteudoEstudSemRoomoDto.class)).toList();
     }
 
     @Override

@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.studyhub.sth.dtos.InstituicaoEnsino.*;
 import com.studyhub.sth.entities.InstituicaoEnsino;
+import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.repositories.InstituicaoEnsinoRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class InstituicaoEnsinoService implements IInstituicaoEnsinoService{
+    @Autowired
+    private IMapper mapper;
 
     @Autowired
     private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
@@ -25,10 +28,7 @@ public class InstituicaoEnsinoService implements IInstituicaoEnsinoService{
     }
 
     public InstituicaoEnsino save(InstituicaoEnsinoDto instituicao) {
-        InstituicaoEnsino newInstituicaoEnsino = new InstituicaoEnsino();
-        newInstituicaoEnsino.setNome(instituicao.getNome());
-        newInstituicaoEnsino.setEndereco(instituicao.getEndereco());
-        newInstituicaoEnsino.setCoordenador(instituicao.getCoordenador());
+        InstituicaoEnsino newInstituicaoEnsino = this.mapper.map(instituicao, InstituicaoEnsino.class);
         return instituicaoEnsinoRepository.save(newInstituicaoEnsino);
     }
 

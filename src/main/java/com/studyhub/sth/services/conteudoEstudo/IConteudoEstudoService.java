@@ -11,6 +11,7 @@ public interface IConteudoEstudoService {
 
     ConteudoEstudSemRoomoDto criarConteudoEstudo(ConteudoEstudoDto dto);
 
+
     List<ConteudoEstudSemRoomoDto> listarConteudosEstudo();
 
     ConteudoEstudo obterConteudoEstudoPorId(UUID id);
