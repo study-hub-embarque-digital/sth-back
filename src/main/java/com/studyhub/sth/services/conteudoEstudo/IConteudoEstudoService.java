@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface IConteudoEstudoService {
 
-    ConteudoEstudo criarConteudoEstudo(ConteudoEstudoDto dto);
+    ConteudoEstudSemRoomoDto criarConteudoEstudo(ConteudoEstudoDto dto);
 
     List<ConteudoEstudSemRoomoDto> listarConteudosEstudo();
 

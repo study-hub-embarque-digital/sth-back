@@ -105,6 +105,7 @@ public class SquadService implements ISquadService {
                 .nome(squad.getNome())
                 .tipo(squad.getTipo())
                 .empresaId(empresaId)
+                .mentorId(squad.getMentor().getId())
                 .build();
     }
 

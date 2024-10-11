@@ -3,6 +3,7 @@ package com.studyhub.sth.controllers;
 import com.studyhub.sth.dtos.mentor.MentorAtualizadoDTO;
 import com.studyhub.sth.dtos.mentor.MentorDTO;
 import com.studyhub.sth.dtos.mentor.NovoMentorDTO;
+import com.studyhub.sth.dtos.squad.SquadDTO;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.services.mentor.IMentorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,11 +58,11 @@ public class MentorController {
     }
 
 
-//    @GetMapping("/squads/{id}")
-//    public  ResponseEntity<List<SquadDto>> listarSquadsDeMentor(@PathVariable UUID id){
-//        var squads = this.mentorService.listarSquads(id);
-//        return ResponseEntity.ok(squads);
-//    }
+    @GetMapping("/squads/{id}")
+    public  ResponseEntity<List<SquadDTO>> listarSquadsDeMentor(@PathVariable UUID id){
+        var squads = this.mentorService.listarSquads(id);
+        return ResponseEntity.ok(squads);
+    }
 
     @GetMapping("/nome/{nome}")
     public ResponseEntity<MentorDTO> buscarMentorPorNome(@PathVariable String nome) throws ElementoNaoEncontradoExcecao {

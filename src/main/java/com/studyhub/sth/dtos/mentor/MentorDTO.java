@@ -1,5 +1,6 @@
 package com.studyhub.sth.dtos.mentor;
 
+import com.studyhub.sth.dtos.squad.SquadDTO;
 import com.studyhub.sth.dtos.users.UsuarioDto;
 import com.studyhub.sth.entities.Mentor;
 import jakarta.validation.Valid;
@@ -18,5 +19,5 @@ import java.util.UUID;
 public class MentorDTO{
     UUID id;
     UsuarioDto usuarioDto;
-    //List<SquadDto> squadDtos;
+    List<SquadDTO> squadDtos;
 }

@@ -21,7 +21,7 @@ public class ConteudoEstudoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ConteudoEstudo criarConteudoEstudo(@RequestBody ConteudoEstudoDto dto) {
+    public ConteudoEstudSemRoomoDto criarConteudoEstudo(@RequestBody ConteudoEstudoDto dto) {
         return conteudoEstudoService.criarConteudoEstudo(dto);
     }
 

@@ -3,12 +3,14 @@ package com.studyhub.sth.services.mentor;
 import com.studyhub.sth.dtos.mentor.MentorAtualizadoDTO;
 import com.studyhub.sth.dtos.mentor.MentorDTO;
 import com.studyhub.sth.dtos.mentor.NovoMentorDTO;
+import com.studyhub.sth.dtos.squad.SquadDTO;
 import com.studyhub.sth.dtos.users.UsuarioDto;
 import com.studyhub.sth.entities.Mentor;
 import com.studyhub.sth.entities.Usuario;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.repositories.IMentorRepository;
+import com.studyhub.sth.repositories.ISquadRepositorio;
 import com.studyhub.sth.repositories.IUsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class MentorService implements IMentorService {
 
     @Autowired
     private IMapper mapper;
+
+    @Autowired
+    private ISquadRepositorio squadRepositorio;
 
     @Override
     public MentorDTO criar(NovoMentorDTO dto) {
@@ -67,8 +72,8 @@ public class MentorService implements IMentorService {
     @Override
     public void deletarPorId(UUID id) throws ElementoNaoEncontradoExcecao {
         var mentor = this.mentorRepository.findById(id).orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Mentor não foi encontrado!"));
-//        var squads = this.mentorRepository.getAllSquad(id);
-        //// deleteAllInBatch
+        var squads = this.mentorRepository.getAllSquad(id);
+        this.squadRepositorio.deleteAllInBatch(squads);
         this.mentorRepository.delete(mentor);
 
     }
@@ -98,12 +103,12 @@ public class MentorService implements IMentorService {
         return mentorDTO;
     }
 
-//
-//    @Override
-//    public List<SquadDto> listarSquads(UUID id) {
-//        //  var squads = this.mentorRepository.getAllSquad(id);
-//        return squads;
-//    }
+
+    @Override
+    public List<SquadDTO> listarSquads(UUID id) {
+        var squads = this.mentorRepository.getAllSquad(id);
+        return squads.stream().map(squad -> this.mapper.map(squad, SquadDTO.class)).collect(Collectors.toList());
+    }
 
     @Override
     public MentorDTO buscarPorNome(String nome) throws ElementoNaoEncontradoExcecao {
