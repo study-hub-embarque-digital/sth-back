@@ -1,5 +1,6 @@
 package com.studyhub.sth.controllers;
 
+import com.studyhub.sth.repositories.InstituicaoEnsinoRepository;
 import com.studyhub.sth.dtos.InstituicaoEnsino.*;
 import com.studyhub.sth.entities.InstituicaoEnsino;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import java.util.UUID;
 public class InstituicaoEnsinoController {
         @Autowired
         private InstituicaoEnsinoService instituicaoEnsinoService;
+
+        private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
     
         @GetMapping
         public List<InstituicaoEnsino> getAll() {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+import com.studyhub.sth.repositories.EmpresaRepository;
 import com.studyhub.sth.dtos.Empresas.UpdateEmpresaDto;
 import com.studyhub.sth.entities.Empresa;
 import com.studyhub.sth.services.Empresa.EmpresaService;
@@ -16,6 +16,8 @@ import java.util.UUID;
 public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
     @GetMapping
     public List<Empresa> getAllEmpresas() {
