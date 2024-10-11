@@ -14,4 +14,5 @@ public interface IAlunoService {
     public AlunoDto atualizar(UUID alunoId, AlunoAtualizadoDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao;
     public AlunoDto detalhar(UUID alunoId) throws ElementoNaoEncontradoExcecao;
     public List<AlunoDto> listarTodos();
+    public List<AlunoDto> listarPorPeriodo(int periodo);
 }

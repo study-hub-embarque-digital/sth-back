@@ -8,6 +8,8 @@ import com.studyhub.sth.dtos.users.UsuarioAtualizadoDto;
 import com.studyhub.sth.dtos.users.UsuarioDto;
 import com.studyhub.sth.entities.Aluno;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
+import com.studyhub.sth.libs.mapper.IMapper;
+import com.studyhub.sth.repositories.IAlunoRepositorio;
 import com.studyhub.sth.services.alunos.IAlunoService;
 import com.studyhub.sth.services.usuarios.IUsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,5 +46,10 @@ public class AlunosController {
     @GetMapping()
     public ResponseEntity<List<AlunoDto>> listarTodos() throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.alunoService.listarTodos(), HttpStatus.OK);
+    }
+
+    @GetMapping("/por-periodo")
+    public ResponseEntity<List<AlunoDto>> obterAlunosPorPeriodo(@RequestParam int periodo) {
+        return new ResponseEntity<>(this.alunoService.listarPorPeriodo(periodo), HttpStatus.OK);
     }
 }
