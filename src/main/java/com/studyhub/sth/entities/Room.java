@@ -22,7 +22,10 @@ public class Room {
 
     private UUID criador;
 
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<ConteudoEstudo> conteudosEstudo;
+
     // obs: entidades que serão criadas futuramente para PI
-    //private Ciclo ciclo;
-    //private Formulario formulario;
+    // private Ciclo ciclo;
+    // private Formulario formulario;
 }
