@@ -6,6 +6,7 @@ import com.studyhub.sth.dtos.squad.SquadUpdateDTO;
 import com.studyhub.sth.entities.Empresa;
 import com.studyhub.sth.entities.Mentor;
 import com.studyhub.sth.entities.Squad;
+import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.repositories.EmpresaRepository;
 import com.studyhub.sth.repositories.IMentorRepository;
 import com.studyhub.sth.repositories.ISquadRepositorio;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +30,9 @@ public class SquadService implements ISquadService {
 
     @Autowired
     private IMentorRepository mentorRepository;
+
+    @Autowired
+    private IMapper mapper;
 
     @Override
     public List<SquadDTO> findAll() {
@@ -64,8 +69,10 @@ public class SquadService implements ISquadService {
     @Transactional
     public Optional<SquadDTO> update(UUID id, SquadUpdateDTO squadUpdateDTO) {
         return squadRepository.findById(id).map(squad -> {
-            Empresa empresa = this.empresaRepository.findById(squadUpdateDTO.getEmpresaId()).orElseThrow();
-            Mentor mentor = this.mentorRepository.findById(squadUpdateDTO.getMentorId()).orElseThrow();
+            Empresa empresa = this.empresaRepository.findById(squadUpdateDTO.getEmpresaId())
+                    .orElseThrow(() -> new NoSuchElementException("Empresa não encontrada com ID: " + squadUpdateDTO.getEmpresaId()));
+            Mentor mentor = this.mentorRepository.findById(squadUpdateDTO.getMentorId())
+                    .orElseThrow(() -> new NoSuchElementException("Mentor não encontrado com ID: " + squadUpdateDTO.getMentorId()));
 
             squad.setNome(squadUpdateDTO.getNome());
             squad.setTipo(squadUpdateDTO.getTipo());
@@ -90,12 +97,21 @@ public class SquadService implements ISquadService {
             return null;
         }
 
+
+        UUID empresaId = (squad.getEmpresa() != null) ? squad.getEmpresa().getEmpresaId() : null;
+
         return SquadDTO.builder()
                 .id(squad.getSquadId())
                 .nome(squad.getNome())
                 .tipo(squad.getTipo())
-                //.mentorId(squad.getMentor().getId())
-                .empresaId(squad.getEmpresa().getEmpresaId())
+                .empresaId(empresaId)
+                .mentorId(squad.getMentor().getId())
                 .build();
+    }
+
+    public SquadDTO findBySquadNomeContainsIgnoreCase(String nome) {
+        Squad squad = squadRepository.findByNome(nome)
+                .orElseThrow(() -> new NoSuchElementException("Squad não encontrado com o nome: " + nome));
+        return this.mapper.map(squad, SquadDTO.class);
     }
 }

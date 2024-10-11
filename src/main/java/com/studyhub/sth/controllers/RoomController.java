@@ -51,7 +51,7 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/conteudos-recomendados/{id}")
+    @PutMapping("/conteudos-recomendados/{roomId}")
     @Transactional
     public  ResponseEntity<List<ConteudoEstudoDto>> addConteudos(@PathVariable UUID roomId, @RequestBody ConteudoEstudoDto conteudoEstudoDto) throws ElementoNaoEncontradoExcecao {
         var lista = this.roomService.addConteudoRecomendado(roomId,conteudoEstudoDto);

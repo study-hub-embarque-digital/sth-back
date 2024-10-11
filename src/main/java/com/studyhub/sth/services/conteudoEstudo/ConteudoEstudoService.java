@@ -27,7 +27,7 @@ public class ConteudoEstudoService implements IConteudoEstudoService {
     private IMapper mapper;
 
     @Override
-    public ConteudoEstudo criarConteudoEstudo(ConteudoEstudoDto dto) {
+    public ConteudoEstudSemRoomoDto criarConteudoEstudo(ConteudoEstudoDto dto) {
         ConteudoEstudo conteudoEstudo = new ConteudoEstudo();
         conteudoEstudo.setLink(dto.getLink());
 
@@ -35,8 +35,9 @@ public class ConteudoEstudoService implements IConteudoEstudoService {
                 .orElseThrow(() -> new RuntimeException("Room não encontrado"));
 
         conteudoEstudo.setRoom(room);
+        conteudoEstudoRepository.save(conteudoEstudo);
 
-        return conteudoEstudoRepository.save(conteudoEstudo);
+        return this.mapper.map(conteudoEstudo,ConteudoEstudSemRoomoDto.class);
     }
 
     @Override

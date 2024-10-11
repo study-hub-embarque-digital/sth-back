@@ -3,6 +3,7 @@ package com.studyhub.sth.controllers;
 import com.studyhub.sth.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.dtos.squad.SquadDTO;
 import com.studyhub.sth.dtos.squad.SquadUpdateDTO;
+import com.studyhub.sth.entities.Squad;
 import com.studyhub.sth.services.squad.ISquadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,12 @@ public class SquadController {
     public ResponseEntity<Void> deleteSquad(@PathVariable UUID id) {
         squadService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<SquadDTO> buscarSquadPorNome(@PathVariable String nome) {
+        SquadDTO squad = squadService.findBySquadNomeContainsIgnoreCase(nome);
+        return ResponseEntity.ok(squad);
     }
 }
 

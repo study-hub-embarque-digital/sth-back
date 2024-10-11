@@ -3,6 +3,7 @@ package com.studyhub.sth.services.squad;
 import com.studyhub.sth.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.dtos.squad.SquadDTO;
 import com.studyhub.sth.dtos.squad.SquadUpdateDTO;
+import com.studyhub.sth.entities.Squad;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +20,7 @@ public interface ISquadService {
     void deleteById(UUID id);
 
     Optional<SquadDTO> update(UUID id, SquadUpdateDTO squadUpdateDTO);
+
+    SquadDTO findBySquadNomeContainsIgnoreCase(String nome);
 }
 

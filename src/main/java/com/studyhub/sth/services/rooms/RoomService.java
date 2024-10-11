@@ -44,7 +44,7 @@ public class RoomService implements IRoomService {
         if (roomAtualizadaDto.getConteudosRecomendados().getLink() != null) {
             var conteudoEstudoDto = roomAtualizadaDto.getConteudosRecomendados();
             var conteudoEstudo = this.roomRepository.findConteudoEstudoByRoomIdAndConteudoEstudoId(
-                            roomId, conteudoEstudoDto.getConteudoEstudoId())
+                            roomId, conteudoEstudoDto.getRoomId())
                     .orElseThrow(() -> new ElementoNaoEncontradoExcecao("Conteúdo de Estudo não encontrado!"));
 
             conteudoEstudo.setLink(conteudoEstudoDto.getLink());
