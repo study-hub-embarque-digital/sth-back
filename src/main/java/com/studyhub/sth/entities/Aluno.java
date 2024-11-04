@@ -1,7 +1,7 @@
 package com.studyhub.sth.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.studyhub.sth.dtos.alunos.AlunoAtualizadoDto;
+import com.studyhub.sth.dtos.alunos.AlunoUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,7 +35,7 @@ public class Aluno {
     @JoinColumn(name = "squad_id")
     private Squad squad;
 
-    public void atualizar(AlunoAtualizadoDto alunoAtualizadoDto) {
+    public void atualizar(AlunoUpdateDto alunoAtualizadoDto) {
         this.periodo = alunoAtualizadoDto.getPeriodo();
         this.curso = alunoAtualizadoDto.getCurso();
     }

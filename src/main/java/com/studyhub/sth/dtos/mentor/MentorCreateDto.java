@@ -1,6 +1,6 @@
 package com.studyhub.sth.dtos.mentor;
 
-import com.studyhub.sth.dtos.users.NovoUsuarioDto;
+import com.studyhub.sth.dtos.users.UsuarioCreateDto;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NovoMentorDTO {
-    @Valid NovoUsuarioDto usuarioDto;
+public class MentorCreateDto {
+    @Valid
+    UsuarioCreateDto usuarioDto;
 }

@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoUpdateDto;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudSemRoomoDto;
+import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoCreateDto;
 import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoDto;
 import com.studyhub.sth.entities.ConteudoEstudo;
 import com.studyhub.sth.entities.Room;
@@ -27,45 +30,43 @@ public class ConteudoEstudoService implements IConteudoEstudoService {
     private IMapper mapper;
 
     @Override
-    public ConteudoEstudSemRoomoDto criarConteudoEstudo(ConteudoEstudoDto dto) {
-        ConteudoEstudo conteudoEstudo = new ConteudoEstudo();
-        conteudoEstudo.setLink(dto.getLink());
+    @Transactional
+    public ConteudoEstudoCreateDto criarConteudoEstudo(ConteudoEstudoCreateDto dto) {
+        ConteudoEstudo conteudoEstudo =  this.mapper.map(dto, ConteudoEstudo.class);
+        conteudoEstudoRepository.save(conteudoEstudo);
+        return this.mapper.map(conteudoEstudo, ConteudoEstudoCreateDto.class);
+    }
 
+    @Override
+    public List<ConteudoEstudoCreateDto> listarConteudosEstudo() {
+        List<ConteudoEstudo> lista = this.conteudoEstudoRepository.findAll();
+        return lista.stream().map(conteudo -> this.mapper.map(conteudo, ConteudoEstudoCreateDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ConteudoEstudoDto obterConteudoEstudoPorId(UUID id) {
+        var contedoEstconteudo = this.conteudoEstudoRepository.findById(id).orElseThrow(() -> new RuntimeException("Conteúdo de estudo não encontrado"));
+        return this.mapper.map(contedoEstconteudo, ConteudoEstudoDto.class);
+    }
+
+    @Override
+    @Transactional
+    public ConteudoEstudoDto atualizarConteudoEstudo(UUID id, ConteudoEstudoUpdateDto dto) {
+        var conteudoEstudo = this.conteudoEstudoRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Conteúdo de estudo não encontrado"));
+        if (dto.getLink() != null){
+            conteudoEstudo.setLink(dto.getLink());
+        }
         Room room = roomRepository.findById(dto.getRoomId())
                 .orElseThrow(() -> new RuntimeException("Room não encontrado"));
-
         conteudoEstudo.setRoom(room);
         conteudoEstudoRepository.save(conteudoEstudo);
-
-        return this.mapper.map(conteudoEstudo,ConteudoEstudSemRoomoDto.class);
+        return this.mapper.map(conteudoEstudo, ConteudoEstudoDto.class);
     }
 
     @Override
-    public List<ConteudoEstudSemRoomoDto> listarConteudosEstudo() {
-        List<ConteudoEstudo> lista = this.conteudoEstudoRepository.findAll();
-        return lista.stream().map(conteudo -> this.mapper.map(conteudo, ConteudoEstudSemRoomoDto.class)).toList();
-    }
-
-    @Override
-    public ConteudoEstudo obterConteudoEstudoPorId(UUID id) {
-        return conteudoEstudoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Conteúdo de estudo não encontrado"));
-    }
-
-    @Override
-    public ConteudoEstudo atualizarConteudoEstudo(UUID id, ConteudoEstudoDto dto) {
-        ConteudoEstudo conteudoEstudo = obterConteudoEstudoPorId(id);
-        conteudoEstudo.setLink(dto.getLink());
-
-        Room room = roomRepository.findById(dto.getRoomId())
-                .orElseThrow(() -> new RuntimeException("Room não encontrado"));
-        conteudoEstudo.setRoom(room);
-
-        return conteudoEstudoRepository.save(conteudoEstudo);
-    }
-
-    @Override
+    @Transactional
     public void deletarConteudoEstudo(UUID id) {
-        conteudoEstudoRepository.deleteById(id);
+        var conteudoEstudo = this.conteudoEstudoRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Conteo de estudo não encontrado"));
+        conteudoEstudoRepository.delete(conteudoEstudo);
     }
 }

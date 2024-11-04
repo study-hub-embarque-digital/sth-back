@@ -1,8 +1,8 @@
 package com.studyhub.sth.controllers;
 
-import com.studyhub.sth.dtos.mentor.MentorAtualizadoDTO;
-import com.studyhub.sth.dtos.mentor.MentorDTO;
-import com.studyhub.sth.dtos.mentor.NovoMentorDTO;
+import com.studyhub.sth.dtos.mentor.MentorUpdateDto;
+import com.studyhub.sth.dtos.mentor.MentorDto;
+import com.studyhub.sth.dtos.mentor.MentorCreateDto;
 import com.studyhub.sth.dtos.squad.SquadDTO;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.services.mentor.IMentorService;
@@ -24,20 +24,20 @@ public class MentorController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<MentorDTO> criarMentor(@RequestBody NovoMentorDTO dto) {
+    public ResponseEntity<MentorDto> criarMentor(@RequestBody MentorCreateDto dto) {
         var mentor = this.mentorService.criar(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(mentor.getId()).toUri();
         return ResponseEntity.created(uri).body(mentor);
     }
 
     @GetMapping
-    public ResponseEntity<List<MentorDTO>> listarMentores() {
+    public ResponseEntity<List<MentorDto>> listarMentores() {
         var mentores = this.mentorService.listar();
         return ResponseEntity.ok(mentores);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MentorDTO> buscarMentorPorID(@PathVariable UUID id) throws ElementoNaoEncontradoExcecao {
+    public ResponseEntity<MentorDto> buscarMentorPorID(@PathVariable UUID id) throws ElementoNaoEncontradoExcecao {
         var mentor = this.mentorService.buscarPorId(id);
         return ResponseEntity.ok(mentor);
     }
@@ -52,7 +52,7 @@ public class MentorController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<MentorDTO> atualizarMentor(@PathVariable UUID id, @RequestBody MentorAtualizadoDTO dto) throws ElementoNaoEncontradoExcecao {
+    public ResponseEntity<MentorDto> atualizarMentor(@PathVariable UUID id, @RequestBody MentorUpdateDto dto) throws ElementoNaoEncontradoExcecao {
         var mentor = this.mentorService.atualizar(id, dto);
         return ResponseEntity.ok(mentor);
     }
@@ -65,7 +65,7 @@ public class MentorController {
     }
 
     @GetMapping("/nome/{nome}")
-    public ResponseEntity<MentorDTO> buscarMentorPorNome(@PathVariable String nome) throws ElementoNaoEncontradoExcecao {
+    public ResponseEntity<MentorDto> buscarMentorPorNome(@PathVariable String nome) throws ElementoNaoEncontradoExcecao {
         var mentor = this.mentorService.buscarPorNome(nome);
         return ResponseEntity.ok(mentor);
     }

@@ -1,8 +1,7 @@
 package com.studyhub.sth.dtos.alunos;
 
-import com.studyhub.sth.dtos.InstituicaoEnsino.InstituicaoEnsinoDto;
+import com.studyhub.sth.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
 import com.studyhub.sth.dtos.users.UsuarioDto;
-import com.studyhub.sth.entities.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

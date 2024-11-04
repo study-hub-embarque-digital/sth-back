@@ -1,22 +1,21 @@
 package com.studyhub.sth.services.conteudoEstudo;
 
-import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudSemRoomoDto;
+import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoCreateDto;
 import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoDto;
-import com.studyhub.sth.entities.ConteudoEstudo;
+import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoUpdateDto;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface IConteudoEstudoService {
 
-    ConteudoEstudSemRoomoDto criarConteudoEstudo(ConteudoEstudoDto dto);
+    ConteudoEstudoCreateDto criarConteudoEstudo(ConteudoEstudoCreateDto dto);
 
+    List<ConteudoEstudoCreateDto> listarConteudosEstudo();
 
-    List<ConteudoEstudSemRoomoDto> listarConteudosEstudo();
+    ConteudoEstudoDto obterConteudoEstudoPorId(UUID id);
 
-    ConteudoEstudo obterConteudoEstudoPorId(UUID id);
-
-    ConteudoEstudo atualizarConteudoEstudo(UUID id, ConteudoEstudoDto dto);
+    ConteudoEstudoDto atualizarConteudoEstudo(UUID id, ConteudoEstudoUpdateDto dto);
 
     void deletarConteudoEstudo(UUID id);
 }

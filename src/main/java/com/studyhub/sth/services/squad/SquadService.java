@@ -10,6 +10,7 @@ import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.repositories.EmpresaRepository;
 import com.studyhub.sth.repositories.IMentorRepository;
 import com.studyhub.sth.repositories.ISquadRepositorio;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SquadService implements ISquadService {
@@ -38,79 +40,54 @@ public class SquadService implements ISquadService {
     public List<SquadDTO> findAll() {
         List<Squad> squads = squadRepository.findAll();
         return squads.stream()
-                .map(this::convertToDTO)
-                .toList();
+                .map(squad -> this.mapper.map(squad,SquadDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<SquadDTO> findById(UUID id) {
-        return squadRepository.findById(id)
-                .map(this::convertToDTO);
-    }
-
-    @Override
-    @Transactional
-    public SquadDTO save(SquadCreateDTO squadCreateDTO) {
-        Squad squad = new Squad();
-        Empresa empresa = this.empresaRepository.findById(squadCreateDTO.getEmpresaId()).orElseThrow();
-        Mentor mentor = this.mentorRepository.findById(squadCreateDTO.getMentorId()).orElseThrow();
-
-        squad.setNome(squadCreateDTO.getNome());
-        squad.setTipo(squadCreateDTO.getTipo());
-        squad.setEmpresa(empresa);
-        squad.setMentor(mentor);
-
-        Squad savedSquad = squadRepository.save(squad);
-
-        return convertToDTO(savedSquad);
+    public SquadDTO findById(UUID id) {
+        var squad = this.squadRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Squad não encontrado!"));
+        return this.mapper.map(squad, SquadDTO.class);
     }
 
     @Override
     @Transactional
-    public Optional<SquadDTO> update(UUID id, SquadUpdateDTO squadUpdateDTO) {
-        return squadRepository.findById(id).map(squad -> {
-            Empresa empresa = this.empresaRepository.findById(squadUpdateDTO.getEmpresaId())
-                    .orElseThrow(() -> new NoSuchElementException("Empresa não encontrada com ID: " + squadUpdateDTO.getEmpresaId()));
-            Mentor mentor = this.mentorRepository.findById(squadUpdateDTO.getMentorId())
-                    .orElseThrow(() -> new NoSuchElementException("Mentor não encontrado com ID: " + squadUpdateDTO.getMentorId()));
-
-            squad.setNome(squadUpdateDTO.getNome());
-            squad.setTipo(squadUpdateDTO.getTipo());
-            squad.setEmpresa(empresa);
-            squad.setMentor(mentor);
-
-            Squad savedSquad = squadRepository.save(squad);
-
-            return convertToDTO(savedSquad);
-        });
+    public SquadDTO save(SquadCreateDTO dto) {
+        Squad squad = this.mapper.map(dto, Squad.class);
+        this.squadRepository.save(squad);
+        return this.mapper.map(squad, SquadDTO.class);
     }
 
+    @Override
+    @Transactional
+    public SquadDTO update(UUID id, SquadUpdateDTO dto) {
+        var squad = this.squadRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Squad não encontrado!"));
+        if (dto.getMentorId() != null) {
+            squad.setMentor(this.mentorRepository.findById(dto.getMentorId()).get());
+        }
+        if (dto.getEmpresaId() != null) {
+            squad.setEmpresa(this.empresaRepository.findById(dto.getEmpresaId()).get());
+        }
+        if (dto.getTipo() != null) {
+            squad.setTipo(dto.getTipo());
+        }
+        if (dto.getNome() != null) {
+            squad.setNome(dto.getNome());
+        }
+        this.squadRepository.save(squad);
+        return this.mapper.map(squad, SquadDTO.class);
+    }
 
     @Override
     @Transactional
     public void deleteById(UUID id) {
-        squadRepository.deleteById(id);
+        var squad = this.squadRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Squad não encontrado!"));
+        squadRepository.delete(squad);
     }
 
-    private SquadDTO convertToDTO(Squad squad) {
-        if (squad == null) {
-            return null;
-        }
-
-
-        UUID empresaId = (squad.getEmpresa() != null) ? squad.getEmpresa().getEmpresaId() : null;
-
-        return SquadDTO.builder()
-                .id(squad.getSquadId())
-                .nome(squad.getNome())
-                .tipo(squad.getTipo())
-                .empresaId(empresaId)
-                .mentorId(squad.getMentor().getId())
-                .build();
-    }
-
+    @Override
     public SquadDTO findBySquadNomeContainsIgnoreCase(String nome) {
-        Squad squad = squadRepository.findByNome(nome)
+        Squad squad = squadRepository.findBySquadNomeContainsIgnoreCase(nome)
                 .orElseThrow(() -> new NoSuchElementException("Squad não encontrado com o nome: " + nome));
         return this.mapper.map(squad, SquadDTO.class);
     }

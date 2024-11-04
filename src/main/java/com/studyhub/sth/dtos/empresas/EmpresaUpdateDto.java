@@ -1,4 +1,4 @@
-package com.studyhub.sth.dtos.Empresas;
+package com.studyhub.sth.dtos.empresas;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,11 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateEmpresaDto {
-    private String razaoSocial;
+public class EmpresaUpdateDto {
     private String nomeFantasia;
     private String telefone;
     private String email;
-    private String cnpj;
-    
 }

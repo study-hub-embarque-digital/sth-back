@@ -1,12 +1,12 @@
 package com.studyhub.sth.controllers;
 
 import com.studyhub.sth.repositories.InstituicaoEnsinoRepository;
-import com.studyhub.sth.dtos.InstituicaoEnsino.*;
+import com.studyhub.sth.dtos.instituicaoEnsino.*;
 import com.studyhub.sth.entities.InstituicaoEnsino;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.studyhub.sth.services.InstituicaoEnsino.InstituicaoEnsinoService;
+import com.studyhub.sth.services.instituicaoEnsino.InstituicaoEnsinoService;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,18 +20,18 @@ public class InstituicaoEnsinoController {
         private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
     
         @GetMapping
-        public List<InstituicaoEnsino> getAll() {
+        public List<InstituicaoEnsinoDto> getAll() {
             return instituicaoEnsinoService.findAll();
         }
     
         @GetMapping("/{id}")
-        public ResponseEntity<InstituicaoEnsino> getById(@PathVariable UUID id) {
-            InstituicaoEnsino instituicao = instituicaoEnsinoService.findById(id);
+        public ResponseEntity<InstituicaoEnsinoDto> getById(@PathVariable UUID id) {
+            var instituicao = instituicaoEnsinoService.findById(id);
             return instituicao != null ? ResponseEntity.ok(instituicao) : ResponseEntity.notFound().build();
         }
     
         @PostMapping
-        public InstituicaoEnsino create(@RequestBody InstituicaoEnsinoDto instituicao) {
+        public InstituicaoEnsinoDto create(@RequestBody InstituicaoEnsinoCreateDto instituicao) {
             return instituicaoEnsinoService.save(instituicao);
         }
     
@@ -41,8 +41,8 @@ public class InstituicaoEnsinoController {
             return ResponseEntity.noContent().build();
         }
         @PutMapping("/{id}")
-        public ResponseEntity<InstituicaoEnsino> update(@PathVariable("id") UUID id, @RequestBody UpdateInstituicaoEnsinoDto instituicaoEnsinoDto) {
-            InstituicaoEnsino updatedInstituicao = instituicaoEnsinoService.update(id, instituicaoEnsinoDto);
+        public ResponseEntity<InstituicaoEnsinoDto> update(@PathVariable("id") UUID id, @RequestBody InstituicaoEnsinoUpdateDto instituicaoEnsinoDto) {
+            var updatedInstituicao = instituicaoEnsinoService.update(id, instituicaoEnsinoDto);
             return ResponseEntity.ok(updatedInstituicao);
     }
 

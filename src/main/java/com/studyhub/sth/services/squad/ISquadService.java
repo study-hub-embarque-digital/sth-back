@@ -13,13 +13,13 @@ public interface ISquadService {
 
     List<SquadDTO> findAll();
 
-    Optional<SquadDTO> findById(UUID id);
+    SquadDTO findById(UUID id);
 
     SquadDTO save(SquadCreateDTO squadCreateDTO);
 
     void deleteById(UUID id);
 
-    Optional<SquadDTO> update(UUID id, SquadUpdateDTO squadUpdateDTO);
+    SquadDTO update(UUID id, SquadUpdateDTO squadUpdateDTO);
 
     SquadDTO findBySquadNomeContainsIgnoreCase(String nome);
 }

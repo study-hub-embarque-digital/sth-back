@@ -1,6 +1,5 @@
 package com.studyhub.sth.entities;
 
-import com.studyhub.sth.dtos.mentor.NovoMentorDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

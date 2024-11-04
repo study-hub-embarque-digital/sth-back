@@ -1,8 +1,7 @@
 package com.studyhub.sth.controllers;
 
-import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoDto;
-import com.studyhub.sth.dtos.rooms.NovoRoomDto;
-import com.studyhub.sth.dtos.rooms.RoomAtualizadaDto;
+import com.studyhub.sth.dtos.rooms.RoomCreateDto;
+import com.studyhub.sth.dtos.rooms.RoomUpdateDto;
 import com.studyhub.sth.dtos.rooms.RoomDto;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.services.rooms.IRoomService;
@@ -25,13 +24,13 @@ public class RoomController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<RoomDto> criar(@RequestBody NovoRoomDto novoRoomDto) {
+    public ResponseEntity<RoomDto> criar(@RequestBody RoomCreateDto novoRoomDto) {
         return new ResponseEntity<>(this.roomService.criar(novoRoomDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{roomId}")
     @Transactional
-    public ResponseEntity<RoomDto> atualizar(@PathVariable UUID roomId, @RequestBody RoomAtualizadaDto roomAtualizadaDto) throws ElementoNaoEncontradoExcecao {
+    public ResponseEntity<RoomDto> atualizar(@PathVariable UUID roomId, @RequestBody RoomUpdateDto roomAtualizadaDto) throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.roomService.atualizar(roomId, roomAtualizadaDto), HttpStatus.OK);
     }
 
@@ -51,10 +50,4 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/conteudos-recomendados/{roomId}")
-    @Transactional
-    public  ResponseEntity<List<ConteudoEstudoDto>> addConteudos(@PathVariable UUID roomId, @RequestBody ConteudoEstudoDto conteudoEstudoDto) throws ElementoNaoEncontradoExcecao {
-        var lista = this.roomService.addConteudoRecomendado(roomId,conteudoEstudoDto);
-        return  ResponseEntity.ok(lista);
-    }
 }

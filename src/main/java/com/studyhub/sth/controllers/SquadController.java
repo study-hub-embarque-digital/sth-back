@@ -28,9 +28,8 @@ public class SquadController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SquadDTO> getSquadById(@PathVariable UUID id) {
-        Optional<SquadDTO> squad = squadService.findById(id);
-        return squad.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        SquadDTO squad = squadService.findById(id);
+        return ResponseEntity.ok(squad);
     }
 
     @PostMapping
@@ -41,9 +40,8 @@ public class SquadController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SquadDTO> updateSquad(@PathVariable UUID id, @RequestBody SquadUpdateDTO squadUpdateDTO) {
-        Optional<SquadDTO> updatedSquad = squadService.update(id, squadUpdateDTO);
-        return updatedSquad.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        SquadDTO squadDTO = squadService.update(id, squadUpdateDTO);
+        return ResponseEntity.ok(squadDTO);
     }
 
 

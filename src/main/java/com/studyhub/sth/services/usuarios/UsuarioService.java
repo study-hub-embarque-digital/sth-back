@@ -1,17 +1,15 @@
 package com.studyhub.sth.services.usuarios;
 
-import com.studyhub.sth.dtos.users.UsuarioAtualizadoDto;
+import com.studyhub.sth.dtos.users.UsuarioUpdateDto;
 import com.studyhub.sth.dtos.users.UsuarioDto;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.studyhub.sth.repositories.IUsuarioRepositorio;
-import com.studyhub.sth.dtos.users.NovoUsuarioDto;
+import com.studyhub.sth.dtos.users.UsuarioCreateDto;
 import org.springframework.stereotype.Service;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.entities.Usuario;
 
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -22,7 +20,7 @@ public class UsuarioService implements IUsuarioService {
     private IMapper mapper;
 
     @Override
-    public UsuarioDto criar(NovoUsuarioDto novoUsuarioDto) {
+    public UsuarioDto criar(UsuarioCreateDto novoUsuarioDto) {
         Usuario usuario = this.mapper.map(novoUsuarioDto, Usuario.class);
 
         this.usuarioRepositorio.save(usuario);
@@ -31,7 +29,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public UsuarioDto atualizar(UUID usuarioId, UsuarioAtualizadoDto usuarioAtualizadoDto) throws ElementoNaoEncontradoExcecao {
+    public UsuarioDto atualizar(UUID usuarioId, UsuarioUpdateDto usuarioAtualizadoDto) throws ElementoNaoEncontradoExcecao {
         Usuario usuario = this.usuarioRepositorio.findById(usuarioId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar o usuário selecionado."));
         usuario.atualizar(usuarioAtualizadoDto);
 
