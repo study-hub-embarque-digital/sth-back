@@ -14,7 +14,7 @@ public interface IArtigoService {
     List<ArtigoDto> listarArtigos();
     ArtigoDto buscarArtigoPorId(UUID id);
     List<ArtigoDto> buscarArtigoPorTitulo(String titulo);
-    List<ArtigoDto> buscarArtigoPorUsuario(UUID autorId);
+    List<ArtigoDto> buscarArtigoPorAutor(UUID autorId);
     List<ArtigoDto> buscarArtigoPorTag(UUID tagId);
     ArtigoDto adicionarTag(UUID artigoId,List<TagDto> tags);
     ArtigoDto removerTag(UUID artigoId, UUID tagId);

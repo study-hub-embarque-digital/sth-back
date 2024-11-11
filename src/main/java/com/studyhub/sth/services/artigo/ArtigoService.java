@@ -43,20 +43,6 @@ public class ArtigoService implements IArtigoService{
     }
 
     @Override
-    @Transactional
-    public ArtigoDto atualizar(UUID id, ArtigoUpdateDto dto) {
-        var artigo = this.artigoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Artigo não encontrado"));
-        if (dto.getTitulo() != null){
-            artigo.setTitulo(dto.getTitulo());
-        }
-        if (dto.getConteudo() != null){
-            artigo.setConteudo(dto.getConteudo());
-        }
-        this.artigoRepository.save(artigo);
-        return this.mapper.map(artigo, ArtigoDto.class);
-    }
-
-    @Override
     public List<ArtigoDto> listarArtigos() {
         var lista = this.artigoRepository.findAll();
         return lista.stream().map(artigo -> this.mapper.map(artigo, ArtigoDto.class)).collect(Collectors.toList());
@@ -75,7 +61,7 @@ public class ArtigoService implements IArtigoService{
     }
 
     @Override
-    public List<ArtigoDto> buscarArtigoPorUsuario(UUID autorId) {
+    public List<ArtigoDto> buscarArtigoPorAutor(UUID autorId) {
         this.usuarioRepositorio.findById(autorId).orElseThrow(() -> new EntityNotFoundException("Autor não encontrado!"));
         var lista = this.artigoRepository.findByAutorId(autorId);
         return lista.stream().map(artigo -> this.mapper.map(artigo, ArtigoDto.class)).collect(Collectors.toList());
@@ -85,7 +71,22 @@ public class ArtigoService implements IArtigoService{
     public List<ArtigoDto> buscarArtigoPorTag(UUID tagId) {
         this.tagRepository.findById(tagId).orElseThrow(() -> new EntityNotFoundException("Tag não encontrada!"));
         var lista = this.artigoRepository.findByTagId(tagId);
-        return lista.stream().map(artigo -> this.mapper.map(artigo, ArtigoDto.class)).collect(Collectors.toList());        }
+        return lista.stream().map(artigo -> this.mapper.map(artigo, ArtigoDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public ArtigoDto atualizar(UUID id, ArtigoUpdateDto dto) {
+        var artigo = this.artigoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Artigo não encontrado"));
+        if (dto.getTitulo() != null){
+            artigo.setTitulo(dto.getTitulo());
+        }
+        if (dto.getConteudo() != null){
+            artigo.setConteudo(dto.getConteudo());
+        }
+        this.artigoRepository.save(artigo);
+        return this.mapper.map(artigo, ArtigoDto.class);
+    }
 
     @Override
     @Transactional
