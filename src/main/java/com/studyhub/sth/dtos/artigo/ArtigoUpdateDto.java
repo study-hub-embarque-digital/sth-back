@@ -15,5 +15,4 @@ import java.util.List;
 public class ArtigoUpdateDto {
     private String titulo;
     private String conteudo;
-    private List<TagDto> tags;
 }

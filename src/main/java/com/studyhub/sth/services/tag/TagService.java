@@ -6,6 +6,7 @@ import com.studyhub.sth.entities.Tag;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.repositories.ITagRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class TagService implements ITagService{
     private ITagRepository tagRepository;
 
     @Override
+    @Transactional
     public TagDto criar(TagCreateAndUpdateDTO dto) {
         Tag tag = this.mapper.map(dto, Tag.class);
         this.tagRepository.save(tag);
@@ -47,6 +49,7 @@ public class TagService implements ITagService{
     }
 
     @Override
+    @Transactional
     public TagDto atualizar(UUID id, TagCreateAndUpdateDTO dto) {
         var tag = this.tagRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tag não encontrada"));
         if(dto.getNome() != null){
@@ -57,6 +60,7 @@ public class TagService implements ITagService{
     }
 
     @Override
+    @Transactional
     public void deletar(UUID id) {
         var tag = this.tagRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tag não encontrada"));
         this.tagRepository.delete(tag);
