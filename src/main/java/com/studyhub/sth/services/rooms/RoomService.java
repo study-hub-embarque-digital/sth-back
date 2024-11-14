@@ -1,13 +1,9 @@
 package com.studyhub.sth.services.rooms;
 
-import com.studyhub.sth.dtos.conteudoEstudo.ConteudoEstudoDto;
-import com.studyhub.sth.dtos.rooms.NovoRoomDto;
-import com.studyhub.sth.dtos.rooms.RoomAtualizadaDto;
+import com.studyhub.sth.dtos.rooms.RoomCreateDto;
+import com.studyhub.sth.dtos.rooms.RoomUpdateDto;
 import com.studyhub.sth.dtos.rooms.RoomDto;
-import com.studyhub.sth.dtos.users.UsuarioDto;
-import com.studyhub.sth.entities.ConteudoEstudo;
 import com.studyhub.sth.entities.Room;
-import com.studyhub.sth.entities.Usuario;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.repositories.IConteudoEstudoRepository;
@@ -31,14 +27,14 @@ public class RoomService implements IRoomService {
     private IMapper mapper;
 
     @Override
-    public RoomDto criar(NovoRoomDto novoRoomDto) {
+    public RoomDto criar(RoomCreateDto novoRoomDto) {
         Room room = this.mapper.map(novoRoomDto, Room.class);
         this.roomRepository.save(room);
         return this.mapper.map(room, RoomDto.class);
     }
 
     @Override
-    public RoomDto atualizar(UUID roomId, RoomAtualizadaDto roomAtualizadaDto) throws ElementoNaoEncontradoExcecao {
+    public RoomDto atualizar(UUID roomId, RoomUpdateDto roomAtualizadaDto) throws ElementoNaoEncontradoExcecao {
         var room = this.roomRepository.findById(roomId)
                 .orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Room não foi encontrado!"));
         if (roomAtualizadaDto.getConteudosRecomendados().getLink() != null) {
@@ -72,12 +68,4 @@ public class RoomService implements IRoomService {
         return lista.stream().map(room -> this.mapper.map(room, RoomDto.class)).collect(Collectors.toList());
     }
 
-    @Override
-    public List<ConteudoEstudoDto> addConteudoRecomendado(UUID roomId,ConteudoEstudoDto conteudoEstudoDto) throws ElementoNaoEncontradoExcecao {
-        var room = this.roomRepository.findById(roomId).orElseThrow(()-> new ElementoNaoEncontradoExcecao("O room não foi encontrado!"));
-        room.getConteudosRecomendados().add(this.mapper.map(conteudoEstudoDto, ConteudoEstudo.class));
-        this.roomRepository.save(room);
-        var lista = room.getConteudosRecomendados();
-        return lista.stream().map( conteudo -> this.mapper.map(conteudo, ConteudoEstudoDto.class)).collect(Collectors.toList());
-    }
 }

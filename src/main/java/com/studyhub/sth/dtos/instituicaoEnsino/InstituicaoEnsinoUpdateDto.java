@@ -1,4 +1,4 @@
-package com.studyhub.sth.dtos.InstituicaoEnsino;
+package com.studyhub.sth.dtos.instituicaoEnsino;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +10,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class InstituicaoEnsinoDto {
+public class InstituicaoEnsinoUpdateDto {
     private String nome;
     private String endereco;
     private String coordenador;
-    //private List<UUID> alunos; // Ou outro DTO de Aluno
-    //private List<UUID> squads; // Ou outro DTO de Squad
-
 }
+
+
+
+
+

@@ -1,14 +1,15 @@
 package com.studyhub.sth.controllers;
 
+import com.studyhub.sth.dtos.empresas.EmpresaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.studyhub.sth.repositories.EmpresaRepository;
-import com.studyhub.sth.dtos.Empresas.NovoEmpresaDto;
-import com.studyhub.sth.dtos.Empresas.UpdateEmpresaDto;
+import com.studyhub.sth.dtos.empresas.EmpresaCreateDto;
+import com.studyhub.sth.dtos.empresas.EmpresaUpdateDto;
 import com.studyhub.sth.entities.Empresa;
-import com.studyhub.sth.services.Empresa.EmpresaService;
+import com.studyhub.sth.services.empresa.EmpresaService;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,14 +22,14 @@ public class EmpresaController {
     private EmpresaRepository empresaRepository;
 
     @GetMapping
-    public List<Empresa> getAllEmpresas() {
+    public List<EmpresaDto> getAllEmpresas() {
         return empresaService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Empresa> getEmpresaById(@PathVariable UUID id) {
-        Optional<Empresa> empresa = empresaService.findById(id);
-        return empresa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<EmpresaDto> getEmpresaById(@PathVariable UUID id) {
+        var empresa = empresaService.findById(id);
+        return ResponseEntity.ok(empresa);
     }
 
     //@GetMapping("/{nome}")
@@ -37,13 +38,13 @@ public class EmpresaController {
     //}
 
     @PutMapping("/{id}")
-    public ResponseEntity<Empresa> updateEmpresa(@PathVariable("id") UUID id, @RequestBody UpdateEmpresaDto empresaDto) {
-        Empresa updatedEmpresa = empresaService.update(id, empresaDto);
+    public ResponseEntity<EmpresaDto> updateEmpresa(@PathVariable("id") UUID id, @RequestBody EmpresaUpdateDto empresaDto) {
+        var updatedEmpresa = empresaService.update(id, empresaDto);
         return ResponseEntity.ok(updatedEmpresa);
     }
 
     @PostMapping
-    public Empresa createEmpresa(@RequestBody NovoEmpresaDto empresaDto) {
+    public Empresa createEmpresa(@RequestBody EmpresaCreateDto empresaDto) {
         return empresaService.save(empresaDto);
     }
 

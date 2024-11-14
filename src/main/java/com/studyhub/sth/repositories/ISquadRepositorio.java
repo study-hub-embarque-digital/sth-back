@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ISquadRepositorio extends JpaRepository<Squad, UUID> {
-    Optional<Squad> findByNome(String nome);
+    Optional<Squad> findBySquadNomeContainsIgnoreCase(String nome);
 
 }
 

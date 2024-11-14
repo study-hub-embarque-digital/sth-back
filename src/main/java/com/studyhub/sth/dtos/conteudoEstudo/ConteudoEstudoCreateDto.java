@@ -7,8 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ConteudoEstudSemRoomoDto {
-    private UUID id;
+public class ConteudoEstudoCreateDto {
     private String link;
     private UUID roomId;
 }

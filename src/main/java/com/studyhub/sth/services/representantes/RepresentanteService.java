@@ -1,6 +1,8 @@
 package com.studyhub.sth.services.representantes;
 
-import com.studyhub.sth.dtos.representante.NovoRepresentanteDto;
+import com.studyhub.sth.dtos.representante.RepresentanteCreateDto;
+import com.studyhub.sth.dtos.representante.RepresentanteDto;
+import com.studyhub.sth.dtos.representante.RepresentanteUpdateDto;
 import com.studyhub.sth.entities.Empresa;
 import com.studyhub.sth.entities.Representante;
 import com.studyhub.sth.entities.Usuario;
@@ -10,14 +12,13 @@ import com.studyhub.sth.repositories.EmpresaRepository;
 import com.studyhub.sth.repositories.IRepresentanteRepositorio;
 
 import com.studyhub.sth.repositories.IUsuarioRepositorio;
-import com.studyhub.sth.services.Empresa.IEmpresaService;
-import com.studyhub.sth.services.usuarios.IUsuarioService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class RepresentanteService implements IRepresentanteService {
@@ -32,7 +33,7 @@ public class RepresentanteService implements IRepresentanteService {
 
     @Override
     @Transactional
-    public Representante criarRepresentante(NovoRepresentanteDto dto) throws ElementoNaoEncontradoExcecao {
+    public RepresentanteDto criarRepresentante(RepresentanteCreateDto dto) throws ElementoNaoEncontradoExcecao {
         Usuario usuario = this.mapper.map(dto.getNovoUsuarioDto(), Usuario.class);
         this.usuarioRepositorio.save(usuario);
 
@@ -42,33 +43,53 @@ public class RepresentanteService implements IRepresentanteService {
         representante.setUsuario(usuario);
         representante.setEmpresa(empresa);
 
-        return representanteRepository.save(representante);
+        this.representanteRepository.save(representante);
+        return this.mapper.map(representante, RepresentanteDto.class);
     }
 
     @Override
     @Transactional
-    public List<Representante> listarRepresentantes() {
-        return representanteRepository.findAll();
+    public List<RepresentanteDto> listarRepresentantes() {
+        var lista = this.representanteRepository.findAll();
+        return lista.stream().map(representante -> this.mapper.map(representante,RepresentanteDto.class)).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public Representante obterRepresentantePorId(UUID id) {
-        return representanteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Representante não encontrado"));
+    public RepresentanteDto obterRepresentantePorId(UUID id) {
+        var representante = this.representanteRepository.findById(id).orElseThrow(() -> new RuntimeException("Representante não encontrado"));
+        return this.mapper.map(representante,RepresentanteDto.class);
     }
 
     @Override
     @Transactional
-    public Representante atualizarRepresentante(UUID id, NovoRepresentanteDto dto) {
-        Representante representante = obterRepresentantePorId(id);
-        representante.setUsuario(new Usuario());
-        //representante.setEmpresaId(dto.getEmpresaId());
-        return representanteRepository.save(representante);
+    public RepresentanteDto atualizarRepresentante(UUID id, RepresentanteUpdateDto dto) {
+        var representante = this.representanteRepository.findById(id).orElseThrow(() -> new RuntimeException("Representante não encontrado"));
+        if (dto.getUsuarioDto() != null) {
+            if (dto.getUsuarioDto().getNome() != null) {
+                representante.getUsuario().setNome(dto.getUsuarioDto().getNome());
+            }
+            if (dto.getUsuarioDto().getEmail() != null) {
+                representante.getUsuario().setEmail(dto.getUsuarioDto().getEmail());
+            }
+            if (dto.getUsuarioDto().getSenha() != null) {
+                representante.getUsuario().setSenha(dto.getUsuarioDto().getSenha());
+            }
+            if (dto.getUsuarioDto().getDataNascimento() != null) {
+                representante.getUsuario().setDataNascimento(dto.getUsuarioDto().getDataNascimento());
+            }
+        }
+        if (dto.getEmpresaId() != null){
+            representante.setRepresentanteId(dto.getEmpresaId());
+        }
+        this.representanteRepository.save(representante);
+        return this.mapper.map(representante, RepresentanteDto.class);
     }
 
     @Override
+    @Transactional
     public void deletarRepresentante(UUID id) {
-        representanteRepository.deleteById(id);
+        var representante = this.representanteRepository.findById(id).orElseThrow(() -> new RuntimeException("Representante não encontrado"));
+        representanteRepository.delete(representante);
     }
 }

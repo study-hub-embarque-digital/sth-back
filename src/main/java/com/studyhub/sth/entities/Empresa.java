@@ -1,8 +1,5 @@
 package com.studyhub.sth.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.studyhub.sth.dtos.Empresas.EmpresaDto;
 import jakarta.persistence.*;
 import lombok.*;
 

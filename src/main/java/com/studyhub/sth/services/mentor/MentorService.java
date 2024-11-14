@@ -1,8 +1,8 @@
 package com.studyhub.sth.services.mentor;
 
-import com.studyhub.sth.dtos.mentor.MentorAtualizadoDTO;
-import com.studyhub.sth.dtos.mentor.MentorDTO;
-import com.studyhub.sth.dtos.mentor.NovoMentorDTO;
+import com.studyhub.sth.dtos.mentor.MentorUpdateDto;
+import com.studyhub.sth.dtos.mentor.MentorDto;
+import com.studyhub.sth.dtos.mentor.MentorCreateDto;
 import com.studyhub.sth.dtos.squad.SquadDTO;
 import com.studyhub.sth.dtos.users.UsuarioDto;
 import com.studyhub.sth.entities.Mentor;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,13 +34,13 @@ public class MentorService implements IMentorService {
     private ISquadRepositorio squadRepositorio;
 
     @Override
-    public MentorDTO criar(NovoMentorDTO dto) {
+    public MentorDto criar(MentorCreateDto dto) {
         Mentor mentor = this.mapper.map(dto, Mentor.class);
         Usuario usuario = this.mapper.map(mentor.getUsuario(), Usuario.class);
         this.usuarioRepositorio.save(usuario);
         mentor.setUsuario(usuario);
         this.mentorRepository.save(mentor);
-        MentorDTO mentorDTO = this.mapper.map(mentor, MentorDTO.class);
+        MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
         UsuarioDto usuarioDTO = this.mapper.map(usuario, UsuarioDto.class);
         mentorDTO.setUsuarioDto(usuarioDTO);
         return mentorDTO;
@@ -49,10 +48,10 @@ public class MentorService implements IMentorService {
 
 
     @Override
-    public List<MentorDTO> listar() {
+    public List<MentorDto> listar() {
         var lista = this.mentorRepository.findAll();
         return lista.stream().map(mentor -> {
-            MentorDTO mentorDTO = this.mapper.map(mentor, MentorDTO.class);
+            MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
             UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);
             mentorDTO.setUsuarioDto(usuarioDTO);
             return mentorDTO;
@@ -61,9 +60,9 @@ public class MentorService implements IMentorService {
 
 
     @Override
-    public MentorDTO buscarPorId(UUID id) throws ElementoNaoEncontradoExcecao {
+    public MentorDto buscarPorId(UUID id) throws ElementoNaoEncontradoExcecao {
         var mentor = this.mentorRepository.findById(id).orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Mentor não foi encontrado!"));
-        MentorDTO mentorDTO = this.mapper.map(mentor, MentorDTO.class);
+        MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
         UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);
         mentorDTO.setUsuarioDto(usuarioDTO);
         return mentorDTO;
@@ -79,7 +78,7 @@ public class MentorService implements IMentorService {
     }
 
     @Override
-    public MentorDTO atualizar(UUID id, MentorAtualizadoDTO dto) throws ElementoNaoEncontradoExcecao {
+    public MentorDto atualizar(UUID id, MentorUpdateDto dto) throws ElementoNaoEncontradoExcecao {
         var mentor = this.mentorRepository.findById(id).orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Mentor não foi encontrado!"));
         if (dto.getUsuarioDto() != null) {
             if (dto.getUsuarioDto().getNome() != null) {
@@ -95,7 +94,7 @@ public class MentorService implements IMentorService {
                 mentor.getUsuario().setDataNascimento(dto.getUsuarioDto().getDataNascimento());
             }
         }
-        MentorDTO mentorDTO = this.mapper.map(mentor, MentorDTO.class);
+        MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
         UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);
         mentorDTO.setUsuarioDto(usuarioDTO);
         this.mentorRepository.save(mentor);
@@ -111,9 +110,9 @@ public class MentorService implements IMentorService {
     }
 
     @Override
-    public MentorDTO buscarPorNome(String nome) throws ElementoNaoEncontradoExcecao {
+    public MentorDto buscarPorNome(String nome) throws ElementoNaoEncontradoExcecao {
         var mentor = this.mentorRepository.findByUsuarioNomeContainsIgnoreCase(nome).orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Mentor não foi encontrado!"));
-        MentorDTO mentorDTO = this.mapper.map(mentor, MentorDTO.class);
+        MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
         UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);
         mentorDTO.setUsuarioDto(usuarioDTO);
         return mentorDTO;

@@ -1,6 +1,6 @@
 package com.studyhub.sth.dtos.alunos;
 
-import com.studyhub.sth.dtos.users.UsuarioAtualizadoDto;
+import com.studyhub.sth.dtos.users.UsuarioCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +12,9 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlunoAtualizadoDto {
-    private UsuarioAtualizadoDto usuarioAtualizadoDto;
+public class AlunoCreateDto {
+    private UsuarioCreateDto novoUsuarioDto;
     private int periodo;
     private String curso;
+    private UUID instituicaoEnsinoId;
 }

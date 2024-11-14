@@ -1,17 +1,10 @@
 package com.studyhub.sth.controllers;
 
-import com.studyhub.sth.dtos.alunos.AlunoAtualizadoDto;
+import com.studyhub.sth.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.dtos.alunos.AlunoDto;
-import com.studyhub.sth.dtos.alunos.NovoAlunoDto;
-import com.studyhub.sth.dtos.users.NovoUsuarioDto;
-import com.studyhub.sth.dtos.users.UsuarioAtualizadoDto;
-import com.studyhub.sth.dtos.users.UsuarioDto;
-import com.studyhub.sth.entities.Aluno;
+import com.studyhub.sth.dtos.alunos.AlunoCreateDto;
 import com.studyhub.sth.exceptions.ElementoNaoEncontradoExcecao;
-import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.repositories.IAlunoRepositorio;
 import com.studyhub.sth.services.alunos.IAlunoService;
-import com.studyhub.sth.services.usuarios.IUsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,12 +22,12 @@ public class AlunosController {
     private IAlunoService alunoService;
 
     @PostMapping()
-    public ResponseEntity<AlunoDto> criar(@RequestBody NovoAlunoDto novoAlunoDto) throws ElementoNaoEncontradoExcecao {
+    public ResponseEntity<AlunoDto> criar(@RequestBody AlunoCreateDto novoAlunoDto) throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.alunoService.criar(novoAlunoDto), HttpStatus.CREATED);
     }
 
     @PutMapping("{alunoId}")
-    public ResponseEntity<AlunoDto> atualizar(@PathVariable UUID alunoId, @RequestBody AlunoAtualizadoDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao {
+    public ResponseEntity<AlunoDto> atualizar(@PathVariable UUID alunoId, @RequestBody AlunoUpdateDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.alunoService.atualizar(alunoId, alunoAtualizadoDto), HttpStatus.OK);
     }
 

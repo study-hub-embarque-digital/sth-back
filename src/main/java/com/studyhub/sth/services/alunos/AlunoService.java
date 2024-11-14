@@ -1,9 +1,9 @@
 package com.studyhub.sth.services.alunos;
 
-import com.studyhub.sth.dtos.InstituicaoEnsino.InstituicaoEnsinoDto;
-import com.studyhub.sth.dtos.alunos.AlunoAtualizadoDto;
+import com.studyhub.sth.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
+import com.studyhub.sth.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.dtos.alunos.AlunoDto;
-import com.studyhub.sth.dtos.alunos.NovoAlunoDto;
+import com.studyhub.sth.dtos.alunos.AlunoCreateDto;
 import com.studyhub.sth.dtos.users.UsuarioDto;
 import com.studyhub.sth.entities.Aluno;
 import com.studyhub.sth.entities.InstituicaoEnsino;
@@ -13,11 +13,8 @@ import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.repositories.IAlunoRepositorio;
 import com.studyhub.sth.repositories.IUsuarioRepositorio;
 import com.studyhub.sth.repositories.InstituicaoEnsinoRepository;
-import com.studyhub.sth.services.usuarios.IUsuarioService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +33,7 @@ public class AlunoService implements IAlunoService {
 
     @Override
     @Transactional
-    public AlunoDto criar(NovoAlunoDto novoAlunoDto) throws ElementoNaoEncontradoExcecao {
+    public AlunoDto criar(AlunoCreateDto novoAlunoDto) throws ElementoNaoEncontradoExcecao {
         Usuario usuario = this.mapper.map(novoAlunoDto.getNovoUsuarioDto(), Usuario.class);
         this.usuarioRepositorio.save(usuario);
 
@@ -52,7 +49,7 @@ public class AlunoService implements IAlunoService {
 
     @Override
     @Transactional
-    public AlunoDto atualizar(UUID alunoId, AlunoAtualizadoDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao {
+    public AlunoDto atualizar(UUID alunoId, AlunoUpdateDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao {
         Aluno aluno = this.alunoRepositorio.findById(alunoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível atualizar o aluno."));
         Usuario usuario = aluno.getUsuario();
 

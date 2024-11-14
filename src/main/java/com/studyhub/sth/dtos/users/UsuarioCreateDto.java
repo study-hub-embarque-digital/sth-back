@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioAtualizadoDto {
+public class UsuarioCreateDto {
     String nome;
     String email;
     String senha;
