@@ -1,7 +1,7 @@
 package com.studyhub.sth.dtos.artigo;
 
+import com.studyhub.sth.dtos.tag.TagDto;
 import com.studyhub.sth.dtos.users.UsuarioDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +19,5 @@ public class ArtigoDto {
     private String titulo;
     private String conteudo;
     private UsuarioDto autor;
-    private List<Tag> tags;
+    private List<TagDto> tags;
 }

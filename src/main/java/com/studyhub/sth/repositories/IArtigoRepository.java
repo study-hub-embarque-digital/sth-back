@@ -16,5 +16,5 @@ public interface IArtigoRepository extends JpaRepository<Artigo, UUID> {
     @Query("SELECT a FROM Artigo a JOIN a.tags t WHERE t.id = :tagId")
     List<Artigo> findByTagId(@Param("tagId") UUID tagId);
 
-    List<Artigo> findByAutorId(UUID usuarioId);
+    List<Artigo> findByAutorUsuarioId(UUID usuarioId);
 }
