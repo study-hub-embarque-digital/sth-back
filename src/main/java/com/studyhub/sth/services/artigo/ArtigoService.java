@@ -63,7 +63,7 @@ public class ArtigoService implements IArtigoService{
     @Override
     public List<ArtigoDto> buscarArtigoPorAutor(UUID autorId) {
         this.usuarioRepositorio.findById(autorId).orElseThrow(() -> new EntityNotFoundException("Autor não encontrado!"));
-        var lista = this.artigoRepository.findByAutorId(autorId);
+        var lista = this.artigoRepository.findByAutorUsuarioId(autorId);
         return lista.stream().map(artigo -> this.mapper.map(artigo, ArtigoDto.class)).collect(Collectors.toList());
     }
 
@@ -93,7 +93,7 @@ public class ArtigoService implements IArtigoService{
     public ArtigoDto adicionarTag(UUID artigoId, List<TagDto> tags) {
         var artigo = this.artigoRepository.findById(artigoId).orElseThrow(() -> new EntityNotFoundException("Artigo não encontrado"));
         for (TagDto t : tags){
-           var tag = this.tagRepository.findById(t.getId()).orElseThrow(() -> new EntityNotFoundException("Tag não encontrada!"));
+           Tag tag = this.tagRepository.findById(t.getId()).orElseThrow(() -> new EntityNotFoundException("Tag não encontrada!"));
            artigo.getTags().add(tag);
         }
         this.artigoRepository.save(artigo);
