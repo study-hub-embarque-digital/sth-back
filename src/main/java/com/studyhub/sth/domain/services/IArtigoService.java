@@ -1,9 +1,9 @@
-package com.studyhub.sth.services.artigo;
+package com.studyhub.sth.domain.services;
 
-import com.studyhub.sth.dtos.artigo.ArtigoCreateDto;
-import com.studyhub.sth.dtos.artigo.ArtigoDto;
-import com.studyhub.sth.dtos.artigo.ArtigoUpdateDto;
-import com.studyhub.sth.dtos.tag.TagDto;
+import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
+import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
+import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
+import com.studyhub.sth.application.dtos.tag.TagDto;
 
 import java.util.List;
 import java.util.UUID;

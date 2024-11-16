@@ -1,4 +1,4 @@
-package com.studyhub.sth.entities;
+package com.studyhub.sth.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.studyhub.sth.repositories;
+package com.studyhub.sth.domain.repositories;
 
-import com.studyhub.sth.entities.Artigo;
+import com.studyhub.sth.domain.entities.Artigo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +16,5 @@ public interface IArtigoRepository extends JpaRepository<Artigo, UUID> {
     @Query("SELECT a FROM Artigo a JOIN a.tags t WHERE t.id = :tagId")
     List<Artigo> findByTagId(@Param("tagId") UUID tagId);
 
-    List<Artigo> findByAutorId(UUID usuarioId);
+    List<Artigo> findByAutorUsuarioId(UUID usuarioId);
 }

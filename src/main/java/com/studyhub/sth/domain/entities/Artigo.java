@@ -1,4 +1,4 @@
-package com.studyhub.sth.entities;
+package com.studyhub.sth.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,6 +19,7 @@ public class Artigo {
 
     private String titulo;
 
+    @Column(columnDefinition = "text")
     private String conteudo;
 
     @ManyToOne

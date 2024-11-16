@@ -1,10 +1,10 @@
 package com.studyhub.sth.controllers;
 
-import com.studyhub.sth.dtos.artigo.ArtigoCreateDto;
-import com.studyhub.sth.dtos.artigo.ArtigoDto;
-import com.studyhub.sth.dtos.artigo.ArtigoUpdateDto;
-import com.studyhub.sth.dtos.tag.TagDto;
-import com.studyhub.sth.services.artigo.IArtigoService;
+import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
+import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
+import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
+import com.studyhub.sth.application.dtos.tag.TagDto;
+import com.studyhub.sth.domain.services.IArtigoService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

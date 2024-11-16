@@ -1,15 +1,15 @@
-package com.studyhub.sth.services.artigo;
+package com.studyhub.sth.application.services;
 
-import com.studyhub.sth.dtos.artigo.ArtigoCreateDto;
-import com.studyhub.sth.dtos.artigo.ArtigoDto;
-import com.studyhub.sth.dtos.artigo.ArtigoUpdateDto;
-import com.studyhub.sth.dtos.tag.TagDto;
-import com.studyhub.sth.entities.Artigo;
-import com.studyhub.sth.entities.Tag;
+import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
+import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
+import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
+import com.studyhub.sth.application.dtos.tag.TagDto;
+import com.studyhub.sth.domain.entities.Artigo;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.repositories.IArtigoRepository;
-import com.studyhub.sth.repositories.ITagRepository;
-import com.studyhub.sth.repositories.IUsuarioRepositorio;
+import com.studyhub.sth.domain.repositories.IArtigoRepository;
+import com.studyhub.sth.domain.repositories.ITagRepository;
+import com.studyhub.sth.domain.repositories.IUsuarioRepositorio;
+import com.studyhub.sth.domain.services.IArtigoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class ArtigoService implements IArtigoService{
+public class ArtigoService implements IArtigoService {
 
     @Autowired
     private IArtigoRepository artigoRepository;
@@ -63,7 +63,7 @@ public class ArtigoService implements IArtigoService{
     @Override
     public List<ArtigoDto> buscarArtigoPorAutor(UUID autorId) {
         this.usuarioRepositorio.findById(autorId).orElseThrow(() -> new EntityNotFoundException("Autor não encontrado!"));
-        var lista = this.artigoRepository.findByAutorId(autorId);
+        var lista = this.artigoRepository.findByAutorUsuarioId(autorId);
         return lista.stream().map(artigo -> this.mapper.map(artigo, ArtigoDto.class)).collect(Collectors.toList());
     }
 

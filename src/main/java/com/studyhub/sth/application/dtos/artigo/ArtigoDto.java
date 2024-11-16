@@ -1,6 +1,6 @@
-package com.studyhub.sth.dtos.artigo;
+package com.studyhub.sth.application.dtos.artigo;
 
-import com.studyhub.sth.dtos.users.UsuarioDto;
+import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

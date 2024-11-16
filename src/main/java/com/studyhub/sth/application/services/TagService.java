@@ -1,10 +1,11 @@
-package com.studyhub.sth.services.tag;
+package com.studyhub.sth.application.services;
 
-import com.studyhub.sth.dtos.tag.TagCreateAndUpdateDTO;
-import com.studyhub.sth.dtos.tag.TagDto;
-import com.studyhub.sth.entities.Tag;
+import com.studyhub.sth.application.dtos.tag.TagCreateAndUpdateDTO;
+import com.studyhub.sth.application.dtos.tag.TagDto;
+import com.studyhub.sth.domain.services.ITagService;
+import com.studyhub.sth.domain.entities.Tag;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.repositories.ITagRepository;
+import com.studyhub.sth.domain.repositories.ITagRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class TagService implements ITagService{
+public class TagService implements ITagService {
     @Autowired
     private IMapper mapper;
 

@@ -1,12 +1,9 @@
-package com.studyhub.sth.dtos.artigo;
+package com.studyhub.sth.application.dtos.artigo;
 
-import com.studyhub.sth.dtos.tag.TagDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

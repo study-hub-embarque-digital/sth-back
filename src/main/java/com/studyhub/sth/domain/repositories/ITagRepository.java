@@ -1,7 +1,7 @@
-package com.studyhub.sth.repositories;
+package com.studyhub.sth.domain.repositories;
 
-import com.studyhub.sth.dtos.tag.TagDto;
-import com.studyhub.sth.entities.Tag;
+import com.studyhub.sth.application.dtos.tag.TagDto;
+import com.studyhub.sth.domain.entities.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
