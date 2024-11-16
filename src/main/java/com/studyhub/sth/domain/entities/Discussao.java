@@ -1,9 +1,6 @@
 package com.studyhub.sth.domain.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -16,6 +13,8 @@ import java.util.UUID;
 @Table(name = "discussoes")
 @EqualsAndHashCode(of = "discussaoId")
 public class Discussao {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID discussaoId;
     private String conteudo;
 
