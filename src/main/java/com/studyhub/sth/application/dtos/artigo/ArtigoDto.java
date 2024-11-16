@@ -1,7 +1,7 @@
-package com.studyhub.sth.dtos.artigo;
+package com.studyhub.sth.application.dtos.artigo;
 
-import com.studyhub.sth.dtos.tag.TagDto;
-import com.studyhub.sth.dtos.users.UsuarioDto;
+import com.studyhub.sth.application.dtos.tag.TagDto;
+import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -5,6 +5,7 @@ import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
 import com.studyhub.sth.domain.entities.Artigo;
+import com.studyhub.sth.domain.entities.Tag;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IArtigoRepository;
 import com.studyhub.sth.domain.repositories.ITagRepository;

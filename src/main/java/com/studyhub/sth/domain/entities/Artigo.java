@@ -1,6 +1,6 @@
-package com.studyhub.sth.entities;
+package com.studyhub.sth.domain.entities;
 
-import com.studyhub.sth.dtos.tag.TagDto;
+import com.studyhub.sth.application.dtos.tag.TagDto;
 import jakarta.persistence.*;
 import lombok.*;
 
