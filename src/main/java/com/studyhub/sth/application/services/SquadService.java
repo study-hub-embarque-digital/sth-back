@@ -6,9 +6,9 @@ import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
 import com.studyhub.sth.domain.entities.Squad;
 import com.studyhub.sth.domain.services.ISquadService;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.domain.repositories.EmpresaRepository;
+import com.studyhub.sth.domain.repositories.IEmpresaRepository;
 import com.studyhub.sth.domain.repositories.IMentorRepository;
-import com.studyhub.sth.domain.repositories.ISquadRepositorio;
+import com.studyhub.sth.domain.repositories.ISquadRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 public class SquadService implements ISquadService {
 
     @Autowired
-    private ISquadRepositorio squadRepository;
+    private ISquadRepository squadRepository;
 
     @Autowired
-    private EmpresaRepository empresaRepository;
+    private IEmpresaRepository IEmpresaRepository;
 
     @Autowired
     private IMentorRepository mentorRepository;
@@ -64,7 +64,7 @@ public class SquadService implements ISquadService {
             squad.setMentor(this.mentorRepository.findById(dto.getMentorId()).get());
         }
         if (dto.getEmpresaId() != null) {
-            squad.setEmpresa(this.empresaRepository.findById(dto.getEmpresaId()).get());
+            squad.setEmpresa(this.IEmpresaRepository.findById(dto.getEmpresaId()).get());
         }
         if (dto.getTipo() != null) {
             squad.setTipo(dto.getTipo());

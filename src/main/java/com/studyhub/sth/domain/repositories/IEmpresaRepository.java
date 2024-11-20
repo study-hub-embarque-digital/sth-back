@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface EmpresaRepository extends JpaRepository<Empresa, UUID> {
+public interface IEmpresaRepository extends JpaRepository<Empresa, UUID> {
     List<Empresa> findByNomeFantasiaContaining(String nomeFantasia);
 
 }

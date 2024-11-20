@@ -5,6 +5,7 @@ import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoUpdateDto;
 import com.studyhub.sth.domain.repositories.InstituicaoEnsinoRepository;
 import com.studyhub.sth.domain.entities.InstituicaoEnsino;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/instituicoes")
+@Tag(name = "Instituições de Ensino Controller")
 public class InstituicaoEnsinoController {
         @Autowired
         private InstituicaoEnsinoService instituicaoEnsinoService;

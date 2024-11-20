@@ -9,10 +9,10 @@ import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IRepresentanteService;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.domain.repositories.EmpresaRepository;
-import com.studyhub.sth.domain.repositories.IRepresentanteRepositorio;
+import com.studyhub.sth.domain.repositories.IEmpresaRepository;
+import com.studyhub.sth.domain.repositories.IRepresentanteRepository;
 
-import com.studyhub.sth.domain.repositories.IUsuarioRepositorio;
+import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +24,11 @@ import java.util.stream.Collectors;
 @Service
 public class RepresentanteService implements IRepresentanteService {
     @Autowired
-    private IRepresentanteRepositorio representanteRepository;
+    private IRepresentanteRepository representanteRepository;
     @Autowired
-    private IUsuarioRepositorio usuarioRepositorio;
+    private IUsuarioRepository usuarioRepositorio;
     @Autowired
-    private EmpresaRepository empresaRepository;
+    private IEmpresaRepository IEmpresaRepository;
     @Autowired
     private IMapper mapper;
 
@@ -38,7 +38,7 @@ public class RepresentanteService implements IRepresentanteService {
         Usuario usuario = this.mapper.map(dto.getNovoUsuarioDto(), Usuario.class);
         this.usuarioRepositorio.save(usuario);
 
-        Empresa empresa = this.empresaRepository.findById(dto.getEmpresaId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Empresa não encontrada"));
+        Empresa empresa = this.IEmpresaRepository.findById(dto.getEmpresaId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Empresa não encontrada"));
 
         Representante representante = new Representante();
         representante.setUsuario(usuario);

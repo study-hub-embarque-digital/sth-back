@@ -1,8 +1,9 @@
-package com.studyhub.sth.controllers;
+package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.tag.TagCreateAndUpdateDTO;
 import com.studyhub.sth.application.dtos.tag.TagDto;
 import com.studyhub.sth.domain.services.ITagService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/tags")
+@RequestMapping("/api/tags")
+@Tag(name = "Tags Controller")
 public class TagController {
 
     @Autowired

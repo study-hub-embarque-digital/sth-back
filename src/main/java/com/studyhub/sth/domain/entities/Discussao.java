@@ -3,6 +3,7 @@ package com.studyhub.sth.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -24,4 +25,21 @@ public class Discussao {
 
     @ManyToOne
     private Discussao discussaoPai;
+
+    private Date criadoEm;
+    private Date atualizadoEm;
+
+    @PrePersist
+    public void onPersist()
+    {
+        Date d = new Date();
+        this.setCriadoEm(d);
+        this.setAtualizadoEm(d);
+    }
+
+    @PreUpdate
+    public void onUpdate()
+    {
+        this.setAtualizadoEm(new Date());
+    }
 }

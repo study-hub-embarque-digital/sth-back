@@ -9,7 +9,7 @@ import com.studyhub.sth.domain.entities.Tag;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IArtigoRepository;
 import com.studyhub.sth.domain.repositories.ITagRepository;
-import com.studyhub.sth.domain.repositories.IUsuarioRepositorio;
+import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.domain.services.IArtigoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -30,7 +30,7 @@ public class ArtigoService implements IArtigoService {
     private ITagRepository tagRepository;
 
     @Autowired
-    private IUsuarioRepositorio usuarioRepositorio;
+    private IUsuarioRepository usuarioRepositorio;
 
     @Autowired
     private IMapper mapper;

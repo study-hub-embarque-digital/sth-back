@@ -1,11 +1,12 @@
 package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import com.studyhub.sth.domain.repositories.EmpresaRepository;
+import com.studyhub.sth.domain.repositories.IEmpresaRepository;
 import com.studyhub.sth.application.dtos.empresas.EmpresaCreateDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaUpdateDto;
 import com.studyhub.sth.domain.entities.Empresa;
@@ -15,11 +16,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/empresas")
+@Tag(name = "Empresas Controller")
 public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
     @Autowired
-    private EmpresaRepository empresaRepository;
+    private IEmpresaRepository IEmpresaRepository;
 
     @GetMapping
     public List<EmpresaDto> getAllEmpresas() {
@@ -56,7 +58,7 @@ public class EmpresaController {
 
     @GetMapping("/{nomeFantasia}")
     public List<Empresa> buscarPorNomeFantasia(@PathVariable String nomeFantasia) {
-        return empresaRepository.findByNomeFantasiaContaining(nomeFantasia);
+        return IEmpresaRepository.findByNomeFantasiaContaining(nomeFantasia);
     }
 
 }
