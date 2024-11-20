@@ -24,8 +24,8 @@ public class EmpresaController {
     private IEmpresaRepository IEmpresaRepository;
 
     @GetMapping
-    public List<EmpresaDto> getAllEmpresas() {
-        return empresaService.findAll();
+    public ResponseEntity<List<EmpresaDto>> getAllEmpresas() {
+        return ResponseEntity.ok(empresaService.findAll());
     }
 
     @GetMapping("/{id}")
@@ -46,8 +46,8 @@ public class EmpresaController {
     }
 
     @PostMapping
-    public EmpresaDto createEmpresa(@RequestBody EmpresaCreateDto empresaDto) {
-        return empresaService.save(empresaDto);
+    public ResponseEntity<EmpresaDto> createEmpresa(@RequestBody EmpresaCreateDto empresaDto) {
+        return ResponseEntity.ok(empresaService.save(empresaDto));
     }
 
     @DeleteMapping("/{id}")
@@ -57,8 +57,8 @@ public class EmpresaController {
     }
 
     @GetMapping("/{nomeFantasia}")
-    public List<Empresa> buscarPorNomeFantasia(@PathVariable String nomeFantasia) {
-        return IEmpresaRepository.findByNomeFantasiaContaining(nomeFantasia);
+    public ResponseEntity<List<Empresa>> buscarPorNomeFantasia(@PathVariable String nomeFantasia) {
+        return ResponseEntity.ok(IEmpresaRepository.findByNomeFantasiaContaining(nomeFantasia));
     }
 
 }

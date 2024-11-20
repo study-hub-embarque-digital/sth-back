@@ -7,6 +7,7 @@ import com.studyhub.sth.application.services.ConteudoEstudoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,23 +24,23 @@ public class ConteudoEstudoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ConteudoEstudoCreateDto criarConteudoEstudo(@RequestBody ConteudoEstudoCreateDto dto) {
-        return conteudoEstudoService.criarConteudoEstudo(dto);
+    public ResponseEntity<ConteudoEstudoCreateDto> criarConteudoEstudo(@RequestBody ConteudoEstudoCreateDto dto) {
+        return ResponseEntity.ok(conteudoEstudoService.criarConteudoEstudo(dto));
     }
 
     @GetMapping
-    public List<ConteudoEstudoCreateDto> listarConteudosEstudo() {
-        return conteudoEstudoService.listarConteudosEstudo();
+    public ResponseEntity<List<ConteudoEstudoCreateDto>> listarConteudosEstudo() {
+        return ResponseEntity.ok(conteudoEstudoService.listarConteudosEstudo());
     }
 
     @GetMapping("/{id}")
-    public ConteudoEstudoDto obterConteudoEstudoPorId(@PathVariable UUID id) {
-        return conteudoEstudoService.obterConteudoEstudoPorId(id);
+    public ResponseEntity<ConteudoEstudoDto> obterConteudoEstudoPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(conteudoEstudoService.obterConteudoEstudoPorId(id));
     }
 
     @PutMapping("/{id}")
-    public ConteudoEstudoDto atualizarConteudoEstudo(@PathVariable UUID id, @RequestBody ConteudoEstudoUpdateDto dto) {
-        return conteudoEstudoService.atualizarConteudoEstudo(id, dto);
+    public ResponseEntity<ConteudoEstudoDto> atualizarConteudoEstudo(@PathVariable UUID id, @RequestBody ConteudoEstudoUpdateDto dto) {
+        return ResponseEntity.ok(conteudoEstudoService.atualizarConteudoEstudo(id, dto));
     }
 
     @DeleteMapping("/{id}")

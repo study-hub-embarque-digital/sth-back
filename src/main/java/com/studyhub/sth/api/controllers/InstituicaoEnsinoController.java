@@ -7,6 +7,7 @@ import com.studyhub.sth.domain.repositories.InstituicaoEnsinoRepository;
 import com.studyhub.sth.domain.entities.InstituicaoEnsino;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.studyhub.sth.application.services.InstituicaoEnsinoService;
@@ -35,8 +36,8 @@ public class InstituicaoEnsinoController {
         }
     
         @PostMapping
-        public InstituicaoEnsinoDto create(@RequestBody InstituicaoEnsinoCreateDto instituicao) {
-            return instituicaoEnsinoService.save(instituicao);
+        public ResponseEntity<InstituicaoEnsinoDto> create(@RequestBody InstituicaoEnsinoCreateDto instituicao) {
+            return new ResponseEntity<>(instituicaoEnsinoService.save(instituicao), HttpStatus.CREATED);
         }
     
         @DeleteMapping("/{id}")
@@ -51,8 +52,8 @@ public class InstituicaoEnsinoController {
     }
 
         @GetMapping("/{nome}")
-        public List<InstituicaoEnsino> buscarPorNome(@PathVariable String nome) {
-            return instituicaoEnsinoRepository.findByNomeContaining(nome);
+        public ResponseEntity<List<InstituicaoEnsino>> buscarPorNome(@PathVariable String nome) {
+            return ResponseEntity.ok(instituicaoEnsinoRepository.findByNomeContaining(nome));
     }
     }
     
