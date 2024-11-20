@@ -33,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
 
-        var login = this.ambiente.equals("DESENVOLVIMENTO") && token.equals("ola mundo") ? "sistema" : tokenService.validateToken(token);
+        var login = this.ambiente.equals("DESENVOLVIMENTO") && token != null && token.equals("ola mundo") ? "sistema" : tokenService.validateToken(token);
 
         if (login != null) {
             Usuario usuario = login.equals("sistema") ? this.getSystemUser() : usuarioRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
