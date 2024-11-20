@@ -47,7 +47,7 @@ public class RoomController {
     @DeleteMapping("/{roomId}")
     public ResponseEntity deletar(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
         this.roomService.deletar(roomId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.noContent().build();
     }
 
 }

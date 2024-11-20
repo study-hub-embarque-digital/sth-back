@@ -10,6 +10,7 @@ import com.studyhub.sth.domain.services.IRepresentanteService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,23 +25,23 @@ public class RepresentanteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public RepresentanteDto criarRepresentante(@RequestBody RepresentanteCreateDto dto) throws ElementoNaoEncontradoExcecao {
-        return representanteService.criarRepresentante(dto);
+    public ResponseEntity<RepresentanteDto> criarRepresentante(@RequestBody RepresentanteCreateDto dto) throws ElementoNaoEncontradoExcecao {
+        return new ResponseEntity<>(representanteService.criarRepresentante(dto), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<RepresentanteDto> listarRepresentantes() {
-        return representanteService.listarRepresentantes();
+    public ResponseEntity<List<RepresentanteDto>> listarRepresentantes() {
+        return ResponseEntity.ok(representanteService.listarRepresentantes());
     }
 
     @GetMapping("/{id}")
-    public RepresentanteDto obterRepresentantePorId(@PathVariable UUID id) {
-        return representanteService.obterRepresentantePorId(id);
+    public ResponseEntity<RepresentanteDto> obterRepresentantePorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(representanteService.obterRepresentantePorId(id));
     }
 
     @PutMapping("/{id}")
-    public RepresentanteDto atualizarRepresentante(@PathVariable UUID id, @RequestBody RepresentanteUpdateDto dto) {
-        return representanteService.atualizarRepresentante(id, dto);
+    public ResponseEntity<RepresentanteDto> atualizarRepresentante(@PathVariable UUID id, @RequestBody RepresentanteUpdateDto dto) {
+        return ResponseEntity.ok(representanteService.atualizarRepresentante(id, dto));
     }
 
     @DeleteMapping("/{id}")

@@ -36,7 +36,9 @@ public class DiscussaoService implements IDiscussaoService {
 
         Discussao discussaoSalva = this.discussaoRepository.save(d);
 
-        return this.mapper.map(discussaoSalva, DiscussaoDto.class);
+        DiscussaoDto dto = this.mapper.map(discussaoSalva, DiscussaoDto.class);
+        dto.setNomeUsuario(discussaoSalva.getUsuario().getNome());
+        return dto;
     }
 
     @Override
@@ -49,7 +51,9 @@ public class DiscussaoService implements IDiscussaoService {
 
         Discussao discussaoSalva = this.discussaoRepository.save(d);
 
-        return this.mapper.map(discussaoSalva, DiscussaoDto.class);
+        DiscussaoDto dto = this.mapper.map(discussaoSalva, DiscussaoDto.class);
+        dto.setNomeUsuario(discussaoSalva.getUsuario().getNome());
+        return dto;
     }
 
     @Override
@@ -57,7 +61,11 @@ public class DiscussaoService implements IDiscussaoService {
         return this.discussaoRepository
                 .findAll()
                 .stream()
-                .map(d -> this.mapper.map(d, DiscussaoDto.class))
+                .map(d -> {
+                    DiscussaoDto dto = this.mapper.map(d, DiscussaoDto.class);
+                    dto.setNomeUsuario(d.getUsuario().getNome());
+                    return dto;
+                })
                 .toList();
     }
 
@@ -68,7 +76,11 @@ public class DiscussaoService implements IDiscussaoService {
         return this.discussaoRepository
                 .findAllByDiscussaoPai(d)
                 .stream()
-                .map(df -> this.mapper.map(df, DiscussaoDto.class))
+                .map(df -> {
+                    DiscussaoDto dto = this.mapper.map(df, DiscussaoDto.class);
+                    dto.setNomeUsuario(df.getUsuario().getNome());
+                    return dto;
+                })
                 .toList();
     }
 
@@ -83,6 +95,8 @@ public class DiscussaoService implements IDiscussaoService {
 
         Discussao discussaoSalva = this.discussaoRepository.save(d);
 
-        return this.mapper.map(discussaoSalva, DiscussaoDto.class);
+        DiscussaoDto dto = this.mapper.map(discussaoSalva, DiscussaoDto.class);
+        dto.setNomeUsuario(discussaoSalva.getUsuario().getNome());
+        return dto;
     }
 }
