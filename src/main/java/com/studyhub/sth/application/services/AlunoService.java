@@ -11,8 +11,8 @@ import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IAlunoService;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.domain.repositories.IAlunoRepositorio;
-import com.studyhub.sth.domain.repositories.IUsuarioRepositorio;
+import com.studyhub.sth.domain.repositories.IAlunoRepository;
+import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.domain.repositories.InstituicaoEnsinoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,9 @@ import java.util.UUID;
 @Service
 public class AlunoService implements IAlunoService {
     @Autowired
-    private IAlunoRepositorio alunoRepositorio;
+    private IAlunoRepository alunoRepositorio;
     @Autowired
-    private IUsuarioRepositorio usuarioRepositorio;
+    private IUsuarioRepository usuarioRepositorio;
     @Autowired
     private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
     @Autowired

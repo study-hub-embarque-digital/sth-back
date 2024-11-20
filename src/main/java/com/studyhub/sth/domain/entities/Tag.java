@@ -16,6 +16,6 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID tagId;
     private String nome;
 }

@@ -6,6 +6,7 @@ import com.studyhub.sth.application.dtos.mentor.MentorCreateDto;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IMentorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/mentor")
+@RequestMapping("/api/mentor")
+@Tag(name = "Mentores Controller")
 public class MentorController {
     @Autowired
     IMentorService mentorService;

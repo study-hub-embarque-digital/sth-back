@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("/api/rooms")
 @Tag(name = "Rooms Controller")
 public class RoomController {
     @Autowired

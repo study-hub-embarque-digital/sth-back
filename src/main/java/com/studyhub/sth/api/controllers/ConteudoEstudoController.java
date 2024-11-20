@@ -4,6 +4,7 @@ import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoDto;
 import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoUpdateDto;
 import com.studyhub.sth.application.services.ConteudoEstudoService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,8 @@ import java.util.UUID;
 import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoCreateDto;
 
 @RestController
-@RequestMapping("api/conteudos-estudo")
+@RequestMapping("/api/conteudos-estudo")
+@Tag(name = "Conteudos de Estudo Controller")
 public class ConteudoEstudoController {
     @Autowired
     private ConteudoEstudoService conteudoEstudoService;

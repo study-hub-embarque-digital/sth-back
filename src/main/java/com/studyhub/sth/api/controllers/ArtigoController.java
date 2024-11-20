@@ -1,10 +1,11 @@
-package com.studyhub.sth.controllers;
+package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
 import com.studyhub.sth.domain.services.IArtigoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/artigo")
+@RequestMapping("/api/artigo")
+@Tag(name = "Artigos Controller")
 public class ArtigoController {
 
     @Autowired

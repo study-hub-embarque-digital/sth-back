@@ -7,6 +7,7 @@ import com.studyhub.sth.domain.entities.Representante;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IRepresentanteService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/representantes")
+@RequestMapping("/api/representantes")
+@Tag(name = "Representantes Controller")
 public class RepresentanteController {
     @Autowired
     private IRepresentanteService representanteService;

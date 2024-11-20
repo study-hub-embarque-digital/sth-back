@@ -11,8 +11,8 @@ import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IMentorService;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IMentorRepository;
-import com.studyhub.sth.domain.repositories.ISquadRepositorio;
-import com.studyhub.sth.domain.repositories.IUsuarioRepositorio;
+import com.studyhub.sth.domain.repositories.ISquadRepository;
+import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +26,13 @@ public class MentorService implements IMentorService {
     private IMentorRepository mentorRepository;
 
     @Autowired
-    private IUsuarioRepositorio usuarioRepositorio;
+    private IUsuarioRepository usuarioRepositorio;
 
     @Autowired
     private IMapper mapper;
 
     @Autowired
-    private ISquadRepositorio squadRepositorio;
+    private ISquadRepository squadRepositorio;
 
     @Override
     public MentorDto criar(MentorCreateDto dto) {

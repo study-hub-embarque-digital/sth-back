@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/alunos")
+@RequestMapping("/api/alunos")
 @Tag(name = "Alunos Controller")
 public class AlunosController {
     @Autowired
