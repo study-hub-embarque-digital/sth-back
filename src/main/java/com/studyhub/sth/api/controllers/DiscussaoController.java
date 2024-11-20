@@ -1,8 +1,10 @@
 package com.studyhub.sth.api.controllers;
 
+import com.studyhub.sth.application.annotations.CurrentUser;
 import com.studyhub.sth.application.dtos.discussao.DiscussaoDto;
 import com.studyhub.sth.application.dtos.discussao.NewDiscussaoDto;
 import com.studyhub.sth.application.dtos.discussao.UpdatedDiscussaoDto;
+import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IDiscussaoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,17 +34,17 @@ public class DiscussaoController {
     }
 
     @PostMapping
-    public ResponseEntity<DiscussaoDto> create(@RequestBody NewDiscussaoDto newDiscussaoDto) {
-        return new ResponseEntity<>(this.discussaoService.create(newDiscussaoDto), HttpStatus.CREATED);
+    public ResponseEntity<DiscussaoDto> create(@RequestBody NewDiscussaoDto newDiscussaoDto, @CurrentUser Usuario u) {
+        return new ResponseEntity<>(this.discussaoService.create(newDiscussaoDto, u), HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<DiscussaoDto> createChild(@RequestBody NewDiscussaoDto newDiscussaoDto, @PathVariable UUID discussaoPaiId) throws ElementoNaoEncontradoExcecao {
-        return new ResponseEntity<>(this.discussaoService.createChild(newDiscussaoDto, discussaoPaiId), HttpStatus.CREATED);
+    public ResponseEntity<DiscussaoDto> createChild(@RequestBody NewDiscussaoDto newDiscussaoDto, @PathVariable UUID discussaoPaiId, @CurrentUser Usuario u) throws ElementoNaoEncontradoExcecao {
+        return new ResponseEntity<>(this.discussaoService.createChild(newDiscussaoDto, discussaoPaiId, u), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DiscussaoDto> update(@RequestBody UpdatedDiscussaoDto updatedDiscussaoDto, @PathVariable UUID discussaoId) throws Exception {
-        return ResponseEntity.ok(this.discussaoService.update(discussaoId, updatedDiscussaoDto));
+    public ResponseEntity<DiscussaoDto> update(@RequestBody UpdatedDiscussaoDto updatedDiscussaoDto, @PathVariable UUID discussaoId, @CurrentUser Usuario u) throws Exception {
+        return ResponseEntity.ok(this.discussaoService.update(discussaoId, updatedDiscussaoDto, u));
     }
 }

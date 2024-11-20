@@ -24,14 +24,10 @@ public class DiscussaoService implements IDiscussaoService {
     @Autowired
     private IMapper mapper;
 
-    @CurrentUser
-    private Usuario usuarioAtual;
-
 
     @Override
-    public DiscussaoDto create(NewDiscussaoDto discussao) {
+    public DiscussaoDto create(NewDiscussaoDto discussao, @CurrentUser Usuario usuarioAtual) {
         Discussao d = this.mapper.map(discussao, Discussao.class);
-
         d.setUsuario(usuarioAtual);
 
         Discussao discussaoSalva = this.discussaoRepository.save(d);
@@ -42,7 +38,7 @@ public class DiscussaoService implements IDiscussaoService {
     }
 
     @Override
-    public DiscussaoDto createChild(NewDiscussaoDto discussao, UUID discussaoId) throws ElementoNaoEncontradoExcecao {
+    public DiscussaoDto createChild(NewDiscussaoDto discussao, UUID discussaoId, @CurrentUser Usuario usuarioAtual) throws ElementoNaoEncontradoExcecao {
         Discussao d = this.mapper.map(discussao, Discussao.class);
         Discussao discussaoPai = this.discussaoRepository.findById(discussaoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar a discussão a qual essa deveria ser vinculada"));
 
@@ -85,10 +81,10 @@ public class DiscussaoService implements IDiscussaoService {
     }
 
     @Override
-    public DiscussaoDto update(UUID discussaoId, UpdatedDiscussaoDto updatedDiscussao) throws Exception {
+    public DiscussaoDto update(UUID discussaoId, UpdatedDiscussaoDto updatedDiscussao, @CurrentUser Usuario usuarioAtual) throws Exception {
         Discussao d = this.discussaoRepository.findById(discussaoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar a discussão selecionada para atualizar"));
 
-        if (d.getUsuario().getUsuarioId() != this.usuarioAtual.getUsuarioId()) throw new Exception("Você não possui permissão para alterar discussões de outros usuários");
+        if (d.getUsuario().getUsuarioId() != usuarioAtual.getUsuarioId()) throw new Exception("Você não possui permissão para alterar discussões de outros usuários");
         if (updatedDiscussao.getConteudo().isEmpty()) throw new Exception("Você não pode colocar um texto vazio na discussão.");
 
         d.setConteudo(updatedDiscussao.getConteudo());
