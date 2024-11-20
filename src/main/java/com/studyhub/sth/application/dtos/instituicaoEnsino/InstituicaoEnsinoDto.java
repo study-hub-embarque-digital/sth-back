@@ -1,5 +1,7 @@
 package com.studyhub.sth.application.dtos.instituicaoEnsino;
 
+import com.studyhub.sth.application.dtos.alunos.AlunoDto;
+import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +16,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InstituicaoEnsinoDto {
-    private UUID id;
+    private UUID instituicaoEnsinoId;
     private String nome;
     private String endereco;
     private String coordenador;
-    private List<UUID> alunos;
-    private List<UUID> squads;
+    private List<AlunoDto> alunos;
+    private List<SquadDTO> squads;
 
 }

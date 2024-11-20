@@ -12,8 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioCreateDto {
-    String nome;
-    String email;
-    String senha;
-    Date dataNascimento;
+    private String nome;
+    private String email;
+    private String senha;
+    private Date dataNascimento;
 }

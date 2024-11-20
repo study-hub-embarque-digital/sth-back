@@ -1,4 +1,15 @@
 package com.studyhub.sth.application.dtos.users;
 
-public record UsuarioLoginDto(String email, String senha) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UsuarioLoginDto {
+    private String email;
+    private String senha;
 }

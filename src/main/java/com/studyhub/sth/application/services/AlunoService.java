@@ -4,6 +4,7 @@ import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoCreateDto;
+import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoSemReferenciaDto;
 import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import com.studyhub.sth.domain.entities.Aluno;
 import com.studyhub.sth.domain.entities.InstituicaoEnsino;
@@ -61,7 +62,7 @@ public class AlunoService implements IAlunoService {
         this.alunoRepositorio.save(aluno);
 
         AlunoDto alunoDto = this.mapper.map(aluno, AlunoDto.class);
-        alunoDto.setUsuario(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
+        alunoDto.setUsuarioDto(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
 
         return alunoDto;
     }
@@ -70,8 +71,8 @@ public class AlunoService implements IAlunoService {
     public AlunoDto detalhar(UUID alunoId) throws ElementoNaoEncontradoExcecao {
         Aluno aluno = this.alunoRepositorio.findById(alunoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar o aluno."));
         AlunoDto alunoDto = this.mapper.map(aluno, AlunoDto.class);
-        alunoDto.setUsuario(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
-        alunoDto.setInstituicaoEnsino(this.mapper.map(aluno.getInstituicaoEnsino(), InstituicaoEnsinoDto.class));
+        alunoDto.setUsuarioDto(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
+        alunoDto.setInstituicaoEnsinoDto(this.mapper.map(aluno.getInstituicaoEnsino(), InstituicaoEnsinoSemReferenciaDto.class));
 
         return alunoDto;
     }
@@ -82,8 +83,10 @@ public class AlunoService implements IAlunoService {
 
         return alunos.stream().map(aluno -> {
             AlunoDto alunoDto = this.mapper.map(aluno, AlunoDto.class);
-            alunoDto.setUsuario(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
-            alunoDto.setInstituicaoEnsino(this.mapper.map(aluno.getInstituicaoEnsino(), InstituicaoEnsinoDto.class));
+            UsuarioDto u = this.mapper.map(aluno.getUsuario(), UsuarioDto.class);
+            InstituicaoEnsinoSemReferenciaDto iesdto = this.mapper.map(aluno.getInstituicaoEnsino(), InstituicaoEnsinoSemReferenciaDto.class);
+            alunoDto.setUsuarioDto(u);
+            alunoDto.setInstituicaoEnsinoDto(iesdto);
 
             return alunoDto;
         }).toList();

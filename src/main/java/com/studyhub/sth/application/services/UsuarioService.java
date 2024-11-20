@@ -43,9 +43,9 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public String login(UsuarioLoginDto usuarioLoginDto) throws Exception {
-        Usuario usuario = this.usuarioRepositorio.findByEmail(usuarioLoginDto.email()).orElseThrow(() -> new Exception("Email ou senha incorretos"));
+        Usuario usuario = this.usuarioRepositorio.findByEmail(usuarioLoginDto.getEmail()).orElseThrow(() -> new Exception("Email ou senha incorretos"));
 
-        if (!passwordEncoder.matches(usuarioLoginDto.senha(), usuario.getSenha())) throw new Exception("Usuário ou senha incorretos");
+        if (!passwordEncoder.matches(usuarioLoginDto.getSenha(), usuario.getSenha())) throw new Exception("Usuário ou senha incorretos");
 
         return tokenService.generateToken(usuario);
     }
