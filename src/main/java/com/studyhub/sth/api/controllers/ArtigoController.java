@@ -25,9 +25,9 @@ public class ArtigoController {
     private IArtigoService artigoService;
 
     @GetMapping
-    public ResponseEntity<List<ArtigoDto>> listarArtigos(){
+    public List<ArtigoDto> listarArtigos(){
         var artigos = this.artigoService.listarArtigos();
-        return ResponseEntity.ok(artigos);
+        return artigos;
     }
 
     @GetMapping("/{id}")
