@@ -8,7 +8,7 @@ import com.studyhub.sth.domain.services.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.application.dtos.users.UsuarioCreateDto;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.entities.Usuario;
@@ -24,8 +24,6 @@ public class UsuarioService implements IUsuarioService {
     private IMapper mapper;
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private TokenService tokenService;
 
     @Override
     public String criar(UsuarioCreateDto novoUsuarioDto) throws Exception {
@@ -38,7 +36,7 @@ public class UsuarioService implements IUsuarioService {
 
         this.usuarioRepositorio.save(usuarioNovo);
 
-        return tokenService.generateToken(usuarioNovo);
+        return ""; // tokenService.generateToken(usuarioNovo);
     }
 
     @Override
@@ -47,7 +45,7 @@ public class UsuarioService implements IUsuarioService {
 
 //        if (!passwordEncoder.matches(usuarioLoginDto.getSenha(), usuario.getSenha())) throw new Exception("Usuário ou senha incorretos");
 
-        return tokenService.generateToken(usuario);
+        return "";//tokenService.generateToken(usuario);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.studyhub.sth.application.services;
 
-import com.studyhub.sth.application.annotations.CurrentUser;
+//import com.studyhub.sth.application.annotations.CurrentUser;
 import com.studyhub.sth.application.dtos.discussao.DiscussaoDto;
 import com.studyhub.sth.application.dtos.discussao.NewDiscussaoDto;
 import com.studyhub.sth.application.dtos.discussao.UpdatedDiscussaoDto;
@@ -26,7 +26,7 @@ public class DiscussaoService implements IDiscussaoService {
 
 
     @Override
-    public DiscussaoDto create(NewDiscussaoDto discussao, @CurrentUser Usuario usuarioAtual) {
+    public DiscussaoDto create(NewDiscussaoDto discussao, Usuario usuarioAtual) {
         Discussao d = this.mapper.map(discussao, Discussao.class);
         d.setUsuario(usuarioAtual);
 
@@ -38,7 +38,7 @@ public class DiscussaoService implements IDiscussaoService {
     }
 
     @Override
-    public DiscussaoDto createChild(NewDiscussaoDto discussao, UUID discussaoId, @CurrentUser Usuario usuarioAtual) throws ElementoNaoEncontradoExcecao {
+    public DiscussaoDto createChild(NewDiscussaoDto discussao, UUID discussaoId, Usuario usuarioAtual) throws ElementoNaoEncontradoExcecao {
         Discussao d = this.mapper.map(discussao, Discussao.class);
         Discussao discussaoPai = this.discussaoRepository.findById(discussaoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar a discussão a qual essa deveria ser vinculada"));
 
@@ -81,7 +81,7 @@ public class DiscussaoService implements IDiscussaoService {
     }
 
     @Override
-    public DiscussaoDto update(UUID discussaoId, UpdatedDiscussaoDto updatedDiscussao, @CurrentUser Usuario usuarioAtual) throws Exception {
+    public DiscussaoDto update(UUID discussaoId, UpdatedDiscussaoDto updatedDiscussao, Usuario usuarioAtual) throws Exception {
         Discussao d = this.discussaoRepository.findById(discussaoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar a discussão selecionada para atualizar"));
 
         if (d.getUsuario().getUsuarioId() != usuarioAtual.getUsuarioId()) throw new Exception("Você não possui permissão para alterar discussões de outros usuários");

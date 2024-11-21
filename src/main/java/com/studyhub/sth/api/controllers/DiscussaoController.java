@@ -1,6 +1,5 @@
 package com.studyhub.sth.api.controllers;
 
-import com.studyhub.sth.application.annotations.CurrentUser;
 import com.studyhub.sth.application.dtos.discussao.DiscussaoDto;
 import com.studyhub.sth.application.dtos.discussao.NewDiscussaoDto;
 import com.studyhub.sth.application.dtos.discussao.UpdatedDiscussaoDto;
@@ -34,17 +33,17 @@ public class DiscussaoController {
     }
 
     @PostMapping
-    public ResponseEntity<DiscussaoDto> create(@RequestBody NewDiscussaoDto newDiscussaoDto, @CurrentUser Usuario u) {
-        return new ResponseEntity<>(this.discussaoService.create(newDiscussaoDto, u), HttpStatus.CREATED);
+    public ResponseEntity<DiscussaoDto> create(@RequestBody NewDiscussaoDto newDiscussaoDto) {
+        return new ResponseEntity<>(this.discussaoService.create(newDiscussaoDto, new Usuario()), HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<DiscussaoDto> createChild(@RequestBody NewDiscussaoDto newDiscussaoDto, @PathVariable UUID discussaoPaiId, @CurrentUser Usuario u) throws ElementoNaoEncontradoExcecao {
+    public ResponseEntity<DiscussaoDto> createChild(@RequestBody NewDiscussaoDto newDiscussaoDto, @PathVariable UUID discussaoPaiId, Usuario u) throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.discussaoService.createChild(newDiscussaoDto, discussaoPaiId, u), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DiscussaoDto> update(@RequestBody UpdatedDiscussaoDto updatedDiscussaoDto, @PathVariable UUID discussaoId, @CurrentUser Usuario u) throws Exception {
+    public ResponseEntity<DiscussaoDto> update(@RequestBody UpdatedDiscussaoDto updatedDiscussaoDto, @PathVariable UUID discussaoId, Usuario u) throws Exception {
         return ResponseEntity.ok(this.discussaoService.update(discussaoId, updatedDiscussaoDto, u));
     }
 }
