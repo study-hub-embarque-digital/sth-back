@@ -22,8 +22,8 @@ public class UsuarioService implements IUsuarioService {
     private IUsuarioRepository usuarioRepositorio;
     @Autowired
     private IMapper mapper;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
     @Autowired
     private TokenService tokenService;
 
@@ -34,7 +34,7 @@ public class UsuarioService implements IUsuarioService {
         if (usuario.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
         Usuario usuarioNovo = this.mapper.map(novoUsuarioDto, Usuario.class);
-        usuarioNovo.setSenha(passwordEncoder.encode(novoUsuarioDto.getSenha()));
+//        usuarioNovo.setSenha(passwordEncoder.encode(novoUsuarioDto.getSenha()));
 
         this.usuarioRepositorio.save(usuarioNovo);
 
@@ -45,7 +45,7 @@ public class UsuarioService implements IUsuarioService {
     public String login(UsuarioLoginDto usuarioLoginDto) throws Exception {
         Usuario usuario = this.usuarioRepositorio.findByEmail(usuarioLoginDto.getEmail()).orElseThrow(() -> new Exception("Email ou senha incorretos"));
 
-        if (!passwordEncoder.matches(usuarioLoginDto.getSenha(), usuario.getSenha())) throw new Exception("Usuário ou senha incorretos");
+//        if (!passwordEncoder.matches(usuarioLoginDto.getSenha(), usuario.getSenha())) throw new Exception("Usuário ou senha incorretos");
 
         return tokenService.generateToken(usuario);
     }
