@@ -19,7 +19,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/artigo")
 @Tag(name = "Artigos Controller")
-public class ArtigoController {
+@CrossOrigin(origins ={"http://localhost:5173", "https://sth-front-dev.vercel.app","https://sth-back-1.onrender.com","*"}, maxAge = 3600)
+        public class ArtigoController {
 
     @Autowired
     private IArtigoService artigoService;
