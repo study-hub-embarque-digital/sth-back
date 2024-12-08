@@ -1,0 +1,53 @@
+package com.studyhub.sth.api.controllers;
+
+import com.studyhub.sth.application.dtos.rooms.RoomCreateDto;
+import com.studyhub.sth.application.dtos.rooms.RoomUpdateDto;
+import com.studyhub.sth.application.dtos.rooms.RoomDto;
+import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
+import com.studyhub.sth.domain.services.IRoomService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/rooms")
+@Tag(name = "Rooms Controller")
+public class RoomController {
+    @Autowired
+    private IRoomService roomService;
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<RoomDto> criar(@RequestBody RoomCreateDto novoRoomDto) {
+        return new ResponseEntity<>(this.roomService.criar(novoRoomDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{roomId}")
+    @Transactional
+    public ResponseEntity<RoomDto> atualizar(@PathVariable UUID roomId, @RequestBody RoomUpdateDto roomAtualizadaDto) throws ElementoNaoEncontradoExcecao {
+        return new ResponseEntity<>(this.roomService.atualizar(roomId, roomAtualizadaDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/{roomId}")
+    public ResponseEntity<RoomDto> detalhar(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
+        return new ResponseEntity<>(this.roomService.detalhar(roomId), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RoomDto>> listar() {
+        return new ResponseEntity<>(this.roomService.listar(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{roomId}")
+    public ResponseEntity deletar(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
+        this.roomService.deletar(roomId);
+        return ResponseEntity.noContent().build();
+    }
+
+}
