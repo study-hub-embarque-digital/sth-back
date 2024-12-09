@@ -5,9 +5,11 @@ import com.studyhub.sth.application.dtos.representante.RepresentanteDto;
 import com.studyhub.sth.application.dtos.representante.RepresentanteUpdateDto;
 import com.studyhub.sth.domain.entities.Empresa;
 import com.studyhub.sth.domain.entities.Representante;
+import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IRepresentanteService;
+import com.studyhub.sth.domain.services.IRoleRepository;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IEmpresaRepository;
 import com.studyhub.sth.domain.repositories.IRepresentanteRepository;
@@ -15,9 +17,11 @@ import com.studyhub.sth.domain.repositories.IRepresentanteRepository;
 import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -31,11 +35,27 @@ public class RepresentanteService implements IRepresentanteService {
     private IEmpresaRepository IEmpresaRepository;
     @Autowired
     private IMapper mapper;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private IRoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
-    public RepresentanteDto criarRepresentante(RepresentanteCreateDto dto) throws ElementoNaoEncontradoExcecao {
+    public String criarRepresentante(RepresentanteCreateDto dto) throws Exception {
+        Optional<Usuario> usuarioExiste = usuarioRepositorio.findByEmail(dto.getNovoUsuarioDto().getEmail());
+
+        if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
+
+        List<Role> roles = roleRepository.findByName("REPRESENTANTE");
+
+        if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
+
         Usuario usuario = this.mapper.map(dto.getNovoUsuarioDto(), Usuario.class);
+        usuario.setRoles(roles);
+        usuario.setSenha(passwordEncoder.encode(dto.getNovoUsuarioDto().getSenha()));
         this.usuarioRepositorio.save(usuario);
 
         Empresa empresa = this.IEmpresaRepository.findById(dto.getEmpresaId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Empresa não encontrada"));
@@ -45,7 +65,7 @@ public class RepresentanteService implements IRepresentanteService {
         representante.setEmpresa(empresa);
 
         this.representanteRepository.save(representante);
-        return this.mapper.map(representante, RepresentanteDto.class);
+        return tokenService.generateToken(usuario);
     }
 
     @Override

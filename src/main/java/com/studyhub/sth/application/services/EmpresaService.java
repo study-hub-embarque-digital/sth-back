@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.studyhub.sth.application.dtos.empresas.EmpresaCreateDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
+import com.studyhub.sth.application.dtos.empresas.EmpresaListDto;
 import com.studyhub.sth.domain.services.IEmpresaService;
 import com.studyhub.sth.libs.mapper.IMapper;
 import jakarta.transaction.Transactional;
@@ -31,6 +32,13 @@ public class EmpresaService implements IEmpresaService {
         var lista = IEmpresaRepository.findAll();
         return lista.stream().map(
                 empresa -> this.mapper.map(empresa, EmpresaDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmpresaListDto> list() {
+        var lista = IEmpresaRepository.findAll();
+        return lista.stream().map(
+                empresa -> this.mapper.map(empresa, EmpresaListDto.class)).collect(Collectors.toList());
     }
 
     @Override

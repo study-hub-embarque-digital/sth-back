@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoCreateDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
+import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoListDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoUpdateDto;
 import com.studyhub.sth.domain.services.IInstituicaoEnsinoService;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,13 @@ public class InstituicaoEnsinoService implements IInstituicaoEnsinoService {
         var lista = this.instituicaoEnsinoRepository.findAll();
         return lista.stream()
                 .map(instituicaoEnsino -> this.mapper.map(instituicaoEnsino, InstituicaoEnsinoDto.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<InstituicaoEnsinoListDto> list() {
+        var lista = this.instituicaoEnsinoRepository.findAll();
+        return lista.stream()
+                .map(instituicaoEnsino -> this.mapper.map(instituicaoEnsino, InstituicaoEnsinoListDto.class))
                 .collect(Collectors.toList());
     }
 
@@ -61,9 +69,6 @@ public class InstituicaoEnsinoService implements IInstituicaoEnsinoService {
         }
         if (dto.getNome() != null) {
             instituicao.setNome(dto.getNome());
-        }
-        if (dto.getEndereco() != null) {
-            instituicao.setEndereco(dto.getEndereco());
         }
         this.instituicaoEnsinoRepository.save(instituicao);
         return this.mapper.map(instituicao, InstituicaoEnsinoDto.class);

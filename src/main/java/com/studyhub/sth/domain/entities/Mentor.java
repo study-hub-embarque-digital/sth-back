@@ -11,11 +11,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "mentorId")
 public class Mentor {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID mentorId;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")

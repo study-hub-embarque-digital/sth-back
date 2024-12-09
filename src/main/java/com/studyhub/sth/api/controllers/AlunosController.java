@@ -22,7 +22,7 @@ public class AlunosController {
     private IAlunoService alunoService;
 
     @PostMapping()
-    public ResponseEntity<AlunoDto> criar(@RequestBody AlunoCreateDto novoAlunoDto) throws ElementoNaoEncontradoExcecao {
+    public ResponseEntity<String> criar(@RequestBody AlunoCreateDto novoAlunoDto) throws Exception {
         return new ResponseEntity<>(this.alunoService.criar(novoAlunoDto), HttpStatus.CREATED);
     }
 

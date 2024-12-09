@@ -1,6 +1,5 @@
 package com.studyhub.sth.application.services;
 
-import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoCreateDto;
@@ -8,18 +7,23 @@ import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoSemR
 import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import com.studyhub.sth.domain.entities.Aluno;
 import com.studyhub.sth.domain.entities.InstituicaoEnsino;
+import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IAlunoService;
+import com.studyhub.sth.domain.services.IRoleRepository;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IAlunoRepository;
 import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.domain.repositories.InstituicaoEnsinoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -32,13 +36,28 @@ public class AlunoService implements IAlunoService {
     private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
     @Autowired
     private IMapper mapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private IRoleRepository roleRepository;
 
     @Override
     @Transactional
-    public AlunoDto criar(AlunoCreateDto novoAlunoDto) throws ElementoNaoEncontradoExcecao {
-        Usuario usuario = this.mapper.map(novoAlunoDto.getNovoUsuarioDto(), Usuario.class);
-        this.usuarioRepositorio.save(usuario);
+    public String criar(AlunoCreateDto novoAlunoDto) throws Exception {
+        Optional<Usuario> usuarioExiste = usuarioRepositorio.findByEmail(novoAlunoDto.getNovoUsuarioDto().getEmail());
 
+        if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
+
+        List<Role> roles = roleRepository.findByName("ALUNO");
+
+        if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
+
+        Usuario usuario = this.mapper.map(novoAlunoDto.getNovoUsuarioDto(), Usuario.class);
+        usuario.setRoles(roles);
+        usuario.setSenha(passwordEncoder.encode(novoAlunoDto.getNovoUsuarioDto().getSenha()));
+        this.usuarioRepositorio.save(usuario);
         InstituicaoEnsino instituicaoEnsino = instituicaoEnsinoRepository.findById(novoAlunoDto.getInstituicaoEnsinoId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar a instituição de ensino do aluno."));
 
         Aluno aluno = this.mapper.map(novoAlunoDto, Aluno.class);
@@ -46,7 +65,7 @@ public class AlunoService implements IAlunoService {
         aluno.setInstituicaoEnsino(instituicaoEnsino);
 
         this.alunoRepositorio.save(aluno);
-        return this.mapper.map(aluno, AlunoDto.class);
+        return this.tokenService.generateToken(usuario);
     }
 
     @Override

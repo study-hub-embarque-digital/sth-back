@@ -8,6 +8,7 @@ import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IMentorService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +27,8 @@ public class MentorController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<MentorDto> criarMentor(@RequestBody MentorCreateDto dto) {
-        var mentor = this.mentorService.criar(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(mentor.getId()).toUri();
-        return ResponseEntity.created(uri).body(mentor);
+    public ResponseEntity<String> criarMentor(@RequestBody MentorCreateDto dto) throws Exception {
+        return new ResponseEntity<>(this.mentorService.criar(dto), HttpStatus.CREATED);
     }
 
     @GetMapping

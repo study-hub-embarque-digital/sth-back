@@ -20,7 +20,7 @@ public class Discussao {
     private String conteudo;
 
     @ManyToOne
-    @JoinColumn(name = "usuarioId")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne

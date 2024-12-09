@@ -3,6 +3,7 @@ package com.studyhub.sth.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "empresas")
@@ -32,12 +33,9 @@ public class Empresa {
     @Column(length = 14, unique = true)
     private String cnpj;
 
-    //@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-    //private List<Representante> representantes;
+    @OneToMany(mappedBy = "empresa")
+    private List<Representante> representantes;
 
-    //@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-    //private List<Squad> squads;
-
-    //@OneToMany(mappedBy = "instituicao_ensino", cascade = CascadeType.ALL)
-    //private List<InstituicaoEnsino> InstituicaoEnsino;
+    @OneToMany(mappedBy = "empresa")
+    private List<Squad> squads;
 }
