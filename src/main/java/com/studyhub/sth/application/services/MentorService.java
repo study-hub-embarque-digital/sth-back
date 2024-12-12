@@ -6,17 +6,21 @@ import com.studyhub.sth.application.dtos.mentor.MentorCreateDto;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import com.studyhub.sth.domain.entities.Mentor;
+import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IMentorService;
+import com.studyhub.sth.domain.services.IRoleRepository;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IMentorRepository;
 import com.studyhub.sth.domain.repositories.ISquadRepository;
 import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -24,27 +28,40 @@ import java.util.stream.Collectors;
 public class MentorService implements IMentorService {
     @Autowired
     private IMentorRepository mentorRepository;
-
     @Autowired
     private IUsuarioRepository usuarioRepositorio;
-
     @Autowired
     private IMapper mapper;
-
     @Autowired
     private ISquadRepository squadRepositorio;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private IRoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
-    public MentorDto criar(MentorCreateDto dto) {
+    public String criar(MentorCreateDto dto) throws Exception {
+        Optional<Usuario> usuarioExiste = usuarioRepositorio.findByEmail(dto.getUsuarioDto().getEmail());
+
+        if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
+
+        List<Role> roles = roleRepository.findByName("MENTOR");
+
+        if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
+
         Mentor mentor = this.mapper.map(dto, Mentor.class);
+
         Usuario usuario = this.mapper.map(mentor.getUsuario(), Usuario.class);
+        usuario.setRoles(roles);
+        usuario.setSenha(passwordEncoder.encode(dto.getUsuarioDto().getSenha()));
         this.usuarioRepositorio.save(usuario);
+
         mentor.setUsuario(usuario);
         this.mentorRepository.save(mentor);
-        MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
-        UsuarioDto usuarioDTO = this.mapper.map(usuario, UsuarioDto.class);
-        mentorDTO.setUsuarioDto(usuarioDTO);
-        return mentorDTO;
+
+        return tokenService.generateToken(usuario);
     }
 
 

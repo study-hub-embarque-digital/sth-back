@@ -27,7 +27,6 @@ public class Aluno {
 
     @ManyToOne()
     @JoinColumn(name = "instituicao_ensino_id")
-    @JsonBackReference
     private InstituicaoEnsino instituicaoEnsino;
 //    private Ciclo ciclo;
 

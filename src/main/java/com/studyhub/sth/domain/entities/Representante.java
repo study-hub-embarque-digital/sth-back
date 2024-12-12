@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "representantes")
 @Table(name = "representantes")
 @Getter
 @Setter
@@ -14,7 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "representanteId")
 public class Representante {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID representanteId;

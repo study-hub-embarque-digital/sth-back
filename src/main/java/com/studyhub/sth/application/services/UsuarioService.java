@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.application.dtos.users.UsuarioCreateDto;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.entities.Usuario;
@@ -22,8 +23,10 @@ public class UsuarioService implements IUsuarioService {
     private IUsuarioRepository usuarioRepositorio;
     @Autowired
     private IMapper mapper;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TokenService tokenService;
 
     @Override
     public String criar(UsuarioCreateDto novoUsuarioDto) throws Exception {
@@ -32,7 +35,7 @@ public class UsuarioService implements IUsuarioService {
         if (usuario.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
         Usuario usuarioNovo = this.mapper.map(novoUsuarioDto, Usuario.class);
-//        usuarioNovo.setSenha(passwordEncoder.encode(novoUsuarioDto.getSenha()));
+        usuarioNovo.setSenha(passwordEncoder.encode(novoUsuarioDto.getSenha()));
 
         this.usuarioRepositorio.save(usuarioNovo);
 
@@ -43,9 +46,9 @@ public class UsuarioService implements IUsuarioService {
     public String login(UsuarioLoginDto usuarioLoginDto) throws Exception {
         Usuario usuario = this.usuarioRepositorio.findByEmail(usuarioLoginDto.getEmail()).orElseThrow(() -> new Exception("Email ou senha incorretos"));
 
-//        if (!passwordEncoder.matches(usuarioLoginDto.getSenha(), usuario.getSenha())) throw new Exception("Usuário ou senha incorretos");
+        if (!passwordEncoder.matches(usuarioLoginDto.getSenha(), usuario.getSenha())) throw new Exception("Usuário ou senha incorretos");
 
-        return "";//tokenService.generateToken(usuario);
+        return tokenService.generateToken(usuario);
     }
 
     @Override

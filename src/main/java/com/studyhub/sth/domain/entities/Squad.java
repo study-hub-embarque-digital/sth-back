@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "squads")
 @Table(name = "squads")
 @Getter
 @Setter
@@ -15,7 +15,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "squadId")
 public class Squad {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID squadId;
@@ -34,15 +33,16 @@ public class Squad {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
+    @ManyToOne
+    @JoinColumn(name = "instituicao_ensino_id")
+    private InstituicaoEnsino instituicaoEnsino;
+
     @ManyToMany
-    @JoinTable(name = "squad_representante",
+    @JoinTable(name = "squads_representantes",
             joinColumns = @JoinColumn(name = "squad_id"),
             inverseJoinColumns = @JoinColumn(name = "representante_id"))
     private List<Representante> representantes;
 
-
     @OneToMany(mappedBy = "squad")
     private List<Aluno> alunos;
-
-
 }

@@ -4,9 +4,11 @@ import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoDto;
 import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoUpdateDto;
 import com.studyhub.sth.application.services.ConteudoEstudoService;
 
+import com.studyhub.sth.domain.annotations.AuthorizeWithRole;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ import java.util.UUID;
 import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoCreateDto;
 
 @RestController
-@RequestMapping("/api/conteudos-estudo")
+@RequestMapping(value = "/api/conteudos-estudo")
 @Tag(name = "Conteudos de Estudo Controller")
 public class ConteudoEstudoController {
     @Autowired
@@ -24,13 +26,15 @@ public class ConteudoEstudoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     public ResponseEntity<ConteudoEstudoCreateDto> criarConteudoEstudo(@RequestBody ConteudoEstudoCreateDto dto) {
         return ResponseEntity.ok(conteudoEstudoService.criarConteudoEstudo(dto));
     }
 
     @GetMapping
+    @ResponseBody
     public ResponseEntity<List<ConteudoEstudoCreateDto>> listarConteudosEstudo() {
-        return ResponseEntity.ok(conteudoEstudoService.listarConteudosEstudo());
+        return new ResponseEntity<>(conteudoEstudoService.listarConteudosEstudo(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

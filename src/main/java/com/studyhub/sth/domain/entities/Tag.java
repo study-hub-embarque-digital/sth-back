@@ -5,15 +5,14 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Entity
+@Entity(name = "tags")
 @Table(name = "tags")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "tagId")
 public class Tag {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID tagId;

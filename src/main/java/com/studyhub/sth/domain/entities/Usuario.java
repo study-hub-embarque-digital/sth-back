@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "usuarios")
@@ -26,6 +27,12 @@ public class Usuario {
 
     private String senha;
     private Date dataNascimento;
+
+    @ManyToMany()
+    @JoinTable(name = "usuarios_roles",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
 
     public void atualizar(UsuarioUpdateDto usuarioAtualizadoDto) {
         this.nome = usuarioAtualizadoDto.getNome();

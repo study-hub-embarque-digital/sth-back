@@ -30,7 +30,7 @@ public class Duvida {
     private List<Tag> tags;
 
     @ManyToOne
-    @JoinColumn(name = "usuarioId")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     private Date criadoEm;

@@ -9,8 +9,8 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity(name = "instituicao_ensino")
-@Table(name = "instituicao_ensino")
+@Entity(name = "instituicoes_ensino")
+@Table(name = "instituicoes_ensino")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,16 +20,17 @@ public class InstituicaoEnsino {
     
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID instituicaoEnsinoId;
-
     private String nome;
-    private String endereco;
     private String coordenador;
 
-    @OneToMany(mappedBy = "instituicaoEnsino", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToOne()
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+
+    @OneToMany(mappedBy = "instituicaoEnsino")
     private List<Aluno> alunos = new ArrayList<>();
     
-    //@OneToMany(mappedBy = "instituicaoEnsino")
-    //private List<Squad> squads;
+    @OneToMany(mappedBy = "instituicaoEnsino")
+    private List<Squad> squads;
 
 }

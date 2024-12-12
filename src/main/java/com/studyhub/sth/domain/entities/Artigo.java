@@ -24,11 +24,12 @@ public class Artigo {
     private String conteudo;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario autor;
 
     @ManyToMany
     @JoinTable(
-            name = "artigo_tag",
+            name = "artigos_tags",
             joinColumns = @JoinColumn(name = "artigo_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )

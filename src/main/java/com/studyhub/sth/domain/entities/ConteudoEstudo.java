@@ -18,11 +18,9 @@ public class ConteudoEstudo {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID conteudoEstudoId;
 
-    // Link do conteúdo (pode ser um vídeo, artigo, etc.)
     private String link;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "room_id")
     private Room room;
-
 }

@@ -13,10 +13,8 @@ import java.util.UUID;
 
 @Repository
 public interface IMentorRepository extends JpaRepository<Mentor, UUID> {
-
-    @Query("SELECT s FROM Squad s WHERE s.mentor.id = :mentorId")
-    List<Squad> getAllSquad(UUID mentorId);
-
     Optional<Mentor> findByUsuarioNomeContainsIgnoreCase(String nome);
 
+    @Query("SELECT s FROM squads s WHERE s.mentor.mentorId = :mentorId")
+    List<Squad> getAllSquad(UUID mentorId);
 }

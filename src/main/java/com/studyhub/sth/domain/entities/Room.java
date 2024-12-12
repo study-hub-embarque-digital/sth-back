@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "rooms")
 @Table(name = "rooms")
 @Getter
 @Setter
@@ -22,7 +22,7 @@ public class Room {
 
     private UUID criador;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "room")
     private List<ConteudoEstudo> conteudosEstudo;
 
     @Column(columnDefinition = "TEXT")
