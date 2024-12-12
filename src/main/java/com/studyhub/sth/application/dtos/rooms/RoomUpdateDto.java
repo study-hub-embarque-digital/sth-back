@@ -12,6 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RoomUpdateDto {
     ConteudoEstudoDto conteudosRecomendados;
+    String description;
+    String title;
+    String image;
     //UUID cicloId;
    // UUID formularioId;
 }
