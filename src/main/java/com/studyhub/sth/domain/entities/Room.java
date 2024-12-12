@@ -25,6 +25,12 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<ConteudoEstudo> conteudosEstudo;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    private String title;
+
+    private String image;
     // obs: entidades que serão criadas futuramente para PI
     // private Ciclo ciclo;
     // private Formulario formulario;
