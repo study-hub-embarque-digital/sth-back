@@ -37,18 +37,19 @@ public class AlunosControllerTest {
     }
 
     @Test
-    public void testCriarAluno_Sucesso() throws ElementoNaoEncontradoExcecao {
+    public void testCriarAluno_Sucesso() throws Exception {
         // Arrange
         AlunoCreateDto novoAlunoDto = new AlunoCreateDto();
         AlunoDto alunoDto = new AlunoDto();
-        when(alunoService.criar(novoAlunoDto)).thenReturn(alunoDto);
+        String token = "eyToken";
+        when(alunoService.criar(novoAlunoDto)).thenReturn(token);
 
         // Act
-        ResponseEntity<AlunoDto> response = alunosController.criar(novoAlunoDto);
+        ResponseEntity<String> response = alunosController.criar(novoAlunoDto);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(alunoDto, response.getBody());
+        assertEquals(token, response.getBody());
     }
 
     @Test
