@@ -16,5 +16,8 @@ import java.util.UUID;
 public class RoomDto {
     UUID roomId;
     UUID criador;
+    String description;
+    String title;
+    String image;
     List<ConteudoEstudoDto> conteudosRecomendados;
 }

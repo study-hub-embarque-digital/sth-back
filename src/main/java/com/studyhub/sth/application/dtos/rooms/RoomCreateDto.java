@@ -13,4 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class RoomCreateDto {
     UUID criador;
+    String description;
+    String title;
+    String image;
 }

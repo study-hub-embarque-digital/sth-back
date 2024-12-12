@@ -38,7 +38,7 @@ public class RoomService implements IRoomService {
     public RoomDto atualizar(UUID roomId, RoomUpdateDto roomAtualizadaDto) throws ElementoNaoEncontradoExcecao {
         var room = this.roomRepository.findById(roomId)
                 .orElseThrow(() -> new ElementoNaoEncontradoExcecao("O Room não foi encontrado!"));
-        if (roomAtualizadaDto.getConteudosRecomendados().getLink() != null) {
+        if (roomAtualizadaDto.getConteudosRecomendados() != null) {
             var conteudoEstudoDto = roomAtualizadaDto.getConteudosRecomendados();
             var conteudoEstudo = this.roomRepository.findConteudoEstudoByRoomIdAndConteudoEstudoId(
                             roomId, conteudoEstudoDto.getRoomId())
@@ -46,6 +46,15 @@ public class RoomService implements IRoomService {
 
             conteudoEstudo.setLink(conteudoEstudoDto.getLink());
             this.conteudoEstudoRepository.save(conteudoEstudo);
+        }
+        if (roomAtualizadaDto.getDescription() != null){
+            room.setDescription(roomAtualizadaDto.getDescription());
+        }
+        if(roomAtualizadaDto.getImage() != null){
+            room.setImage(roomAtualizadaDto.getImage());
+        }
+        if(roomAtualizadaDto.getTitle() != null){
+            room.setTitle(roomAtualizadaDto.getTitle());
         }
         this.roomRepository.save(room);
         return this.mapper.map(room, RoomDto.class);
