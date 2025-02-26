@@ -1,6 +1,7 @@
 package com.studyhub.sth.api.controllers;
 
 
+import com.studyhub.sth.application.dtos.admins.AdminCreateDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoCreateDto;
 import com.studyhub.sth.application.dtos.auth.AuthResponse;
 import com.studyhub.sth.application.dtos.auth.RefreshRequest;
@@ -40,6 +41,12 @@ public class AuthController {
     @PostMapping(value = "/representantes/signup")
     public ResponseEntity<AuthResponse> signupRepresentantes(@RequestBody RepresentanteCreateDto representanteCreateDto) throws Exception {
         return new ResponseEntity<>(this.authService.criaRepresentante(representanteCreateDto), HttpStatus.CREATED);
+    }
+
+    @Operation(tags = "Auth Controller", summary = "Criar uma conta nova - admin")
+    @PostMapping(value = "/admins/signup")
+    public ResponseEntity<AuthResponse> adminRepresentantes(@RequestBody AdminCreateDto adminCreateDto) throws Exception {
+        return new ResponseEntity<>(this.authService.criaAdmin(adminCreateDto), HttpStatus.CREATED);
     }
 
     @Operation(tags = "Auth Controller", summary = "Entrar em sua conta")
