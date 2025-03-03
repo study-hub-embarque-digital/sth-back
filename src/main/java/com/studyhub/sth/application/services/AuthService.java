@@ -1,5 +1,6 @@
 package com.studyhub.sth.application.services;
 
+import com.studyhub.sth.application.dtos.admins.AdminCreateDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoCreateDto;
 import com.studyhub.sth.application.dtos.auth.AuthResponse;
 import com.studyhub.sth.application.dtos.auth.RefreshRequest;
@@ -31,19 +32,21 @@ public class AuthService implements IAuthService {
     private IEmpresaRepository empresaRepository;
     private IMentorRepository mentorRepository;
     private IAlunoRepository alunoRepositorio;
+    private IAdminRepository adminRepository;
     private PasswordEncoder passwordEncoder;
     private IRoleRepository roleRepository;
     private TokenService tokenService;
     private IMapper mapper;
 
     @Autowired
-    public AuthService(InstituicaoEnsinoRepository instituicaoEnsinoRepository, IRepresentanteRepository representanteRepository, IUsuarioRepository usuarioRepositorio, IEmpresaRepository empresaRepository, IMentorRepository mentorRepository, IAlunoRepository alunoRepositorio, PasswordEncoder passwordEncoder, IRoleRepository roleRepository, TokenService tokenService, IMapper mapper) {
+    public AuthService(InstituicaoEnsinoRepository instituicaoEnsinoRepository, IRepresentanteRepository representanteRepository, IUsuarioRepository usuarioRepositorio, IEmpresaRepository empresaRepository, IMentorRepository mentorRepository, IAlunoRepository alunoRepositorio, IAdminRepository adminRepository, PasswordEncoder passwordEncoder, IRoleRepository roleRepository, TokenService tokenService, IMapper mapper) {
         this.instituicaoEnsinoRepository = instituicaoEnsinoRepository;
         this.representanteRepository = representanteRepository;
         this.usuarioRepositorio = usuarioRepositorio;
         this.empresaRepository = empresaRepository;
         this.mentorRepository = mentorRepository;
         this.alunoRepositorio = alunoRepositorio;
+        this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.tokenService = tokenService;
@@ -89,6 +92,19 @@ public class AuthService implements IAuthService {
         representante.setEmpresa(empresa);
 
         this.representanteRepository.save(representante);
+
+        return new AuthResponse(tokenService.generateToken(usuario), tokenService.generateRefreshToken(usuario));
+    }
+
+    @Override
+    @Transactional
+    public AuthResponse criaAdmin(AdminCreateDto dto) throws Exception {
+        Usuario usuario = this.criaUsuario(dto.getNovoUsuarioDto(), RolesUsuario.ADMIN);
+
+        Admin admin = new Admin();
+        admin.setUsuario(usuario);
+
+        this.adminRepository.save(admin);
 
         return new AuthResponse(tokenService.generateToken(usuario), tokenService.generateRefreshToken(usuario));
     }
