@@ -1,5 +1,6 @@
 package com.studyhub.sth.domain.entities;
 
+import com.studyhub.sth.libs.core.EntidadeBase;
 import jakarta.persistence.*;
 import lombok.*;
 

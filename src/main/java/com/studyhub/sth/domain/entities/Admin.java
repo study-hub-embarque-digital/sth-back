@@ -17,7 +17,7 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID adminId;
 
-    @ManyToOne()
+    @OneToOne()
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 }

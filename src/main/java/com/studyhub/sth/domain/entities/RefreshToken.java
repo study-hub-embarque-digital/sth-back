@@ -23,8 +23,5 @@ public class RefreshToken {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToOne
-    @JoinColumn(name = "session_id")
-    private Session session;
     private Instant expiration;
 }
