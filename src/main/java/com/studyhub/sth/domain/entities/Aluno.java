@@ -18,7 +18,7 @@ public class Aluno {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID alunoId;
 
-    @ManyToOne()
+    @OneToOne()
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 

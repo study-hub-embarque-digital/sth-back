@@ -1,9 +1,8 @@
 package com.studyhub.sth.domain.entities;
 
+import com.studyhub.sth.libs.core.EntidadeBase;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "conteudos_estudo")
@@ -11,12 +10,12 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "conteudoEstudoId")
-public class ConteudoEstudo {
+@EqualsAndHashCode(callSuper = true)
+public class ConteudoEstudo extends EntidadeBase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID conteudoEstudoId;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.UUID)
+//    private UUID conteudoEstudoId;
 
     private String link;
 

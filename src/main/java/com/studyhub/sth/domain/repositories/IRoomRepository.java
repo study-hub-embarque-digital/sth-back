@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface IRoomRepository extends JpaRepository<Room, UUID> {
-    @Query("SELECT c FROM ConteudoEstudo c WHERE c.room.roomId = :roomId AND c.conteudoEstudoId = :conteudoEstudoId")
+    @Query("SELECT c FROM ConteudoEstudo c WHERE c.room.roomId = :roomId AND c.id = :conteudoEstudoId")
     Optional<ConteudoEstudo> findConteudoEstudoByRoomIdAndConteudoEstudoId(UUID roomId, UUID conteudoEstudoId);
 }
 

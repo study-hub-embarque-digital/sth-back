@@ -17,7 +17,7 @@ public class Mentor {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID mentorId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
