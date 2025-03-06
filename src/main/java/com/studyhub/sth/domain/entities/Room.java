@@ -22,16 +22,16 @@ public class Room {
 
     private UUID criador;
 
-    @OneToMany(mappedBy = "room")
-    private List<ConteudoEstudo> conteudosEstudo;
-
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column
     private String title;
 
+    @Column
     private String image;
-    // obs: entidades que serão criadas futuramente para PI
-    // private Ciclo ciclo;
-    // private Formulario formulario;
+
+    @ManyToMany()
+    @JoinTable(name = "rooms_topicos")
+    private List<Topico> topicos;
 }
