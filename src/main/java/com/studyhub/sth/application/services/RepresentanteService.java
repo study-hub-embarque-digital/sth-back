@@ -49,7 +49,7 @@ public class RepresentanteService implements IRepresentanteService {
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
-        List<Role> roles = roleRepository.findByName("REPRESENTANTE");
+        List<Role> roles = roleRepository.findByNome("REPRESENTANTE");
 
         if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
 

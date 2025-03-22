@@ -47,7 +47,7 @@ public class MentorService implements IMentorService {
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
-        List<Role> roles = roleRepository.findByName("MENTOR");
+        List<Role> roles = roleRepository.findByNome("MENTOR");
 
         if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
 

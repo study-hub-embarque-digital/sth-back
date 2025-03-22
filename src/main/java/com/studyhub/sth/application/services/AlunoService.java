@@ -50,7 +50,7 @@ public class AlunoService implements IAlunoService {
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
-        List<Role> roles = roleRepository.findByName("ALUNO");
+        List<Role> roles = roleRepository.findByNome("ALUNO");
 
         if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
 
