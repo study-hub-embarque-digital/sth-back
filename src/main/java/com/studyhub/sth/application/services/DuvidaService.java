@@ -50,6 +50,7 @@ public class DuvidaService implements IDuvidaService{
                 .map(d -> {
                     DuvidaDto dto = this.mapper.map(d, DuvidaDto.class);
                     dto.setNomeUsuario(d.getUsuario().getNome());
+                    dto.setTags(d.getTags().stream().map(Tag::getNome).toList());
                     return dto;
                 })
                 .toList();
