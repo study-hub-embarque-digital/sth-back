@@ -17,7 +17,7 @@ public class DuvidaDto {
     private UUID duvidaId;
     private String titulo;
     private String descricao;
-    private List<TagDto> tags;
+    private List<String> tags;
     private String nomeUsuario;
     private Date criadoEm;
     private Date atualizadoEm;

@@ -31,6 +31,10 @@ public class Solucao {
 
     private Date criadoEm;
     private Date atualizadoEm;
+    
+    @ManyToOne
+    @JoinColumn(name = "atualizado_por")
+    private Usuario atualizadoPor;
 
     @PrePersist
     public void onPersist()
