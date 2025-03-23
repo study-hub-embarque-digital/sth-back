@@ -1,7 +1,5 @@
 package com.studyhub.sth.api.controllers;
-import com.studyhub.sth.application.dtos.duvida.DuvidaDto;
-import com.studyhub.sth.application.dtos.duvida.NewDuvidaDto;
-import com.studyhub.sth.application.dtos.duvida.UpdateDuvidaDto;
+
 import com.studyhub.sth.application.dtos.solucao.CreateSolucaoDto;
 import com.studyhub.sth.application.dtos.solucao.SolucaoDto;
 import com.studyhub.sth.application.dtos.solucao.UpdateSolucaoDto;

@@ -1,19 +1,12 @@
 package com.studyhub.sth.api.controllers;
 
-import com.studyhub.sth.application.dtos.discussao.DiscussaoDto;
-import com.studyhub.sth.application.dtos.discussao.NewDiscussaoDto;
 import com.studyhub.sth.application.dtos.duvida.*;
-import com.studyhub.sth.domain.entities.Duvida;
-import com.studyhub.sth.domain.entities.Usuario;
-import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IDuvidaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Optional;
-
 import java.util.List;
 import java.util.UUID;
 

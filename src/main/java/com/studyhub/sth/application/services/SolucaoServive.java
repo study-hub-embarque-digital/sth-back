@@ -2,12 +2,8 @@ package com.studyhub.sth.application.services;
 
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.studyhub.sth.application.dtos.duvida.DuvidaDto;
-import com.studyhub.sth.application.dtos.duvida.NewDuvidaDto;
 import com.studyhub.sth.application.dtos.solucao.CreateSolucaoDto;
 import com.studyhub.sth.application.dtos.solucao.SolucaoDto;
 import com.studyhub.sth.application.dtos.solucao.UpdateSolucaoDto;
@@ -19,7 +15,6 @@ import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.domain.repositories.IDuvidaRepository;
 import com.studyhub.sth.domain.services.ISolucaoService;
 import com.studyhub.sth.libs.mapper.IMapper;
-
 import jakarta.transaction.Transactional;
 
 @Service
