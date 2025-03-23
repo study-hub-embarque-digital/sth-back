@@ -7,6 +7,7 @@ import com.studyhub.sth.application.dtos.discussao.UpdatedDiscussaoDto;
 import com.studyhub.sth.application.dtos.duvida.*;
 import com.studyhub.sth.application.dtos.empresas.EmpresaCreateDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
+import com.studyhub.sth.application.dtos.solucao.SolucaoDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
 import com.studyhub.sth.domain.entities.Discussao;
 import com.studyhub.sth.domain.entities.Duvida;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class DuvidaService implements IDuvidaService{
@@ -60,8 +62,17 @@ public class DuvidaService implements IDuvidaService{
     public DuvidaSolucoesDto findByIdWithSolucao(UUID id) {
         return this.duvidaRepository.findById(id)
                 .map(d -> {
-                    DuvidaSolucoesDto dto = this.mapper.map(d, DuvidaSolucoesDto.class);
-                    dto.setNomeUsuario(d.getUsuario().getNome());
+                    DuvidaDto duvidaDto = this.mapper.map(d, DuvidaDto.class);
+                    duvidaDto.setNomeUsuario(d.getUsuario().getNome());
+                    duvidaDto.setTags(d.getTags().stream().map(Tag::getNome).toList());
+
+                    List<SolucaoDto> solucoesDto = d.getSolucoes().stream()
+                        .map(solucao -> this.mapper.map(solucao, SolucaoDto.class))
+                        .collect(Collectors.toList());
+
+                    DuvidaSolucoesDto dto = new DuvidaSolucoesDto();
+                    dto.setDuvida(duvidaDto);
+                    dto.setSolucoes(solucoesDto);
                     return dto;
                 })
                 .orElseThrow(() -> new RuntimeException("Dúvida não encontrada"));

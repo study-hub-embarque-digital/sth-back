@@ -15,13 +15,7 @@ import com.studyhub.sth.application.dtos.tag.TagDto;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DuvidaSolucoesDto {
-    private UUID duvidaId;
-    private String titulo;
-    private String descricao;
-    private List<TagDto> tags;
-    private String nomeUsuario;
-    private Date criadoEm;
-    private Date atualizadoEm;
+    private DuvidaDto duvida;
     private List<SolucaoDto> solucoes;
     
 }
