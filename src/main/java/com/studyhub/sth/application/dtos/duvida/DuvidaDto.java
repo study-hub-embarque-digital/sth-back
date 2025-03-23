@@ -7,7 +7,6 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import com.studyhub.sth.application.dtos.tag.TagDto;
 
 @Getter
 @Setter

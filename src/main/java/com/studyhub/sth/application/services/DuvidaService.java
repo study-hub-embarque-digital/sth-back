@@ -1,31 +1,17 @@
 package com.studyhub.sth.application.services;
 
-//import com.studyhub.sth.application.annotations.CurrentUser;
-import com.studyhub.sth.application.dtos.discussao.DiscussaoDto;
-import com.studyhub.sth.application.dtos.discussao.NewDiscussaoDto;
-import com.studyhub.sth.application.dtos.discussao.UpdatedDiscussaoDto;
 import com.studyhub.sth.application.dtos.duvida.*;
-import com.studyhub.sth.application.dtos.empresas.EmpresaCreateDto;
-import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
 import com.studyhub.sth.application.dtos.solucao.SolucaoDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
-import com.studyhub.sth.domain.entities.Discussao;
 import com.studyhub.sth.domain.entities.Duvida;
 import com.studyhub.sth.domain.entities.Tag;
 import com.studyhub.sth.domain.entities.Usuario;
-import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.repositories.*;
-import com.studyhub.sth.domain.services.IDiscussaoService;
 import com.studyhub.sth.domain.services.IDuvidaService;
 import com.studyhub.sth.libs.mapper.IMapper;
-import java.util.Optional;
-
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
