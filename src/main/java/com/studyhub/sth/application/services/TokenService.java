@@ -35,6 +35,7 @@ public class TokenService {
                     .withSubject(usuario.getEmail())
                     .withExpiresAt(generateExpirationTime())
                     .withArrayClaim("roles", roles)
+                    .withClaim("usuarioId", usuario.getUsuarioId().toString()) 
                     .sign(algorithm);
 
             return token;
