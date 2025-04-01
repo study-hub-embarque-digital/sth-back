@@ -1,20 +1,24 @@
 package com.studyhub.sth.domain.entities;
 
 import com.studyhub.sth.domain.enums.Dificuldade;
-import com.studyhub.sth.libs.core.EntidadeBase;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
-@Entity(name = "topicos")
+@Entity
 @Table(name = "topicos")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class Topico extends EntidadeBase {
+@EqualsAndHashCode(of = "topicoId")
+public class Topico {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID topicoId;
+
     @Column
     private String titulo;
 

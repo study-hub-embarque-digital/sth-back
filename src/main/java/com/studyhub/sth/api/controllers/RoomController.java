@@ -3,8 +3,12 @@ package com.studyhub.sth.api.controllers;
 import com.studyhub.sth.application.dtos.rooms.RoomCreateDto;
 import com.studyhub.sth.application.dtos.rooms.RoomUpdateDto;
 import com.studyhub.sth.application.dtos.rooms.RoomDto;
+import com.studyhub.sth.application.dtos.salasTematica.SalaTematicaDto;
+import com.studyhub.sth.domain.entities.SalaTematica;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
+import com.studyhub.sth.domain.repositories.ISalaTematicaRepository;
 import com.studyhub.sth.domain.services.IRoomService;
+import com.studyhub.sth.domain.services.ISalasTematicaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,8 @@ import java.util.UUID;
 public class RoomController {
     @Autowired
     private IRoomService roomService;
+    @Autowired
+    private ISalasTematicaService salasTematicaService;
 
     @PostMapping
     @Transactional
@@ -37,6 +43,11 @@ public class RoomController {
     @GetMapping("/{roomId}")
     public ResponseEntity<RoomDto> detalhar(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
         return new ResponseEntity<>(this.roomService.detalhar(roomId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{roomId}/salas")
+    public ResponseEntity<List<SalaTematicaDto>> salas(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
+        return new ResponseEntity<>(this.salasTematicaService.obterPorRoom(roomId), HttpStatus.OK);
     }
 
     @GetMapping

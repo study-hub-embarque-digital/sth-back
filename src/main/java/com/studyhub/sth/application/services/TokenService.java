@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.studyhub.sth.domain.entities.Permissao;
 import com.studyhub.sth.domain.entities.RefreshToken;
 import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
@@ -15,8 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class TokenService {
@@ -28,13 +28,29 @@ public class TokenService {
     public String generateToken(Usuario usuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            String[] roles = usuario.getRoles().stream().map(Role::getName).toArray(String[]::new);
+
+            String[] rolesNames = usuario.getRoles().stream().map(Role::getNome).toArray(String[]::new);
+
+            List<Role> roles = usuario.getRoles();
+            List<List<Permissao>> listOfRolesListsOfPermissoes = roles.stream().map(Role::getPermissoes).toList();
+            List<Permissao> listOfPermissions = listOfRolesListsOfPermissoes.stream()
+                    .flatMap(List::stream)
+                    .toList();
+
+            String[] permissions = new String[0];
+
+            if (!listOfPermissions.isEmpty()) {
+                permissions = listOfPermissions.stream().map(Permissao::getNome).distinct().toArray(String[]::new);
+            }
 
             String token = JWT.create()
                     .withIssuer("sth-spring")
-                    .withSubject(usuario.getEmail())
+                    .withSubject(usuario.getUsuarioId().toString())
                     .withExpiresAt(generateExpirationTime())
-                    .withArrayClaim("roles", roles)
+                    .withClaim("name", usuario.getNome())
+                    .withClaim("email", usuario.getEmail())
+                    .withArrayClaim("roles", rolesNames)
+                    .withArrayClaim("permissions", permissions)
                     .sign(algorithm);
 
             return token;
