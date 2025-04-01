@@ -1,15 +1,18 @@
 package com.studyhub.sth.domain.entities;
 
+import com.studyhub.sth.domain.enums.StatusReuniao;
+import com.studyhub.sth.domain.enums.TipoReuniao;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GeneratedColumn;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name = "reuniao")
+@Entity
 @Table(name = "reunioes")
 @Getter
 @Setter
@@ -25,16 +28,34 @@ public class Reuniao {
     @JoinColumn(nullable = true, name = "sala_tematica_id")
     private SalaTematica salaTematica;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "reuniao_participantes")
     private List<Usuario> participantes;
 
+    @Column
     private Date criadoEm;
 
-    private UUID criadoPor;
+    @Column
+    private Date statusAtualizadoEm;
 
-    public Reuniao(SalaTematica salaTematica, List<Usuario> participantes) {
-        this.salaTematica = salaTematica;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario criadoPor;
+
+    @Column
+    private StatusReuniao status;
+
+    @Column
+    private TipoReuniao tipo;
+
+
+
+    public Reuniao(Usuario criador, List<Usuario> participantes) {
+        this.setStatus(StatusReuniao.AGENDADA);
+        this.setTipo(TipoReuniao.Mentoria);
+        this.setCriadoEm(new Date());
+        this.setCriadoPor(criador);
+        this.setStatusAtualizadoEm(new Date());
 
         if (this.participantes == null) {
             this.participantes = new ArrayList<>();
@@ -44,7 +65,12 @@ public class Reuniao {
     }
 
     public Reuniao(SalaTematica salaTematica, Usuario participanteInicial) {
-        this.salaTematica = salaTematica;
+        this.setStatus(StatusReuniao.EM_ESPERA);
+        this.setSalaTematica(salaTematica);
+        this.setTipo(TipoReuniao.SalaTematica);
+        this.setCriadoEm(new Date());
+        this.setCriadoPor(participanteInicial);
+        this.setStatusAtualizadoEm(new Date());
 
         if (this.participantes == null) {
             this.participantes = new ArrayList<>();
@@ -61,5 +87,34 @@ public class Reuniao {
         }
 
         this.participantes.add(participante);
+
+        if (this.participantes.size() >= 2 && this.status == StatusReuniao.EM_ESPERA) {
+            this.setStatus(StatusReuniao.AGUARDANDO_PARTICIPANTES);
+        }
+    }
+
+    public void cancelar() {
+        this.setStatusAtualizadoEm(new Date());
+        this.setStatus(StatusReuniao.CANCELADA);
+    }
+
+    public void iniciar() {
+        this.setStatusAtualizadoEm(new Date());
+        this.setStatus(StatusReuniao.ATIVA);
+    }
+
+    public void iniciarEstudo() {
+        this.setStatusAtualizadoEm(new Date());
+        this.setStatus(StatusReuniao.EM_ESTUDO);
+    }
+
+    public void iniciarApresentacoes() {
+        this.setStatusAtualizadoEm(new Date());
+        this.setStatus(StatusReuniao.EM_APRESENTACAO);
+    }
+
+    public void encerrar() {
+        this.setStatusAtualizadoEm(new Date());
+        this.setStatus(StatusReuniao.ENCERRADA);
     }
 }

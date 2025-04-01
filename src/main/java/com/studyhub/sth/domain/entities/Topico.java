@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name = "topicos")
+@Entity
 @Table(name = "topicos")
 @Getter
 @Setter

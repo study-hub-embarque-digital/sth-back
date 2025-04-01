@@ -36,7 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var login = this.ambiente.equals("DESENVOLVIMENTO") && token != null && token.equals("ola mundo") ? "sistema" : tokenService.validateToken(token);
 
         if (login != null) {
-            Usuario usuario = login.equals("sistema") ? this.getSystemUser() : usuarioRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+            Usuario usuario = login.equals("sistema") ? this.getSystemUser() : usuarioRepository.findById(UUID.fromString(login)).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
             var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);

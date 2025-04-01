@@ -10,7 +10,7 @@ import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IMentorService;
-import com.studyhub.sth.domain.services.IRoleRepository;
+import com.studyhub.sth.domain.repositories.IRoleRepository;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IMentorRepository;
 import com.studyhub.sth.domain.repositories.ISquadRepository;

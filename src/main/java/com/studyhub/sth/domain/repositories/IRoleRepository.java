@@ -1,4 +1,4 @@
-package com.studyhub.sth.domain.services;
+package com.studyhub.sth.domain.repositories;
 
 import com.studyhub.sth.domain.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

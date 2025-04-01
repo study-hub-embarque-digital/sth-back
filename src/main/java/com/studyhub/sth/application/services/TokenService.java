@@ -45,8 +45,10 @@ public class TokenService {
 
             String token = JWT.create()
                     .withIssuer("sth-spring")
-                    .withSubject(usuario.getEmail())
+                    .withSubject(usuario.getUsuarioId().toString())
                     .withExpiresAt(generateExpirationTime())
+                    .withClaim("name", usuario.getNome())
+                    .withClaim("email", usuario.getEmail())
                     .withArrayClaim("roles", rolesNames)
                     .withArrayClaim("permissions", permissions)
                     .sign(algorithm);

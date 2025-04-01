@@ -1,11 +1,14 @@
 package com.studyhub.sth.domain.services;
 
-import com.studyhub.sth.domain.annotations.CurrentUser;
-import com.studyhub.sth.domain.entities.Reuniao;
-import com.studyhub.sth.domain.entities.Usuario;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.List;
 import java.util.UUID;
 
 public interface IReuniaoService {
-    UUID entrarReuniaoSalaTematica(UUID salaTematicaId, Usuario usuarioAtual);
+    void entrarReuniaoSalaTematica(UUID salaTematicaId, UUID usuarioAtual);
+    void cancelarReunioes(List<UUID> reunioesParaCancelarIds);
+    void iniciarReunioes(List<UUID> reunioesParaIniciar);
+    void iniciarApresentacoes(List<UUID> reunioesParaIniciarApresentacoesIds) throws JsonProcessingException;
+    void finalizarApresentacaoIniciarDiscussao(List<UUID> apresentacoesParaFinalizarIds);
+    void finalizarTempoDeDiscussao(List<UUID> apresentacoesParaFinalizarTempoDeDiscussaoIds);
 }

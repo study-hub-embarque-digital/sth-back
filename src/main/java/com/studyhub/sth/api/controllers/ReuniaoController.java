@@ -21,10 +21,10 @@ public class ReuniaoController {
     IReuniaoService reuniaoService;
 
 
-    @PostMapping("/reuniao")
-    @Operation(summary = "Entra em uma reunião já existente da sala, ou cria caso nao exista.")
-    public ResponseEntity<UUID> CriaReuniao(@RequestBody UUID salaTematicaId, @CurrentUser Usuario usuarioAtual) {
-        return ResponseEntity.ok(reuniaoService.entrarReuniaoSalaTematica(salaTematicaId, usuarioAtual));
-    }
+//    @PostMapping("/reuniao")
+//    @Operation(summary = "Entra em uma reunião já existente da sala, ou cria caso nao exista.")
+//    public ResponseEntity<UUID> CriaReuniao(@RequestBody UUID salaTematicaId, @CurrentUser Usuario usuarioAtual) {
+//        return ResponseEntity.ok(reuniaoService.entrarReuniaoSalaTematica(salaTematicaId, usuarioAtual));
+//    }
 }
 
