@@ -13,5 +13,12 @@ import java.util.UUID;
 @NoArgsConstructor
 public class InstituicaoEnsinoListDto {
     private UUID InstituicaoEnsinoId;
+    private String razaoSocial;
+    private String nomeFantasia;
+    private String telefone;
+    private String email;
+    private String cnpj;
     private String nome;
+    private Boolean isActive;
+    private String site;
 }
