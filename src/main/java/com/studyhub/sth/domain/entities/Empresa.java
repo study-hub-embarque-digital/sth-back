@@ -36,6 +36,20 @@ public class Empresa {
     @OneToMany(mappedBy = "empresa")
     private List<Representante> representantes;
 
+    private boolean isActive;
+
+    private boolean isInPortoDigital;
+
+    private String site;
+
+    //periodo de interesse
+
+
     @OneToMany(mappedBy = "empresa")
     private List<Squad> squads;
+
+    //lista aluno
+
+    //lista rpresentantes
+
 }

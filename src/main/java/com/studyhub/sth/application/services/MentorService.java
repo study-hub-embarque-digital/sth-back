@@ -108,9 +108,6 @@ public class MentorService implements IMentorService {
             if (dto.getUsuarioDto().getSenha() != null) {
                 mentor.getUsuario().setSenha(dto.getUsuarioDto().getSenha());
             }
-            if (dto.getUsuarioDto().getDataNascimento() != null) {
-                mentor.getUsuario().setDataNascimento(dto.getUsuarioDto().getDataNascimento());
-            }
         }
         MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
         UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);

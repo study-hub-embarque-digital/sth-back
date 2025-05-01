@@ -9,9 +9,11 @@ import com.studyhub.sth.domain.entities.Aluno;
 import com.studyhub.sth.domain.entities.InstituicaoEnsino;
 import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
+import com.studyhub.sth.domain.enums.Periodo;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IAlunoService;
 import com.studyhub.sth.domain.repositories.IRoleRepository;
+import com.studyhub.sth.domain.services.IUsuarioService;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IAlunoRepository;
 import com.studyhub.sth.domain.repositories.IUsuarioRepository;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,6 +44,9 @@ public class AlunoService implements IAlunoService {
     private TokenService tokenService;
     @Autowired
     private IRoleRepository roleRepository;
+
+    @Autowired
+    private IUsuarioService usuarioService;
 
     @Override
     @Transactional
@@ -69,13 +75,12 @@ public class AlunoService implements IAlunoService {
 
     @Override
     @Transactional
-    public AlunoDto atualizar(UUID alunoId, AlunoUpdateDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao {
+    public AlunoDto atualizar(UUID alunoId, AlunoUpdateDto alunoAtualizadoDto) throws ElementoNaoEncontradoExcecao, IOException {
         Aluno aluno = this.alunoRepositorio.findById(alunoId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível atualizar o aluno."));
         Usuario usuario = aluno.getUsuario();
 
         aluno.atualizar(alunoAtualizadoDto);
         usuario.atualizar(alunoAtualizadoDto.getUsuarioAtualizadoDto());
-
         this.usuarioRepositorio.save(usuario);
         this.alunoRepositorio.save(aluno);
 
@@ -111,7 +116,7 @@ public class AlunoService implements IAlunoService {
     }
 
     @Override
-    public List<AlunoDto> listarPorPeriodo(int periodo) {
+    public List<AlunoDto> listarPorPeriodo(Periodo periodo) {
         List<AlunoDto> alunos = this.alunoRepositorio.findAlunosByPeriodo(periodo).stream().map(aluno -> this.mapper.map(aluno, AlunoDto.class)).toList();
 
         return alunos;
