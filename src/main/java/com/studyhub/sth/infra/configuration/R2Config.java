@@ -1,5 +1,6 @@
 package com.studyhub.sth.infra.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -12,15 +13,21 @@ import java.net.URI;
 
 @Configuration
 public class R2Config {
+    @Value("${r2.access-key-id}")
+    private String accessKeyId;
+    @Value("${r2.secret_access_key}")
+    private String secretAccessKey;
+    @Value("${r2.endpoint}")
+    private String endpoint;
 
     @Bean
     public S3Client s3Client() {
-        AwsBasicCredentials credentials = AwsBasicCredentials.create("ef231db429e49b1c8acc8195ef3e5820", "6525dd8839565573473d0350f4991f3ebab3a687697f95e72ac4c3c7a757aa8c");
+        AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
 
         return S3Client.builder()
-                .region(Region.US_EAST_1) // Região fictícia
+                .region(Region.US_EAST_1)
                 .credentialsProvider(StaticCredentialsProvider.create(credentials))
-                .endpointOverride(URI.create("https://83d9351fbe0e04bb88114471abd9b1aa.r2.cloudflarestorage.com"))
+                .endpointOverride(URI.create(endpoint))
                 .serviceConfiguration(S3Configuration.builder().pathStyleAccessEnabled(true).build())
                 .build();
     }
