@@ -96,9 +96,6 @@ public class RepresentanteService implements IRepresentanteService {
             if (dto.getUsuarioDto().getSenha() != null) {
                 representante.getUsuario().setSenha(dto.getUsuarioDto().getSenha());
             }
-            if (dto.getUsuarioDto().getDataNascimento() != null) {
-                representante.getUsuario().setDataNascimento(dto.getUsuarioDto().getDataNascimento());
-            }
         }
         if (dto.getEmpresaId() != null){
             representante.setRepresentanteId(dto.getEmpresaId());
