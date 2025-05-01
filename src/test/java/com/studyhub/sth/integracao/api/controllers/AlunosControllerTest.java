@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import com.studyhub.sth.domain.enums.Periodo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -100,7 +101,7 @@ public class AlunosControllerTest {
     @Test
     public void testObterAlunosPorPeriodo_Sucesso() {
         // Arrange
-        int periodo = 3;
+        Periodo periodo = Periodo.TERCEIRO;
         List<AlunoDto> alunos = Arrays.asList(new AlunoDto(), new AlunoDto());
         when(alunoService.listarPorPeriodo(periodo)).thenReturn(alunos);
 

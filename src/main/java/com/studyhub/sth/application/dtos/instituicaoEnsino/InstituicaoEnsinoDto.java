@@ -20,6 +20,13 @@ public class InstituicaoEnsinoDto {
     private String nome;
     private String endereco;
     private String coordenador;
+    private String razaoSocial;
+    private String nomeFantasia;
+    private String telefone;
+    private String email;
+    private String cnpj;
+    private Boolean isActive;
+    private String site;
     private List<AlunoDto> alunos;
     private List<SquadDTO> squads;
 

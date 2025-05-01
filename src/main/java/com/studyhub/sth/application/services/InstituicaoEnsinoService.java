@@ -70,6 +70,18 @@ public class InstituicaoEnsinoService implements IInstituicaoEnsinoService {
         if (dto.getNome() != null) {
             instituicao.setNome(dto.getNome());
         }
+        if (dto.getEmail() != null){
+            instituicao.setNome(dto.getEmail());
+        }
+        if (dto.getTelefone() != null){
+            instituicao.setNome(dto.getTelefone());
+        }
+        if (dto.getSite() != null){
+            instituicao.setNome(dto.getSite());
+        }
+        if(dto.getIsActive() != null){
+            instituicao.setIsActive(dto.getIsActive());
+        }
         this.instituicaoEnsinoRepository.save(instituicao);
         return this.mapper.map(instituicao, InstituicaoEnsinoDto.class);
     }

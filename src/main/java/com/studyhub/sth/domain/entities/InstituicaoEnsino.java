@@ -22,6 +22,24 @@ public class InstituicaoEnsino {
     private UUID instituicaoEnsinoId;
     private String nome;
     private String coordenador;
+    @Column(length = 350, nullable = false)
+    private String razaoSocial;
+
+    @Column(length = 350, nullable = false)
+    private String nomeFantasia;
+
+    @Column(length = 14)
+    private String telefone;
+
+    @Column(length = 350, unique = true)
+    private String email;
+
+    @Column(length = 14, unique = true)
+    private String cnpj;
+
+    private Boolean isActive;
+
+    private String site;
 
     @OneToOne()
     @JoinColumn(name = "endereco_id")
