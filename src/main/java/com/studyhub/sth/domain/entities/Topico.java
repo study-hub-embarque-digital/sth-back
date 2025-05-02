@@ -23,6 +23,7 @@ public class Topico {
     private String titulo;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Dificuldade dificuldade;
 
     @ManyToOne()

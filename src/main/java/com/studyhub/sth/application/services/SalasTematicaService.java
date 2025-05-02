@@ -2,6 +2,7 @@ package com.studyhub.sth.application.services;
 
 import com.studyhub.sth.application.dtos.salasTematica.SalaTematicaDto;
 import com.studyhub.sth.domain.entities.SalaTematica;
+import com.studyhub.sth.domain.enums.Dificuldade;
 import com.studyhub.sth.domain.repositories.ISalaTematicaRepository;
 import com.studyhub.sth.domain.services.ISalasTematicaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class SalasTematicaService implements ISalasTematicaService {
         this.salaTematicaRepository = salaTematicaRepository;
     }
 
-    public List<SalaTematicaDto> obterPorRoom(UUID roomId) {
-        List<SalaTematica> salasTematica = this.salaTematicaRepository.findByRoomRoomId(roomId);
+    public List<SalaTematicaDto> obterPorRoom(UUID roomId, Dificuldade dificuldade) {
+        List<SalaTematica> salasTematica = this.salaTematicaRepository.findByRoomAndDifficulty(roomId, dificuldade);
 
         return salasTematica.stream().map(SalaTematicaDto::new).toList();
     }
