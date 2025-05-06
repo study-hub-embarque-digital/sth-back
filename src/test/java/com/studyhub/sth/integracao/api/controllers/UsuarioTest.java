@@ -1,7 +1,7 @@
 package com.studyhub.sth.integracao.api.controllers;
 
 import com.studyhub.sth.application.dtos.users.UsuarioUpdateDto;
-import com.studyhub.sth.domain.entities.Usuario;
+import com.studyhub.sth.domain.before.entities.Usuario;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

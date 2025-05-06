@@ -1,8 +1,8 @@
 package com.studyhub.sth.api.filters;
 
 import com.studyhub.sth.application.services.TokenService;
-import com.studyhub.sth.domain.entities.Usuario;
-import com.studyhub.sth.domain.repositories.IUsuarioRepository;
+import com.studyhub.sth.domain.before.entities.Usuario;
+import com.studyhub.sth.domain.before.repositories.IUsuarioRepository;
 import com.studyhub.sth.libs.core.exceptions.UnauthorizedException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,13 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.UUID;
 
 @Slf4j

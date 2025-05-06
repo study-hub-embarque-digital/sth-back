@@ -1,7 +1,6 @@
 package com.studyhub.sth.application.annotations;
 
-import com.studyhub.sth.domain.annotations.AuthorizeWithRole;
-import com.studyhub.sth.domain.entities.Usuario;
+import com.studyhub.sth.domain.before.annotations.AuthorizeWithRole;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.security.core.Authentication;

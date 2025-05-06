@@ -1,7 +1,7 @@
 package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.duvida.*;
-import com.studyhub.sth.domain.services.IDuvidaService;
+import com.studyhub.sth.domain.before.services.IDuvidaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -2,6 +2,7 @@ package com.studyhub.sth.libs.controller;
 
 import com.studyhub.sth.libs.application.ServiceResponse;
 import com.studyhub.sth.libs.controller.response.ErrorResponse;
+import com.studyhub.sth.libs.controller.response.Response;
 import com.studyhub.sth.libs.controller.response.ResponseError;
 import com.studyhub.sth.libs.controller.response.SuccessResponse;
 import com.studyhub.sth.libs.core.errors.ValidationError;
@@ -48,36 +49,37 @@ public abstract class ControllerBase {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public<T> ResponseEntity<?> internalServerError() {
+    // TODO: make correct implementation of internal server error
+    public<T> ResponseEntity<? extends Response> internalServerError() {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno do servidor, tente novamente mais tarde!");
         return badRequest(errorResponse);
     }
 
-    public<T> ResponseEntity<?> customResponse(T data) {
+    public<TData> ResponseEntity<SuccessResponse<TData>> customResponse(TData data) {
         if (data == null) return noContent();
 
         return ok(data);
     }
 
-    public<T> ResponseEntity<?> customResponse(T data, String message) {
+    public<TData> ResponseEntity<SuccessResponse<TData>> customResponse(TData data, String message) {
         if (data == null) return noContent();
 
         return ok(data, message);
     }
 
-    public<T> ResponseEntity<?> customResponse(List<ResponseError> errors, String message) {
+    public ResponseEntity<ErrorResponse> customResponse(List<ResponseError> errors, String message) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, message);
         errorResponse.addMessages(errors);
         return badRequest(errorResponse);
     }
 
-    public<T> ResponseEntity<?> customResponse(ResponseError error, String message) {
+    public ResponseEntity<ErrorResponse> customResponse(ResponseError error, String message) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, message);
         errorResponse.addMessage(error);
         return badRequest(errorResponse);
     }
 
-    public<T> ResponseEntity<?> customResponse(ServiceResponse<?> data) {
+    public<TData> ResponseEntity<? extends Response> customResponse(ServiceResponse<TData> data) {
         if (!data.getValidationErrors().isEmpty()) {
             ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "");
             errorResponse.addMessages(data.getValidationErrors().stream().map(validationError -> new ResponseError("STH-00", validationError.getError(), validationError.getDescription())).toList());
@@ -87,10 +89,10 @@ public abstract class ControllerBase {
 
         if (data.getResponse() == null) return noContent();
 
-        return ok(data);
+        return ok(data.getResponse());
     }
 
-    public ResponseEntity<?> customResponse(List<ValidationError> data) {
+    public ResponseEntity<ErrorResponse> customResponse(List<ValidationError> data) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "");
         errorResponse.addMessages(data.stream().map(validationError -> new ResponseError("STH-00", validationError.getError(), validationError.getDescription())).toList());
 

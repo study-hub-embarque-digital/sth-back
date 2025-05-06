@@ -1,9 +1,8 @@
 package com.studyhub.sth.infra.redis.entities;
 
-import com.studyhub.sth.domain.entities.Reuniao;
-import com.studyhub.sth.domain.enums.StatusReuniao;
-import com.studyhub.sth.domain.enums.TipoReuniao;
-import jakarta.persistence.Column;
+import com.studyhub.sth.domain.before.entities.Reuniao;
+import com.studyhub.sth.domain.before.enums.StatusReuniao;
+import com.studyhub.sth.domain.before.enums.TipoReuniao;
 import org.springframework.data.annotation.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

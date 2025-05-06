@@ -22,7 +22,7 @@ import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
-import com.studyhub.sth.domain.services.IArtigoService;
+import com.studyhub.sth.domain.before.services.IArtigoService;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;

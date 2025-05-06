@@ -1,16 +1,16 @@
 package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
-import com.studyhub.sth.domain.annotations.AuthorizeWithPermission;
+import com.studyhub.sth.domain.before.annotations.AuthorizeWithPermission;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import com.studyhub.sth.domain.repositories.IEmpresaRepository;
+import com.studyhub.sth.domain.before.repositories.IEmpresaRepository;
 import com.studyhub.sth.application.dtos.empresas.EmpresaCreateDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaUpdateDto;
-import com.studyhub.sth.domain.entities.Empresa;
+import com.studyhub.sth.domain.before.entities.Empresa;
 import com.studyhub.sth.application.services.EmpresaService;
 
 import java.util.UUID;

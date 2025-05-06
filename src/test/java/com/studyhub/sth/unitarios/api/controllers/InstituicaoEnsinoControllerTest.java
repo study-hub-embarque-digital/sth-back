@@ -5,8 +5,8 @@ import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoCrea
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoUpdateDto;
 import com.studyhub.sth.application.services.InstituicaoEnsinoService;
-import com.studyhub.sth.domain.entities.InstituicaoEnsino;
-import com.studyhub.sth.domain.repositories.InstituicaoEnsinoRepository;
+import com.studyhub.sth.domain.before.entities.InstituicaoEnsino;
+import com.studyhub.sth.domain.before.repositories.InstituicaoEnsinoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

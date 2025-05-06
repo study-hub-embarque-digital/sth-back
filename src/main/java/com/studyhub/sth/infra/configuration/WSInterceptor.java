@@ -1,21 +1,16 @@
 package com.studyhub.sth.infra.configuration;
 
 import com.studyhub.sth.application.services.TokenService;
-import com.studyhub.sth.domain.entities.Usuario;
-import com.studyhub.sth.domain.repositories.IUsuarioRepository;
+import com.studyhub.sth.domain.before.entities.Usuario;
+import com.studyhub.sth.domain.before.repositories.IUsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 

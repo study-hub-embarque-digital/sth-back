@@ -4,7 +4,7 @@ import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
-import com.studyhub.sth.domain.services.IArtigoService;
+import com.studyhub.sth.domain.before.services.IArtigoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

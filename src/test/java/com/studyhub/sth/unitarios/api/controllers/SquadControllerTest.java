@@ -4,7 +4,7 @@ import com.studyhub.sth.api.controllers.SquadController;
 import com.studyhub.sth.application.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
-import com.studyhub.sth.domain.services.ISquadService;
+import com.studyhub.sth.domain.before.services.ISquadService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

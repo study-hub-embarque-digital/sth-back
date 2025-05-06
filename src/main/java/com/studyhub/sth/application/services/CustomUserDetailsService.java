@@ -1,7 +1,7 @@
 package com.studyhub.sth.application.services;
 
-import com.studyhub.sth.domain.entities.Usuario;
-import com.studyhub.sth.domain.repositories.IUsuarioRepository;
+import com.studyhub.sth.domain.before.entities.Usuario;
+import com.studyhub.sth.domain.before.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

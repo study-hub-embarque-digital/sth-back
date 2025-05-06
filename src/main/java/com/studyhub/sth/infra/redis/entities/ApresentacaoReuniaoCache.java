@@ -1,7 +1,7 @@
 package com.studyhub.sth.infra.redis.entities;
 
-import com.studyhub.sth.domain.entities.ApresentacaoReuniao;
-import com.studyhub.sth.domain.entities.Topico;
+import com.studyhub.sth.domain.before.entities.ApresentacaoReuniao;
+import com.studyhub.sth.domain.before.entities.Topico;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

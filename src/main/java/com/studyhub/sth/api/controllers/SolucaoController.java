@@ -3,7 +3,7 @@ package com.studyhub.sth.api.controllers;
 import com.studyhub.sth.application.dtos.solucao.CreateSolucaoDto;
 import com.studyhub.sth.application.dtos.solucao.SolucaoDto;
 import com.studyhub.sth.application.dtos.solucao.UpdateSolucaoDto;
-import com.studyhub.sth.domain.services.ISolucaoService;
+import com.studyhub.sth.domain.before.services.ISolucaoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

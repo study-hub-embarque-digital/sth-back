@@ -1,7 +1,7 @@
 package com.studyhub.sth.integracao.api.controllers;
 
-import com.studyhub.sth.domain.entities.ConteudoEstudo;
-import com.studyhub.sth.domain.entities.Room;
+import com.studyhub.sth.domain.before.entities.ConteudoEstudo;
+import com.studyhub.sth.domain.before.entities.Room;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

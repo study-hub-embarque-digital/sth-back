@@ -1,22 +1,11 @@
 package com.studyhub.sth.jobs;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.studyhub.sth.domain.enums.StatusReuniao;
-import com.studyhub.sth.domain.services.IReuniaoService;
-import com.studyhub.sth.infra.redis.entities.ApresentacaoReuniaoCache;
-import com.studyhub.sth.infra.redis.entities.ReuniaoCache;
+import com.studyhub.sth.domain.before.services.IReuniaoService;
 import com.studyhub.sth.infra.redis.repositories.IApresencaoReuniaoCacheRepository;
 import com.studyhub.sth.infra.redis.repositories.IReuniaoRedisRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.StreamSupport;
 
 @Slf4j
 @Component

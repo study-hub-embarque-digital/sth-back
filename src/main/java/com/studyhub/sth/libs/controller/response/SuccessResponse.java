@@ -1,7 +1,9 @@
 package com.studyhub.sth.libs.controller.response;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class SuccessResponse<T> extends Response {
     private final T data;
 

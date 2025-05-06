@@ -3,9 +3,7 @@ package com.studyhub.sth.api.controllers;
 import com.studyhub.sth.application.dtos.representante.RepresentanteCreateDto;
 import com.studyhub.sth.application.dtos.representante.RepresentanteDto;
 import com.studyhub.sth.application.dtos.representante.RepresentanteUpdateDto;
-import com.studyhub.sth.domain.entities.Representante;
-import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
-import com.studyhub.sth.domain.services.IRepresentanteService;
+import com.studyhub.sth.domain.before.services.IRepresentanteService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

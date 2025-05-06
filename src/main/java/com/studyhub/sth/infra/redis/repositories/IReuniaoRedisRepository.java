@@ -1,6 +1,5 @@
 package com.studyhub.sth.infra.redis.repositories;
 
-import com.studyhub.sth.domain.entities.Reuniao;
 import com.studyhub.sth.infra.redis.entities.ReuniaoCache;
 import org.springframework.data.repository.CrudRepository;
 

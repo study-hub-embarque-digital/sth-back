@@ -5,7 +5,6 @@ import com.studyhub.sth.application.dtos.empresas.EmpresaCreateDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaUpdateDto;
 import com.studyhub.sth.application.services.EmpresaService;
-import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

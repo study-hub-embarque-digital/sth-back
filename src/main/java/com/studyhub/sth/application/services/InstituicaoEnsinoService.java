@@ -8,13 +8,13 @@ import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoCrea
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoListDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoUpdateDto;
-import com.studyhub.sth.domain.services.IInstituicaoEnsinoService;
+import com.studyhub.sth.domain.before.services.IInstituicaoEnsinoService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.studyhub.sth.domain.entities.InstituicaoEnsino;
+import com.studyhub.sth.domain.before.entities.InstituicaoEnsino;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.domain.repositories.InstituicaoEnsinoRepository;
+import com.studyhub.sth.domain.before.repositories.InstituicaoEnsinoRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service

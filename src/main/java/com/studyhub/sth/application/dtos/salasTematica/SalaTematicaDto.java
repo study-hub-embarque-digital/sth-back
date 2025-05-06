@@ -1,7 +1,7 @@
 package com.studyhub.sth.application.dtos.salasTematica;
 
 
-import com.studyhub.sth.domain.entities.SalaTematica;
+import com.studyhub.sth.domain.before.entities.SalaTematica;
 
 import java.util.UUID;
 

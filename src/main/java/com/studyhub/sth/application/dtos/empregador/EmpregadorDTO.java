@@ -1,6 +1,6 @@
 package com.studyhub.sth.application.dtos.empregador;
 
-import com.studyhub.sth.domain.enums.TipoVinculo;
+import com.studyhub.sth.domain.before.enums.TipoVinculo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

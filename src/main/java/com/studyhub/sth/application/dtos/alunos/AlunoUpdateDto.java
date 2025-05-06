@@ -1,8 +1,8 @@
 package com.studyhub.sth.application.dtos.alunos;
 
 import com.studyhub.sth.application.dtos.users.UsuarioUpdateDto;
-import com.studyhub.sth.domain.enums.Ciclo;
-import com.studyhub.sth.domain.enums.Periodo;
+import com.studyhub.sth.domain.before.enums.Ciclo;
+import com.studyhub.sth.domain.before.enums.Periodo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

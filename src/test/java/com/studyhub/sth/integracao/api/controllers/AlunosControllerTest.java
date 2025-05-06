@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import com.studyhub.sth.domain.enums.Periodo;
+import com.studyhub.sth.domain.before.enums.Periodo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,8 +21,8 @@ import com.studyhub.sth.api.controllers.AlunosController;
 import com.studyhub.sth.application.dtos.alunos.AlunoCreateDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
-import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
-import com.studyhub.sth.domain.services.IAlunoService;
+import com.studyhub.sth.domain.before.exceptions.ElementoNaoEncontradoExcecao;
+import com.studyhub.sth.domain.before.services.IAlunoService;
 
 public class AlunosControllerTest {
 

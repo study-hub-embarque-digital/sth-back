@@ -3,7 +3,7 @@ package com.studyhub.sth.api.controllers;
 import com.studyhub.sth.application.dtos.job.JobCreateDto;
 import com.studyhub.sth.application.dtos.job.JobListDto;
 import com.studyhub.sth.application.dtos.job.JobUpdateDto;
-import com.studyhub.sth.domain.services.IJobService;
+import com.studyhub.sth.domain.before.services.IJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

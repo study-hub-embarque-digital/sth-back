@@ -1,20 +1,17 @@
 package com.studyhub.sth.unitarios.api.controllers;
 
 import com.studyhub.sth.api.controllers.ArtigoController;
-import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
-import com.studyhub.sth.domain.services.IArtigoService;
+import com.studyhub.sth.domain.before.services.IArtigoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;

@@ -1,10 +1,9 @@
 package com.studyhub.sth.api.controllers;
 
-import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
-import com.studyhub.sth.domain.services.IUsuarioService;
+import com.studyhub.sth.domain.before.exceptions.ElementoNaoEncontradoExcecao;
+import com.studyhub.sth.domain.before.services.IUsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

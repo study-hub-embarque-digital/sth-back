@@ -3,7 +3,7 @@ package com.studyhub.sth.api.controllers;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorCreateDto;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorListDto;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorUpdateDto;
-import com.studyhub.sth.domain.services.IEmpregadorService;
+import com.studyhub.sth.domain.before.services.IEmpregadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

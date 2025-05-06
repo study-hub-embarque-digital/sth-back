@@ -1,7 +1,7 @@
 package com.studyhub.sth.application.dtos.apresentacoesReunioes;
 
-import com.studyhub.sth.domain.entities.ApresentacaoReuniao;
-import com.studyhub.sth.domain.entities.Topico;
+import com.studyhub.sth.domain.before.entities.ApresentacaoReuniao;
+import com.studyhub.sth.domain.before.entities.Topico;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

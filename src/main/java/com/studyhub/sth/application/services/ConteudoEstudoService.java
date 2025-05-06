@@ -5,7 +5,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoUpdateDto;
-import com.studyhub.sth.domain.services.IConteudoEstudoService;
+import com.studyhub.sth.domain.before.services.IConteudoEstudoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoCreateDto;
 import com.studyhub.sth.application.dtos.conteudoEstudo.ConteudoEstudoDto;
-import com.studyhub.sth.domain.entities.ConteudoEstudo;
-import com.studyhub.sth.domain.entities.Room;
+import com.studyhub.sth.domain.before.entities.ConteudoEstudo;
+import com.studyhub.sth.domain.before.entities.Room;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.domain.repositories.IConteudoEstudoRepository;
-import com.studyhub.sth.domain.repositories.IRoomRepository;
+import com.studyhub.sth.domain.before.repositories.IConteudoEstudoRepository;
+import com.studyhub.sth.domain.before.repositories.IRoomRepository;
 
 @Service
 public class ConteudoEstudoService implements IConteudoEstudoService {

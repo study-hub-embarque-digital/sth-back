@@ -3,11 +3,11 @@ package com.studyhub.sth.application.services;
 import com.studyhub.sth.application.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
-import com.studyhub.sth.domain.entities.Aluno;
-import com.studyhub.sth.domain.entities.Representante;
-import com.studyhub.sth.domain.entities.Squad;
-import com.studyhub.sth.domain.repositories.*;
-import com.studyhub.sth.domain.services.ISquadService;
+import com.studyhub.sth.domain.before.entities.Aluno;
+import com.studyhub.sth.domain.before.entities.Representante;
+import com.studyhub.sth.domain.squads.Squad;
+import com.studyhub.sth.domain.before.repositories.*;
+import com.studyhub.sth.domain.before.services.ISquadService;
 import com.studyhub.sth.libs.mapper.IMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -32,7 +32,7 @@ public class SquadService implements ISquadService {
     private IRepresentanteRepository representanteRepository;
 
     @Autowired
-    private IEmpresaRepository IEmpresaRepository;
+    private com.studyhub.sth.domain.before.repositories.IEmpresaRepository IEmpresaRepository;
 
     @Autowired
     private IMentorRepository mentorRepository;

@@ -8,12 +8,12 @@ import com.studyhub.sth.application.dtos.mentor.MentorCreateDto;
 import com.studyhub.sth.application.dtos.representante.RepresentanteCreateDto;
 import com.studyhub.sth.application.dtos.users.UsuarioCreateDto;
 import com.studyhub.sth.application.dtos.users.UsuarioLoginDto;
-import com.studyhub.sth.domain.entities.*;
-import com.studyhub.sth.domain.enums.RolesUsuario;
-import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
-import com.studyhub.sth.domain.repositories.*;
-import com.studyhub.sth.domain.services.IAuthService;
-import com.studyhub.sth.domain.repositories.IRoleRepository;
+import com.studyhub.sth.domain.before.entities.*;
+import com.studyhub.sth.domain.before.enums.RolesUsuario;
+import com.studyhub.sth.domain.before.exceptions.ElementoNaoEncontradoExcecao;
+import com.studyhub.sth.domain.before.repositories.*;
+import com.studyhub.sth.domain.before.services.IAuthService;
+import com.studyhub.sth.libs.application.ServiceResponse;
 import com.studyhub.sth.libs.mapper.IMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,17 +54,22 @@ public class AuthService implements IAuthService {
 
     @Override
     @Transactional
-    public AuthResponse criaAluno(AlunoCreateDto novoAlunoDto) throws Exception {
+    public ServiceResponse<AuthResponse> criaAluno(AlunoCreateDto novoAlunoDto) throws Exception {
+        ServiceResponse<AuthResponse> response = new ServiceResponse<>();
         Usuario usuario = this.criaUsuario(novoAlunoDto.getNovoUsuarioDto(), RolesUsuario.aluno);
-        InstituicaoEnsino instituicaoEnsino = instituicaoEnsinoRepository.findById(novoAlunoDto.getInstituicaoEnsinoId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar a instituição de ensino do aluno."));
+        Optional<InstituicaoEnsino> instituicaoEnsino = instituicaoEnsinoRepository.findById(novoAlunoDto.getInstituicaoEnsinoId());
+
+        if (instituicaoEnsino.isEmpty()) {
+            return response.fail("");
+        }
 
         Aluno aluno = this.mapper.map(novoAlunoDto, Aluno.class);
         aluno.setUsuario(usuario);
-        aluno.setInstituicaoEnsino(instituicaoEnsino);
+        aluno.setInstituicaoEnsino(instituicaoEnsino.get());
 
         this.alunoRepositorio.save(aluno);
 
-        return new AuthResponse(tokenService.generateToken(usuario), tokenService.generateRefreshToken(usuario));
+        return response.success(new AuthResponse(tokenService.generateToken(usuario), tokenService.generateRefreshToken(usuario)));
     }
 
     @Override
@@ -109,12 +114,16 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public AuthResponse login(UsuarioLoginDto usuarioLoginDto) throws Exception {
-        Usuario usuario = this.usuarioRepositorio.findByEmail(usuarioLoginDto.getEmail()).orElseThrow(() -> new Exception("Email ou senha incorretos"));
+    public ServiceResponse<AuthResponse> login(UsuarioLoginDto usuarioLoginDto) throws Exception {
+        ServiceResponse<AuthResponse> response = new ServiceResponse<>();
 
-        if (!passwordEncoder.matches(usuarioLoginDto.getSenha(), usuario.getSenha())) throw new Exception("Usuário ou senha incorretos");
+        Optional<Usuario> usuario = this.usuarioRepositorio.findByEmail(usuarioLoginDto.getEmail());
 
-        return new AuthResponse(tokenService.generateToken(usuario), tokenService.generateRefreshToken(usuario));
+        if (usuario.isEmpty()) return response.fail("Email ou senha incorretos");
+
+        if (!passwordEncoder.matches(usuarioLoginDto.getSenha(), usuario.get().getSenha())) return response.fail("Email ou senha incorretos");
+
+        return response.success(new AuthResponse(tokenService.generateToken(usuario.get()), tokenService.generateRefreshToken(usuario.get())));
     }
 
     @Override

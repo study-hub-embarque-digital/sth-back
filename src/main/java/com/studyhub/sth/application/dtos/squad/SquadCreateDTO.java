@@ -1,6 +1,6 @@
 package com.studyhub.sth.application.dtos.squad;
 
-import com.studyhub.sth.domain.enums.TipoSquad;
+import com.studyhub.sth.domain.squads.TipoSquad;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

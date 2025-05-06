@@ -2,7 +2,7 @@ package com.studyhub.sth.infra.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studyhub.sth.application.services.TokenService;
-import com.studyhub.sth.domain.repositories.IUsuarioRepository;
+import com.studyhub.sth.domain.before.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.DefaultContentTypeResolver;

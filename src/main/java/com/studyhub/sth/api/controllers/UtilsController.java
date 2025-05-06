@@ -1,14 +1,12 @@
 package com.studyhub.sth.api.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.studyhub.sth.application.dtos.empresas.EmpresaListDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoListDto;
 import com.studyhub.sth.application.services.TokenService;
-import com.studyhub.sth.domain.annotations.CurrentUser;
-import com.studyhub.sth.domain.entities.Usuario;
-import com.studyhub.sth.domain.services.IEmpresaService;
-import com.studyhub.sth.domain.services.IInstituicaoEnsinoService;
-import com.studyhub.sth.libs.ai.messages.deepseak.DSPromptResponse;
+import com.studyhub.sth.domain.before.annotations.CurrentUser;
+import com.studyhub.sth.domain.before.entities.Usuario;
+import com.studyhub.sth.domain.before.services.IEmpresaService;
+import com.studyhub.sth.domain.before.services.IInstituicaoEnsinoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

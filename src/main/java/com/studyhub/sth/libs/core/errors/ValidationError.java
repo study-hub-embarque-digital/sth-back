@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class ValidationError {
     private final String error;
-    private String description;
+    private final String description;
 
     public ValidationError(String error, String description) {
         this.error = error;
@@ -14,5 +14,6 @@ public class ValidationError {
 
     public ValidationError(String error) {
         this.error = error;
+        this.description = "";
     }
 }

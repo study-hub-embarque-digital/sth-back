@@ -7,15 +7,15 @@ import java.util.stream.Collectors;
 import com.studyhub.sth.application.dtos.empresas.EmpresaCreateDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaListDto;
-import com.studyhub.sth.domain.services.IEmpresaService;
+import com.studyhub.sth.domain.before.services.IEmpresaService;
 import com.studyhub.sth.libs.mapper.IMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.studyhub.sth.application.dtos.empresas.EmpresaUpdateDto;
-import com.studyhub.sth.domain.entities.Empresa;
-import com.studyhub.sth.domain.repositories.IEmpresaRepository;
+import com.studyhub.sth.domain.before.entities.Empresa;
+import com.studyhub.sth.domain.before.repositories.IEmpresaRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 

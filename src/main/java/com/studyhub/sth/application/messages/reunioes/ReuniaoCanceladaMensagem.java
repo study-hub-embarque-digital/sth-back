@@ -1,6 +1,6 @@
 package com.studyhub.sth.application.messages.reunioes;
 
-import com.studyhub.sth.domain.enums.StatusReuniao;
+import com.studyhub.sth.domain.before.enums.StatusReuniao;
 import com.studyhub.sth.libs.core.BaseWSResponseMessage;
 import com.studyhub.sth.libs.core.WSMessageContext;
 import lombok.Getter;

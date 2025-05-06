@@ -3,7 +3,7 @@ package com.studyhub.sth.unitarios.api.controllers;
 import com.studyhub.sth.api.controllers.TagController;
 import com.studyhub.sth.application.dtos.tag.TagCreateAndUpdateDTO;
 import com.studyhub.sth.application.dtos.tag.TagDto;
-import com.studyhub.sth.domain.services.ITagService;
+import com.studyhub.sth.domain.before.services.ITagService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;

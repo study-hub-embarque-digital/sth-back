@@ -1,13 +1,12 @@
 package com.studyhub.sth.application.dtos.users;
 
 import com.studyhub.sth.application.dtos.job.JobDto;
-import com.studyhub.sth.domain.enums.Gender;
+import com.studyhub.sth.domain.before.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Getter

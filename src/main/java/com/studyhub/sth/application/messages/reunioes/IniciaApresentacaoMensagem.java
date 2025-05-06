@@ -1,7 +1,6 @@
 package com.studyhub.sth.application.messages.reunioes;
 
-import com.studyhub.sth.application.dtos.apresentacoesReunioes.ListApresentacaoReuniaoDto;
-import com.studyhub.sth.domain.enums.StatusReuniao;
+import com.studyhub.sth.domain.before.enums.StatusReuniao;
 import com.studyhub.sth.libs.core.BaseWSResponseMessage;
 import com.studyhub.sth.libs.core.WSMessageContext;
 import lombok.Data;
@@ -9,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)

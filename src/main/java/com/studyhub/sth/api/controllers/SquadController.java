@@ -3,7 +3,7 @@ package com.studyhub.sth.api.controllers;
 import com.studyhub.sth.application.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
-import com.studyhub.sth.domain.services.ISquadService;
+import com.studyhub.sth.domain.before.services.ISquadService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
