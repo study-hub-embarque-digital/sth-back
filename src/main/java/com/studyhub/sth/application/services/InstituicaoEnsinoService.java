@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.studyhub.sth.application.dtos.enderecos.EnderecoDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoCreateDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoListDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoUpdateDto;
+import com.studyhub.sth.domain.entities.Endereco;
+import com.studyhub.sth.domain.repositories.IEnderecoRepository;
 import com.studyhub.sth.domain.services.IInstituicaoEnsinoService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,9 @@ public class InstituicaoEnsinoService implements IInstituicaoEnsinoService {
 
     @Autowired
     private InstituicaoEnsinoRepository instituicaoEnsinoRepository;
+
+    @Autowired
+    private IEnderecoRepository enderecoRepository;
 
     @Override
     public List<InstituicaoEnsinoDto> findAll() {
@@ -48,8 +54,12 @@ public class InstituicaoEnsinoService implements IInstituicaoEnsinoService {
     @Override
     @Transactional
     public InstituicaoEnsinoDto save(InstituicaoEnsinoCreateDto dto) {
-        InstituicaoEnsino instituicao = this.mapper.map(dto, InstituicaoEnsino.class);
+        Endereco endereco = new Endereco(1, 1, dto.getEndereco().getCep(), dto.getEndereco().getLogradouro(), dto.getEndereco().getCidade(), dto.getEndereco().getEstado(), dto.getEndereco().getComplemento(), dto.getEndereco().getNumero());
+        this.enderecoRepository.save(endereco);
+
+        InstituicaoEnsino instituicao = new InstituicaoEnsino(dto.getCoordenador(), dto.getRazaoSocial(), dto.getNomeFantasia(), dto.getTelefone(), dto.getEmail(), dto.getCnpj(), dto.getSite(), endereco);
         this.instituicaoEnsinoRepository.save(instituicao);
+
         return this.mapper.map(instituicao, InstituicaoEnsinoDto.class);
     }
 
@@ -67,17 +77,17 @@ public class InstituicaoEnsinoService implements IInstituicaoEnsinoService {
         if (dto.getCoordenador() != null) {
             instituicao.setCoordenador(dto.getCoordenador());
         }
-        if (dto.getNome() != null) {
-            instituicao.setNome(dto.getNome());
-        }
+//        if (dto.getNome() != null) {
+//            instituicao.setNome(dto.getNome());
+//        }
         if (dto.getEmail() != null){
-            instituicao.setNome(dto.getEmail());
+            instituicao.setEmail(dto.getEmail());
         }
         if (dto.getTelefone() != null){
-            instituicao.setNome(dto.getTelefone());
+            instituicao.setTelefone(dto.getTelefone());
         }
         if (dto.getSite() != null){
-            instituicao.setNome(dto.getSite());
+            instituicao.setSite(dto.getSite());
         }
         if(dto.getIsActive() != null){
             instituicao.setIsActive(dto.getIsActive());
