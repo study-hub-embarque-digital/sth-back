@@ -2,7 +2,7 @@ package com.studyhub.sth.domain.enums;
 
 public enum Ethnicity {
     PRETO,
-    PARTO,
+    PARDO,
     BRANCO,
     INDIGENA,
     AMARELO,
