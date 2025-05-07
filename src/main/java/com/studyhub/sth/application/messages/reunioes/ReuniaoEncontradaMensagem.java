@@ -13,10 +13,12 @@ import java.util.UUID;
 public class ReuniaoEncontradaMensagem extends BaseWSResponseMessage<ReunioesMensagens> {
     private UUID reuniaoId;
     private StatusReuniao status;
+    private String token;
 
-    public ReuniaoEncontradaMensagem(UUID reuniaoId, StatusReuniao status) {
+    public ReuniaoEncontradaMensagem(UUID reuniaoId, StatusReuniao status, String token) {
         super(WSMessageContext.REUNIOES, ReunioesMensagens.REUNIAO_ENCONTRADA);
         this.reuniaoId = reuniaoId;
         this.status = status;
+        this.token = token;
     }
 }

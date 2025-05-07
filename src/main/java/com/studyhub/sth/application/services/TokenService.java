@@ -41,44 +41,12 @@ public class TokenService {
     private IRefreshTokenRepository refreshTokenRepository;
     @Autowired
     private ObjectMapper objectMapper;
-    private final String privKey = "-----BEGIN PRIVATE KEY-----\n" +
-            "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCdQ2ha7ZW+RvAa\n" +
-            "G2aGDvZt2yBiki5qhnBq/NJjsBKIYsaThPU80rBSngv8XXGtMiep/A5+GyhKiBvf\n" +
-            "UVLUEyQNPmK53UPRe89X5vEdjSP3bSiqWGam7Ehfz0XggUHDpfNHznyij9eytKKF\n" +
-            "n44cpnZPZL4MgaSfxb5+PDlJQslN/JbtAk1EptBLEV9vQpfifyNAnCQjiLOn1EJn\n" +
-            "d7j8r/4Fq3auQ7ilkIQNrb3pVbD4NQj6BJhoGy1i9yBzd4IU7KA+EseWsibKtisI\n" +
-            "ploKkf6ttz44XUXODKS9RTcoafoyYcsaH/Jp2Ul2bzyW4lpa51dAlymUouugo1YU\n" +
-            "fIuqsExPAgMBAAECggEAA2omRusnuDT0G60CoeCLS0FZx6oi5d87a6dHrjBxhpKW\n" +
-            "ezeE16g/edvCqN0ijb8sC03UxroyOsQPzt6GLOKpgrwbCqwaP98vVlpGW/znjgTJ\n" +
-            "wEEhIXi57ZKjksdbtTLSQHnkTOdQqKmxabNYM5kNspWeZskd2PZDN5x5JfUUR+Qu\n" +
-            "YFrj22d+LzvRULc6Y65SswFgx8XHOqigiaYcGSXhKDCFyHtAphfhzpHjwGVcxFSS\n" +
-            "8i+EBUjSYLkrcEu6nv5zLzB65j9lYEusPi3LDigv+zwK96mzHjNDIwiqWkO9dFb1\n" +
-            "zH+s9HaqYLVOJ0xVn82RS/I5o6MJji5iFWo/BIlSUQKBgQDh9iahw/HpTy/zEPN0\n" +
-            "tQgpwt1hciht3pGOXy10XfFUc0KPB/FUh3ogYtj3BkXP5YLgxvKPb7aB261Ao/PA\n" +
-            "IkIogaxlwGU51+VLwM5xG/cKk/72crbcjrQMYLEhYEXt/oIObnllNvZZx2gHVEA1\n" +
-            "OUukjv136zY7YObhi/Gd9VrtlwKBgQCyK1dncm50b46R3zNp5TIvCvQ61w4OqF1L\n" +
-            "GZ/ETcsFTy8pUCR+JBvN6Gl/aiXMQn0JTLaboEURb0NeYKpFgX64NKJ0DmBsMcXN\n" +
-            "IyMRDx+yLjlp04/2fPvim5RgGAAeLa7HYc46a0OSbWvMROJiRenv8qGBHPrGsoZB\n" +
-            "1mF5K9PeCQKBgQCSB7R7wthqQYTpf0D3Ya9+3bKYsWAzcS18Z0JG/BdkzoBrU2TB\n" +
-            "jjR9DaTOMD2Z1+e3QJut2zKFxeS3670xpHJBH1y8/ZPtx/sl89r2+m2zZmXV+9j1\n" +
-            "vTva6/pNaZyH7H08umS15slayCYQ5oAAZaDfHpHsmBQaV8ueZASoYtJ6zQKBgHK2\n" +
-            "KwEkkO8QgDd1AHI2qdfV8qcLnTZcuixHJDFMcOFLOS8dNVGtx+ULtRje69UWHdDl\n" +
-            "/lA2oSF3hGV4UUiM9lx9LvcP5o7igNrxu3sZRKwAzOBQ4Uiu8bHVv3MbIMBNY1Fl\n" +
-            "rFS6iPf20UfkNelV4CeoDMnHMcLKYFx1Pa65RCCZAoGBAIOBs2L9XbWpCxVC+ES1\n" +
-            "2XEdJ3Y4D8GX4BmcjBwyCNGFMvvkKBQYAb4tEi6hjYlJkaMamoJttHoXBsTeUUfD\n" +
-            "J/Unue51oQDc48dU2we4b1izwBoM6eg9rtIo32lyH0NnzZwwZ4wbTDoiEXvfvdYk\n" +
-            "dB+6BLWDW2EiLmE2jhEr5ktW\n" +
-            "-----END PRIVATE KEY-----";
-
-    private final String publicKeyPem = "-----BEGIN PUBLIC KEY-----\n" +
-            "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnUNoWu2VvkbwGhtmhg72\n" +
-            "bdsgYpIuaoZwavzSY7ASiGLGk4T1PNKwUp4L/F1xrTInqfwOfhsoSogb31FS1BMk\n" +
-            "DT5iud1D0XvPV+bxHY0j920oqlhmpuxIX89F4IFBw6XzR858oo/XsrSihZ+OHKZ2\n" +
-            "T2S+DIGkn8W+fjw5SULJTfyW7QJNRKbQSxFfb0KX4n8jQJwkI4izp9RCZ3e4/K/+\n" +
-            "Bat2rkO4pZCEDa296VWw+DUI+gSYaBstYvcgc3eCFOygPhLHlrImyrYrCKZaCpH+\n" +
-            "rbc+OF1FzgykvUU3KGn6MmHLGh/yadlJdm88luJaWudXQJcplKLroKNWFHyLqrBM\n" +
-            "TwIDAQAB\n" +
-            "-----END PUBLIC KEY-----\n";
+    @Value("${jitsi.private-key}")
+    private String privKey;
+    @Value("${jitsi.public-key}")
+    private String publicKeyPem;
+    @Value("${jitsi.key-id}")
+    private String jitsiKeyId;
 
     public String generateToken(Usuario usuario) {
         try {
@@ -155,8 +123,8 @@ public class TokenService {
 
             // 1) Constrói o PrivateKey a partir da string PEM
             String privatePemClean = privKey
-                    .replaceAll("-----BEGIN (.*)-----", "")
-                    .replaceAll("-----END (.*)-----", "")
+                    .replace("-----BEGIN PRIVATE KEY-----", "")
+                    .replace("-----END PRIVATE KEY-----", "")
                     .replaceAll("\\s", "");
             byte[] privateBytes = Base64.getDecoder().decode(privatePemClean);
             PKCS8EncodedKeySpec privateSpec = new PKCS8EncodedKeySpec(privateBytes);
@@ -164,8 +132,8 @@ public class TokenService {
 
             // 2) Constrói o PublicKey a partir da string PEM
             String publicPemClean = publicKeyPem
-                    .replaceAll("-----BEGIN (.*)-----", "")
-                    .replaceAll("-----END (.*)-----", "")
+                    .replace("-----BEGIN PUBLIC KEY-----", "")
+                    .replace("-----END PUBLIC KEY-----", "")
                     .replaceAll("\\s", "");
             byte[] publicBytes = Base64.getDecoder().decode(publicPemClean);
             X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(publicBytes);
@@ -182,7 +150,7 @@ public class TokenService {
             Map<String, Object> context = objectMapper.convertValue(jitsiContext, Map.class);
 
             String token = JWT.create()
-                    .withKeyId("vpaas-magic-cookie-5949bf32cbbe4eb082c593fa88929944/5ba92b")
+                    .withKeyId(jitsiKeyId)
                     .withIssuer("chat")
                     .withSubject("vpaas-magic-cookie-5949bf32cbbe4eb082c593fa88929944")
                     .withAudience("jitsi")

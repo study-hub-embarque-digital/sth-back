@@ -2,6 +2,7 @@ package com.studyhub.sth.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,8 +37,10 @@ public class Empresa {
     @OneToMany(mappedBy = "empresa")
     private List<Representante> representantes;
 
+    @ColumnDefault("true")
     private boolean isActive;
 
+    @ColumnDefault("true")
     private boolean isInPortoDigital;
 
     private String site;

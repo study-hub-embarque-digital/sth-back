@@ -26,4 +26,15 @@ public class Endereco {
     private String estado;
     private String complemento;
     private String numero;
+
+    public Endereco(double lagitude, double longitude, String cep, String logradouro, String cidade, String estado, String complemento, String numero) {
+        this.lagitude = lagitude;
+        this.longitude = longitude;
+        this.cep = cep;
+        this.logradouro = logradouro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.complemento = complemento;
+        this.numero = numero;
+    }
 }

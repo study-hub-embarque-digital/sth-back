@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
@@ -32,9 +34,10 @@ public class ReuniaoService implements IReuniaoService {
     private final IApresencaoReuniaoCacheRepository apresencaoReuniaoCacheRepository;
     private final String wsUsurioTopico = "/topic/user/";
     private final String wsReunioesTopico = "/topic/reunioes/";
+    private final TokenService tokenService;
 
     @Autowired
-    public ReuniaoService(IReuniaoRepository reuniaoRepository, ISalaTematicaRepository salaTematicaRepository, IReuniaoRedisRepository reuniaoRedisRepository, SimpMessageSendingOperations messagingTemplate, IUsuarioRepository usuarioRepository, ITopicoRepository topicoRepository, IApresentacaoReuniaoRepository apresentacaoReuniaoRepository, IApresencaoReuniaoCacheRepository apresencaoReuniaoCacheRepository) {
+    public ReuniaoService(IReuniaoRepository reuniaoRepository, ISalaTematicaRepository salaTematicaRepository, IReuniaoRedisRepository reuniaoRedisRepository, SimpMessageSendingOperations messagingTemplate, IUsuarioRepository usuarioRepository, ITopicoRepository topicoRepository, IApresentacaoReuniaoRepository apresentacaoReuniaoRepository, IApresencaoReuniaoCacheRepository apresencaoReuniaoCacheRepository, TokenService tokenService) {
         this.reuniaoRepository = reuniaoRepository;
         this.salaTematicaRepository = salaTematicaRepository;
         this.reuniaoRedisRepository = reuniaoRedisRepository;
@@ -43,9 +46,10 @@ public class ReuniaoService implements IReuniaoService {
         this.topicoRepository = topicoRepository;
         this.apresentacaoReuniaoRepository = apresentacaoReuniaoRepository;
         this.apresencaoReuniaoCacheRepository = apresencaoReuniaoCacheRepository;
+        this.tokenService = tokenService;
     }
 
-    public void entrarReuniaoSalaTematica(UUID salaTematicaId, UUID usuarioAtual) {
+    public void entrarReuniaoSalaTematica(UUID salaTematicaId, UUID usuarioAtual) throws NoSuchAlgorithmException, InvalidKeySpecException {
         Usuario usuarioAtualPeloBanco = this.usuarioRepository.findById(usuarioAtual).orElseThrow(() -> new RuntimeException("asd"));
         List<Reuniao> reunioesDisponiveis = this.reuniaoRepository.findAvailableReunioes(salaTematicaId);
         Optional<Reuniao> reuniaoDisponivel = reunioesDisponiveis.stream().findFirst();
@@ -55,7 +59,7 @@ public class ReuniaoService implements IReuniaoService {
             reuniaoDisponivel.get().addParticipante(usuarioAtualPeloBanco);
             this.reuniaoRepository.save(reuniaoDisponivel.get());
             this.reuniaoRedisRepository.save(new ReuniaoCache(reuniaoDisponivel.get()));
-            this.messagingTemplate.convertAndSend(wsUsurioTopico + usuarioAtual.toString(), new ReuniaoEncontradaMensagem(reuniaoDisponivel.get().getReuniaoId(), reuniaoDisponivel.get().getStatus()));
+            this.messagingTemplate.convertAndSend(wsUsurioTopico + usuarioAtual.toString(), new ReuniaoEncontradaMensagem(reuniaoDisponivel.get().getReuniaoId(), reuniaoDisponivel.get().getStatus(), this.tokenService.generateJitsiToken(usuarioAtualPeloBanco, reuniaoDisponivel.get().getReuniaoId().toString())));
 
             if (reuniaoDisponivel.get().getStatus() == StatusReuniao.AGUARDANDO_PARTICIPANTES) {
                 this.messagingTemplate.convertAndSend(wsReunioesTopico + reuniaoDisponivel.get().getReuniaoId().toString(), new AguardandoMaisParticipantes(reuniaoDisponivel.get().getReuniaoId(), reuniaoDisponivel.get().getStatus()));
@@ -70,7 +74,7 @@ public class ReuniaoService implements IReuniaoService {
 
         this.reuniaoRepository.save(novaReuniao);
         this.reuniaoRedisRepository.save(new ReuniaoCache(novaReuniao));
-        this.messagingTemplate.convertAndSend(wsUsurioTopico + usuarioAtual.toString(), new ReuniaoEncontradaMensagem(novaReuniao.getReuniaoId(), novaReuniao.getStatus()));
+        this.messagingTemplate.convertAndSend(wsUsurioTopico + usuarioAtual.toString(), new ReuniaoEncontradaMensagem(novaReuniao.getReuniaoId(), novaReuniao.getStatus(), this.tokenService.generateJitsiToken(usuarioAtualPeloBanco, novaReuniao.getReuniaoId().toString())));
     }
 
     public void cancelarReunioes(List<UUID> reunioesParaCancelarIds) {

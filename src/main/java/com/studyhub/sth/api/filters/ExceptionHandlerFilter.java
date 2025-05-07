@@ -34,10 +34,10 @@ public class ExceptionHandlerFilter extends ControllerBase {
                 .body("The requested media type is not supported. Supported types: " + ex.getMessage());
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Retorno> badRequestExceptionHandler(Exception exception) {
-        return new ResponseEntity<>(new Retorno(exception.getMessage()), HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Retorno> badRequestExceptionHandler(Exception exception) {
+//        return new ResponseEntity<>(new Retorno(exception.getMessage()), HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<Retorno> handleMissingParams(MissingServletRequestParameterException ex) {
