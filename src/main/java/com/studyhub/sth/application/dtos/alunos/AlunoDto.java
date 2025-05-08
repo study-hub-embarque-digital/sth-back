@@ -23,6 +23,6 @@ public class AlunoDto {
     private UsuarioDto usuarioDto;
     private InstituicaoEnsinoSemReferenciaDto instituicaoEnsinoDto;
     private Ciclo ciclo;
-    private boolean isWorkingInIt;
-    private boolean isExemptedResidence;
+    private Boolean isWorkingInIt;
+    private Boolean isExemptedResidence;
 }

@@ -1,6 +1,5 @@
 package com.studyhub.sth.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.domain.enums.Ciclo;
 import com.studyhub.sth.domain.enums.Periodo;
@@ -43,10 +42,10 @@ public class Aluno {
     private Squad squad;
 
     @Column(name = "is_working_in_it", nullable = true)
-    private boolean isWorkingInIt;
+    private Boolean isWorkingInIt;
 
     @Column(name = "is_exempted_residence",nullable = true)
-    private boolean isExemptedResidence;
+    private Boolean isExemptedResidence;
 
     //lista squads
 
@@ -54,7 +53,7 @@ public class Aluno {
         this.periodo = alunoAtualizadoDto.getPeriodo();
         this.curso = alunoAtualizadoDto.getCurso();
         this.ciclo = alunoAtualizadoDto.getCiclo();
-        this.isExemptedResidence = alunoAtualizadoDto.isExemptedResidence();
-        this.isWorkingInIt = alunoAtualizadoDto.isWorkingInIt();
+        this.isExemptedResidence = alunoAtualizadoDto.getIsExemptedResidence();
+        this.isWorkingInIt = alunoAtualizadoDto.getIsWorkingInIt();
     }
 }

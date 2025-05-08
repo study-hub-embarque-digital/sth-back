@@ -20,6 +20,6 @@ public class AlunoCreateDto {
     private String curso;
     private UUID instituicaoEnsinoId;
     private Ciclo ciclo;
-    private boolean isWorkingInIt;
-    private boolean isExemptedResidence;
+    private Boolean isWorkingInIt;
+    private Boolean isExemptedResidence;
 }
