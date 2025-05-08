@@ -1,6 +1,7 @@
 package com.studyhub.sth.application.services;
 
 import com.studyhub.sth.application.dtos.empregador.EmpregadorCreateDto;
+import com.studyhub.sth.application.dtos.empregador.EmpregadorDTO;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorListDto;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorUpdateDto;
 import com.studyhub.sth.domain.entities.Empregador;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -76,5 +78,13 @@ public class EmpregadorService  implements IEmpregadorService {
     public void deletar(UUID id) {
         var empregador = this.empregadorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Empregador não encontrado"));
         this.empregadorRepository.delete(empregador);
+    }
+
+    @Override
+    public EmpregadorDTO findEmpregadorByCnpjEmpresa(String cnpjEmpresa) {
+        var empregador = this.empregadorRepository.findEmpregadorByCnpjEmpresa(cnpjEmpresa)
+                .orElseThrow(() -> new EntityNotFoundException("Empregador não encontrado!"));
+
+        return this.mapper.map(empregador,EmpregadorDTO.class);
     }
 }

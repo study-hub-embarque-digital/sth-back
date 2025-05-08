@@ -3,7 +3,11 @@ package com.studyhub.sth.application.services;
 import com.studyhub.sth.application.dtos.job.JobCreateDto;
 import com.studyhub.sth.application.dtos.job.JobListDto;
 import com.studyhub.sth.application.dtos.job.JobUpdateDto;
+import com.studyhub.sth.domain.entities.Empregador;
 import com.studyhub.sth.domain.entities.Job;
+import com.studyhub.sth.domain.entities.Usuario;
+import com.studyhub.sth.domain.repositories.IEmpregadorRepository;
+import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.domain.services.IJobService;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IJobRepository;
@@ -25,12 +29,28 @@ public class JobService  implements IJobService {
     @Autowired
     private IJobRepository jobRepository;
 
+    @Autowired
+    private IUsuarioRepository usuarioRepository;
+
+    @Autowired
+    private IEmpregadorRepository empregadorRepository;
+
     @Override
     @Transactional
     public JobListDto criar(JobCreateDto dto) {
-        Job job = this.mapper.map(dto, Job.class);
-        this.jobRepository.save(job);
-        return this.mapper.map(job, JobListDto.class);
+        Job job = new Job(dto);
+
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+
+        Empregador empregador = empregadorRepository.findById(dto.getEmpregadorId())
+                .orElseThrow(() -> new EntityNotFoundException("Empregador não encontrado"));
+
+        job.setUsuario(usuario);
+        job.setEmpregador(empregador);
+
+        jobRepository.save(job);
+        return mapper.map(job, JobListDto.class);
     }
 
 
