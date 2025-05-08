@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -19,8 +19,8 @@ public class JobListDto {
     private UUID jobId;
     private String cargo;
     private String areaAtuacao;
-    private LocalDate dataInicio;
-    private LocalDate dataTermino;
+    private Date dataInicio;
+    private Date dataTermino;
     private UsuarioDto usuarioDto;
     private EmpregadorDTO empregadorDTO;
 }

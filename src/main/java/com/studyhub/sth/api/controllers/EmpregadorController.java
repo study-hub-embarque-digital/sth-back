@@ -1,6 +1,7 @@
 package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.empregador.EmpregadorCreateDto;
+import com.studyhub.sth.application.dtos.empregador.EmpregadorDTO;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorListDto;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorUpdateDto;
 import com.studyhub.sth.domain.services.IEmpregadorService;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/empregadores")
+@RequestMapping("api/empregadores")
 public class EmpregadorController {
 
     @Autowired
@@ -47,5 +48,11 @@ public class EmpregadorController {
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
         empregadorService.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/cnpj/{cnpjEmpresa}")
+    public ResponseEntity<EmpregadorDTO> findEmpregadorByCnpjEmpresa(@PathVariable String cnpjEmpresa) {
+        EmpregadorDTO empregadorDTO = this.empregadorService.findEmpregadorByCnpjEmpresa(cnpjEmpresa);
+        return ResponseEntity.ok(empregadorDTO);
     }
 }

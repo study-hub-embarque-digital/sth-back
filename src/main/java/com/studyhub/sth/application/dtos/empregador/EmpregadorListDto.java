@@ -8,12 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmpregadorListDto {
+    private UUID empregadorId;
     private String nomeGestor;
     private String cargoGestor;
     private String emailGestor;

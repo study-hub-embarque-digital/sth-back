@@ -1,10 +1,12 @@
 package com.studyhub.sth.domain.services;
 
 import com.studyhub.sth.application.dtos.empregador.EmpregadorCreateDto;
+import com.studyhub.sth.application.dtos.empregador.EmpregadorDTO;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorListDto;
 import com.studyhub.sth.application.dtos.empregador.EmpregadorUpdateDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface IEmpregadorService {
@@ -17,4 +19,6 @@ public interface IEmpregadorService {
     EmpregadorListDto atualizar(UUID id, EmpregadorUpdateDto dto);
 
     void deletar(UUID id);
+
+    EmpregadorDTO findEmpregadorByCnpjEmpresa(String cnpjEmpresa);;
 }
