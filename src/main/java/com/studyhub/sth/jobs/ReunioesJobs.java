@@ -33,14 +33,18 @@ public class ReunioesJobs {
         log.info("JOB [cancelarReunioesEmEspera] - INICIOU");
         Instant cincoMinAtras = Instant.now().minusSeconds(15);// Instant cincoMinAtras = Instant.now().minus(2, ChronoUnit.MINUTES);
 
+        log.info("JOB [cancelarReunioesEmEspera] - BUSCANDO REUNIÕES");
         List<ReuniaoCache> reunioesParaCancelar = StreamSupport.stream(reuniaoRedisRepository.findAll().spliterator(), false)
                 .filter(reuniao -> reuniao != null && reuniao.getCriadoEm().toInstant().isBefore(cincoMinAtras) && reuniao.getStatus() == StatusReuniao.EM_ESPERA)
                 .toList();
 
+        log.info("JOB [cancelarReunioesEmEspera] - FORAM ENCONTRADAS {} REUNIÕES PARA CANCELAR", reunioesParaCancelar.size());
         if (reunioesParaCancelar.isEmpty()) return;
 
+        log.info("JOB [cancelarReunioesEmEspera] - MAPEANDO ID'S PARA CANCELAR");
         List<UUID> uuids = reunioesParaCancelar.stream().map(ReuniaoCache::getReuniaoId).toList();
 
+        log.info("JOB [cancelarReunioesEmEspera] - CHAMANDO SERVIÇO DE CANCELAR REUNIÕES");
         this.reuniaoService.cancelarReunioes(uuids);
     }
 

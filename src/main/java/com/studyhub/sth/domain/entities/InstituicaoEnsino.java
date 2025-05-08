@@ -8,6 +8,7 @@ import lombok.*;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity(name = "instituicoes_ensino")
 @Table(name = "instituicoes_ensino")
@@ -20,12 +21,13 @@ public class InstituicaoEnsino {
     
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID instituicaoEnsinoId;
-    private String nome;
     private String coordenador;
     @Column(length = 350, nullable = false)
+    @ColumnDefault("''")
     private String razaoSocial;
 
     @Column(length = 350, nullable = false)
+    @ColumnDefault("''")
     private String nomeFantasia;
 
     @Column(length = 14)
@@ -51,4 +53,15 @@ public class InstituicaoEnsino {
     @OneToMany(mappedBy = "instituicaoEnsino")
     private List<Squad> squads;
 
+    public InstituicaoEnsino(String coordenador, String razaoSocial, String nomeFantasia, String telefone, String email, String cnpj, String site, Endereco endereco) {
+        this.coordenador = coordenador;
+        this.razaoSocial = razaoSocial;
+        this.nomeFantasia = nomeFantasia;
+        this.telefone = telefone;
+        this.email = email;
+        this.cnpj = cnpj;
+        this.site = site;
+        this.endereco = endereco;
+        this.isActive = true;
+    }
 }

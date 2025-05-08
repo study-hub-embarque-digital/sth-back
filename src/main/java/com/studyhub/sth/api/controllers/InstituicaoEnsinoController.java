@@ -51,10 +51,10 @@ public class InstituicaoEnsinoController {
             return ResponseEntity.ok(updatedInstituicao);
     }
 
-        @GetMapping("/{nome}")
-        public ResponseEntity<List<InstituicaoEnsino>> buscarPorNome(@PathVariable String nome) {
-            return ResponseEntity.ok(instituicaoEnsinoRepository.findByNomeContaining(nome));
-    }
+//        @GetMapping("/{nome}")
+//        public ResponseEntity<List<InstituicaoEnsino>> buscarPorNome(@PathVariable String nome) {
+//            return ResponseEntity.ok(instituicaoEnsinoRepository.findByNomeContaining(nome));
+//    }
     }
     
 

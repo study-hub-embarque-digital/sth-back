@@ -6,7 +6,7 @@ import org.hibernate.annotations.GeneratedColumn;
 
 import java.util.UUID;
 
-@Entity(name = "salaTematica")
+@Entity
 @Table(name = "salas_tematicas")
 @Getter
 @Setter

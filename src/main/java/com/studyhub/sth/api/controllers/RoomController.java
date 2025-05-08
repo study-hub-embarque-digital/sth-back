@@ -1,10 +1,13 @@
 package com.studyhub.sth.api.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.studyhub.sth.application.dtos.rooms.GeneratedRoomDto;
 import com.studyhub.sth.application.dtos.rooms.RoomCreateDto;
 import com.studyhub.sth.application.dtos.rooms.RoomUpdateDto;
 import com.studyhub.sth.application.dtos.rooms.RoomDto;
 import com.studyhub.sth.application.dtos.salasTematica.SalaTematicaDto;
 import com.studyhub.sth.domain.entities.SalaTematica;
+import com.studyhub.sth.domain.enums.Dificuldade;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.repositories.ISalaTematicaRepository;
 import com.studyhub.sth.domain.services.IRoomService;
@@ -46,13 +49,18 @@ public class RoomController {
     }
 
     @GetMapping("/{roomId}/salas")
-    public ResponseEntity<List<SalaTematicaDto>> salas(@PathVariable UUID roomId) throws ElementoNaoEncontradoExcecao {
-        return new ResponseEntity<>(this.salasTematicaService.obterPorRoom(roomId), HttpStatus.OK);
+    public ResponseEntity<List<SalaTematicaDto>> salas(@PathVariable UUID roomId, @RequestParam Dificuldade dificuldade) {
+        return new ResponseEntity<>(this.salasTematicaService.obterPorRoom(roomId, dificuldade), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<RoomDto>> listar() {
         return new ResponseEntity<>(this.roomService.listar(), HttpStatus.OK);
+    }
+
+    @GetMapping("/generate")
+    public ResponseEntity<GeneratedRoomDto> gerarRoom() throws JsonProcessingException {
+        return new ResponseEntity<>(this.roomService.generateRoom(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{roomId}")
