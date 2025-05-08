@@ -1,5 +1,6 @@
 package com.studyhub.sth.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.studyhub.sth.application.dtos.users.UsuarioUpdateDto;
 import com.studyhub.sth.domain.enums.Ethnicity;
 import com.studyhub.sth.domain.enums.Gender;
@@ -29,6 +30,8 @@ public class Usuario {
     private String email;
 
     private String senha;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date dataNascimento;
 
     @Column(name = "is_active", nullable = true)
@@ -53,9 +56,12 @@ public class Usuario {
 
     private String fotoPerfil;
 
-    public Usuario(UUID usuarioId, String nome, String email, String senha, Date dataNascimento, List<Role> roles, Ethnicity ethnicity, String phone, Gender gender, Job job, String fotoPerfil) {
+    @Column(name = "has_job")
+    private Boolean hasJob;
+
+    public Usuario(UUID usuarioId, String nome, String email, String senha, Date dataNascimento, List<Role> roles, Ethnicity ethnicity, String phone, Gender gender, Boolean isActive) {
         this.usuarioId = usuarioId;
-        this.isActive = false;
+        this.isActive = isActive;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -64,12 +70,10 @@ public class Usuario {
         this.ethnicity = ethnicity;
         this.phone = phone;
         this.gender = gender;
-        this.fotoPerfil = fotoPerfil;
-        this.jobs.add(job);
     }
 
     public void setPhone(String phone) throws PhoneNotValidException {
-        if(!phone.matches("\\(\\d{2}\\) \\d{4,5}-\\d{4}")) {
+        if(!phone.matches("\\d{2}\\d{4,5}\\d{4}")) {
             throw new PhoneNotValidException("Telefone inválido! Verifique e tente novamente!");
         }
 

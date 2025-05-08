@@ -23,4 +23,5 @@ public class UsuarioUpdateDto {
     private Boolean isActive;
     private String phone;
     private Gender gender;
+    private Boolean hasJob;
 }

@@ -23,5 +23,6 @@ public class UsuarioCreateDto {
     private Ethnicity ethnicity;
     private String phone;
     private Gender gender;
-    private MultipartFile fotoPerfil;
+    private Boolean isActive;
+    private Boolean hasJob;
 }

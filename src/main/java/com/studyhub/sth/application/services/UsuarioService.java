@@ -32,15 +32,6 @@ public class UsuarioService implements IUsuarioService {
     @Autowired
     private R2StorageService r2StorageService;
 
-//    @PostMapping("/alunos/{id}/foto")
-//    public ResponseEntity<?> atualizarFoto(@PathVariable Long id, @RequestParam("foto") MultipartFile foto) {
-//        Aluno aluno = alunoRepository.findById(id).orElseThrow();
-//        String nomeFoto = r2StorageService.uploadFile(foto);
-//        aluno.setFotoPerfil(nomeFoto);
-//        alunoRepository.save(aluno);
-//        return ResponseEntity.ok("Foto atualizada!");
-//    }
-
     @Override
     public String criar(UsuarioCreateDto novoUsuarioDto) throws Exception {
         Optional<Usuario> usuario = usuarioRepositorio.findByEmail(novoUsuarioDto.getEmail());
@@ -48,8 +39,6 @@ public class UsuarioService implements IUsuarioService {
         if (usuario.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
         Usuario usuarioNovo = this.mapper.map(novoUsuarioDto, Usuario.class);
-        String nomeFoto = r2StorageService.uploadFile(novoUsuarioDto.getFotoPerfil());
-        usuarioNovo.setFotoPerfil(nomeFoto);
         usuarioNovo.setSenha(passwordEncoder.encode(novoUsuarioDto.getSenha()));
 
         this.usuarioRepositorio.save(usuarioNovo);
