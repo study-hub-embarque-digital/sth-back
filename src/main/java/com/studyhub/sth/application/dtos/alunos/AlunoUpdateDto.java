@@ -17,6 +17,6 @@ public class AlunoUpdateDto {
     private Periodo periodo;
     private String curso;
     private Ciclo ciclo;
-    private boolean isWorkingInIt;
-    private boolean isExemptedResidence;
+    private Boolean isWorkingInIt;
+    private Boolean isExemptedResidence;
 }
