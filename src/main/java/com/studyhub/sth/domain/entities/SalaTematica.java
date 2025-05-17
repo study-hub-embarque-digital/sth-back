@@ -1,17 +1,23 @@
 package com.studyhub.sth.domain.entities;
 
-import com.studyhub.sth.libs.core.EntidadeBase;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GeneratedColumn;
 
-@Entity(name = "salaTematica")
+import java.util.UUID;
+
+@Entity
 @Table(name = "salas_tematicas")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class SalaTematica extends EntidadeBase {
+@EqualsAndHashCode(of = "salaTematicaId")
+public class SalaTematica {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID salaTematicaId;
+
     @ManyToOne()
     @JoinColumn(name = "room_id")
     private Room room;

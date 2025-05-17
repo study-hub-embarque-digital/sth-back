@@ -3,12 +3,12 @@ package com.studyhub.sth.application.services;
 import com.studyhub.sth.application.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
+import com.studyhub.sth.domain.entities.Aluno;
+import com.studyhub.sth.domain.entities.Representante;
 import com.studyhub.sth.domain.entities.Squad;
+import com.studyhub.sth.domain.repositories.*;
 import com.studyhub.sth.domain.services.ISquadService;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.domain.repositories.IEmpresaRepository;
-import com.studyhub.sth.domain.repositories.IMentorRepository;
-import com.studyhub.sth.domain.repositories.ISquadRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,12 @@ public class SquadService implements ISquadService {
 
     @Autowired
     private ISquadRepository squadRepository;
+
+    @Autowired
+    private IAlunoRepository alunoRepository;
+
+    @Autowired
+    private IRepresentanteRepository representanteRepository;
 
     @Autowired
     private IEmpresaRepository IEmpresaRepository;
@@ -52,7 +58,14 @@ public class SquadService implements ISquadService {
     @Transactional
     public SquadDTO save(SquadCreateDTO dto) {
         Squad squad = this.mapper.map(dto, Squad.class);
+        List<Aluno> alunos = alunoRepository.findAllById(dto.getAlunosIds());
+        List<Representante> representantes = representanteRepository.findAllById(dto.getRepresentantesIds());
+
+        squad.setAlunos(alunos);
+        squad.setRepresentantes(representantes);
+
         this.squadRepository.save(squad);
+
         return this.mapper.map(squad, SquadDTO.class);
     }
 
@@ -89,4 +102,6 @@ public class SquadService implements ISquadService {
                 .orElseThrow(() -> new NoSuchElementException("Squad não encontrado com o nome: " + nome));
         return this.mapper.map(squad, SquadDTO.class);
     }
+
+    
 }
