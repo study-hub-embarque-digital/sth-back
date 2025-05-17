@@ -4,6 +4,7 @@ import com.studyhub.sth.application.dtos.tag.TagDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,4 +35,25 @@ public class Artigo {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags;
+
+    private Date criadoEm;
+    private Date atualizadoEm;
+
+    @ManyToOne
+    @JoinColumn(name = "atualizado_por")
+    private Usuario atualizadoPor;
+
+    @PrePersist
+    public void onPersist()
+    {
+        Date d = new Date();
+        this.setCriadoEm(d);
+        this.setAtualizadoEm(d);
+    }
+
+    @PreUpdate
+    public void onUpdate()
+    {
+        this.setAtualizadoEm(new Date());
+    }
 }

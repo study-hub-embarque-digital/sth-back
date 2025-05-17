@@ -3,9 +3,13 @@ package com.studyhub.sth.application.services;
 import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
+import com.studyhub.sth.application.dtos.duvida.DuvidaDto;
+import com.studyhub.sth.application.dtos.duvida.NewDuvidaDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
 import com.studyhub.sth.domain.entities.Artigo;
+import com.studyhub.sth.domain.entities.Duvida;
 import com.studyhub.sth.domain.entities.Tag;
+import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IArtigoRepository;
 import com.studyhub.sth.domain.repositories.ITagRepository;
@@ -38,7 +42,9 @@ public class ArtigoService implements IArtigoService {
     @Override
     @Transactional
     public ArtigoDto criar(ArtigoCreateDto dto) {
+        Usuario usuario = usuarioRepositorio.findById(dto.getUsuario()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         Artigo artigo = this.mapper.map(dto, Artigo.class);
+        artigo.setAutor(usuario);
         this.artigoRepository.save(artigo);
         return this.mapper.map(artigo, ArtigoDto.class);
     }
