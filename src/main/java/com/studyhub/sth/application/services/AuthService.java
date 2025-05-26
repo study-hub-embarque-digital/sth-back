@@ -13,10 +13,9 @@ import com.studyhub.sth.domain.enums.RolesUsuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.repositories.*;
 import com.studyhub.sth.domain.services.IAuthService;
-import com.studyhub.sth.domain.services.IRoleRepository;
+import com.studyhub.sth.domain.repositories.IRoleRepository;
 import com.studyhub.sth.libs.mapper.IMapper;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,7 +55,7 @@ public class AuthService implements IAuthService {
     @Override
     @Transactional
     public AuthResponse criaAluno(AlunoCreateDto novoAlunoDto) throws Exception {
-        Usuario usuario = this.criaUsuario(novoAlunoDto.getNovoUsuarioDto(), RolesUsuario.ALUNO);
+        Usuario usuario = this.criaUsuario(novoAlunoDto.getNovoUsuarioDto(), RolesUsuario.aluno);
         InstituicaoEnsino instituicaoEnsino = instituicaoEnsinoRepository.findById(novoAlunoDto.getInstituicaoEnsinoId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar a instituição de ensino do aluno."));
 
         Aluno aluno = this.mapper.map(novoAlunoDto, Aluno.class);
@@ -71,7 +70,7 @@ public class AuthService implements IAuthService {
     @Override
     @Transactional
     public AuthResponse criaMentor(MentorCreateDto dto) throws Exception {
-        Usuario usuario = this.criaUsuario(dto.getUsuarioDto(), RolesUsuario.MENTOR);
+        Usuario usuario = this.criaUsuario(dto.getUsuarioDto(), RolesUsuario.mentor);
 
         Mentor mentor = this.mapper.map(dto, Mentor.class);
         mentor.setUsuario(usuario);
@@ -83,7 +82,7 @@ public class AuthService implements IAuthService {
     @Override
     @Transactional
     public AuthResponse criaRepresentante(RepresentanteCreateDto dto) throws Exception {
-        Usuario usuario = this.criaUsuario(dto.getNovoUsuarioDto(), RolesUsuario.REPRESENTANTE);
+        Usuario usuario = this.criaUsuario(dto.getNovoUsuarioDto(), RolesUsuario.representante);
 
         Empresa empresa = this.empresaRepository.findById(dto.getEmpresaId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Empresa não encontrada"));
 
@@ -99,7 +98,7 @@ public class AuthService implements IAuthService {
     @Override
     @Transactional
     public AuthResponse criaAdmin(AdminCreateDto dto) throws Exception {
-        Usuario usuario = this.criaUsuario(dto.getNovoUsuarioDto(), RolesUsuario.ADMIN);
+        Usuario usuario = this.criaUsuario(dto.getNovoUsuarioDto(), RolesUsuario.admin);
 
         Admin admin = new Admin();
         admin.setUsuario(usuario);
@@ -125,12 +124,12 @@ public class AuthService implements IAuthService {
         return new AuthResponse(this.tokenService.generateToken(usuario), this.tokenService.generateRefreshToken(usuario));
     }
 
-    private Usuario criaUsuario(UsuarioCreateDto usuarioCreateDto, RolesUsuario rolesUsuario) throws Exception {
+    private Usuario criaUsuario(UsuarioCreateDto usuarioCreateDto, String roleUsuario) throws Exception {
         Optional<Usuario> usuarioExiste = usuarioRepositorio.findByEmail(usuarioCreateDto.getEmail());
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
-        List<Role> roles = roleRepository.findByName(rolesUsuario.toString());
+        List<Role> roles = roleRepository.findByNome(roleUsuario);
 
         if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
 

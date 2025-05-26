@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.UUID;
 import com.studyhub.sth.application.dtos.duvida.*;
 
+import java.util.List;
+import java.util.UUID;
+import com.studyhub.sth.application.dtos.duvida.*;
+
 public interface IDuvidaService {
     List<DuvidaDto> findAll();
     DuvidaSolucoesDto findByIdWithSolucao(UUID id);

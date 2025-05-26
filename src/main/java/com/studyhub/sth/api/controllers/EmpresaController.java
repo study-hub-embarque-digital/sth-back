@@ -1,6 +1,7 @@
 package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
+import com.studyhub.sth.domain.annotations.AuthorizeWithPermission;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +35,6 @@ public class EmpresaController {
         return ResponseEntity.ok(empresa);
     }
 
-    //@GetMapping("/{nome}")
-    //public Empresa getEmpresaByName(@PathVariable String name) {
-    //    return EmpresaRepository.findByNomeFantasia(name);
-    //}
-
     @PutMapping("/{id}")
     public ResponseEntity<EmpresaDto> updateEmpresa(@PathVariable("id") UUID id, @RequestBody EmpresaUpdateDto empresaDto) {
         var updatedEmpresa = empresaService.update(id, empresaDto);
@@ -46,10 +42,12 @@ public class EmpresaController {
     }
 
     @PostMapping
+    @AuthorizeWithPermission(permissions = {"write:empresas"})
     public ResponseEntity<EmpresaDto> createEmpresa(@RequestBody EmpresaCreateDto empresaDto) {
         return ResponseEntity.ok(empresaService.save(empresaDto));
     }
 
+    @AuthorizeWithPermission(permissions = {"delete:empresas"})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmpresa(@PathVariable UUID id) {
         empresaService.delete(id);

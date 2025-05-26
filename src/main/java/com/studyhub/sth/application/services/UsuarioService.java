@@ -13,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.entities.Usuario;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,6 +29,8 @@ public class UsuarioService implements IUsuarioService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private R2StorageService r2StorageService;
 
     @Override
     public String criar(UsuarioCreateDto novoUsuarioDto) throws Exception {
@@ -52,7 +56,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public UsuarioDto atualizar(UUID usuarioId, UsuarioUpdateDto usuarioAtualizadoDto) throws ElementoNaoEncontradoExcecao {
+    public UsuarioDto atualizar(UUID usuarioId, UsuarioUpdateDto usuarioAtualizadoDto) throws ElementoNaoEncontradoExcecao, IOException {
         Usuario usuario = this.usuarioRepositorio.findById(usuarioId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar o usuário selecionado."));
         usuario.atualizar(usuarioAtualizadoDto);
 
@@ -67,4 +71,13 @@ public class UsuarioService implements IUsuarioService {
 
         return this.mapper.map(usuario, UsuarioDto.class);
     }
+
+    @Override
+    public String atualizarFoto(UUID usuarioId, MultipartFile foto) throws ElementoNaoEncontradoExcecao, IOException {
+        Usuario usuario = this.usuarioRepositorio.findById(usuarioId).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Não foi possível encontrar o usuário selecionado."));
+        String novaFoto = r2StorageService.uploadFile(foto);
+        usuario.setFotoPerfil(novaFoto);
+        this.usuarioRepositorio.save(usuario);
+        return novaFoto;
+   }
 }

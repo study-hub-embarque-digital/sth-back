@@ -56,5 +56,7 @@ public class SquadController {
         SquadDTO squad = squadService.findBySquadNomeContainsIgnoreCase(nome);
         return ResponseEntity.ok(squad);
     }
+
+
 }
 

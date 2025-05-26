@@ -10,7 +10,7 @@ import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IMentorService;
-import com.studyhub.sth.domain.services.IRoleRepository;
+import com.studyhub.sth.domain.repositories.IRoleRepository;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IMentorRepository;
 import com.studyhub.sth.domain.repositories.ISquadRepository;
@@ -47,7 +47,7 @@ public class MentorService implements IMentorService {
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
-        List<Role> roles = roleRepository.findByName("MENTOR");
+        List<Role> roles = roleRepository.findByNome("MENTOR");
 
         if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
 
@@ -107,9 +107,6 @@ public class MentorService implements IMentorService {
             }
             if (dto.getUsuarioDto().getSenha() != null) {
                 mentor.getUsuario().setSenha(dto.getUsuarioDto().getSenha());
-            }
-            if (dto.getUsuarioDto().getDataNascimento() != null) {
-                mentor.getUsuario().setDataNascimento(dto.getUsuarioDto().getDataNascimento());
             }
         }
         MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
