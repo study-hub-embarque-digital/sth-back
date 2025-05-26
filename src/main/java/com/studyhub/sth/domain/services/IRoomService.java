@@ -1,5 +1,7 @@
 package com.studyhub.sth.domain.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.studyhub.sth.application.dtos.rooms.GeneratedRoomDto;
 import com.studyhub.sth.application.dtos.rooms.RoomCreateDto;
 import com.studyhub.sth.application.dtos.rooms.RoomUpdateDto;
 import com.studyhub.sth.application.dtos.rooms.RoomDto;
@@ -14,4 +16,5 @@ public interface IRoomService {
     RoomDto detalhar(UUID roomId) throws ElementoNaoEncontradoExcecao;
     void deletar(UUID roomId) throws ElementoNaoEncontradoExcecao;
     List<RoomDto> listar();
+    public GeneratedRoomDto generateRoom() throws JsonProcessingException;
 }

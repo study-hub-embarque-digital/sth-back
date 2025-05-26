@@ -9,7 +9,7 @@ import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
 import com.studyhub.sth.domain.services.IRepresentanteService;
-import com.studyhub.sth.domain.services.IRoleRepository;
+import com.studyhub.sth.domain.repositories.IRoleRepository;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IEmpresaRepository;
 import com.studyhub.sth.domain.repositories.IRepresentanteRepository;
@@ -49,7 +49,7 @@ public class RepresentanteService implements IRepresentanteService {
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
 
-        List<Role> roles = roleRepository.findByName("REPRESENTANTE");
+        List<Role> roles = roleRepository.findByNome("REPRESENTANTE");
 
         if (roles.isEmpty()) throw new ElementoNaoEncontradoExcecao("Não foi criar seu perfil de acesso.");
 
@@ -95,9 +95,6 @@ public class RepresentanteService implements IRepresentanteService {
             }
             if (dto.getUsuarioDto().getSenha() != null) {
                 representante.getUsuario().setSenha(dto.getUsuarioDto().getSenha());
-            }
-            if (dto.getUsuarioDto().getDataNascimento() != null) {
-                representante.getUsuario().setDataNascimento(dto.getUsuarioDto().getDataNascimento());
             }
         }
         if (dto.getEmpresaId() != null){

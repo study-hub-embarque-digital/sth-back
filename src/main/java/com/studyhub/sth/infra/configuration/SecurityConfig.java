@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/ws").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/healthcheck").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/utils/**").permitAll()
                         .requestMatchers("/docs/**").permitAll()

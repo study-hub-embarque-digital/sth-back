@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,4 +18,6 @@ public class SquadCreateDTO {
     private TipoSquad tipo;
     private UUID mentorId;
     private UUID empresaId;
+    private List<UUID> representantesIds;
+    private List<UUID> alunosIds;
 }
