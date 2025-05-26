@@ -18,6 +18,9 @@ public class DuvidaDto {
     private String descricao;
     private List<String> tags;
     private String nomeUsuario;
+    private UUID usuarioId;
     private Date criadoEm;
     private Date atualizadoEm;
+    private long quantidadeSolucoes;
+    private boolean resolvida;
 }

@@ -46,4 +46,12 @@ public class DuvidaController {
         duvidaService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/resolvida")
+    public ResponseEntity<Void> marcarComoResolvida(@PathVariable UUID id) {
+        duvidaService.marcarComoResolvida(id);
+        return ResponseEntity.noContent().build(); // 204 No Content
+        }
+
+
 }

@@ -10,4 +10,5 @@ public interface IDuvidaService {
     DuvidaDto create(NewDuvidaDto newDuvidaDto);
     DuvidaDto update(UUID duvidaId, UpdateDuvidaDto updateDuvidaDto);
     void delete(UUID id);
+    void marcarComoResolvida(UUID id);
 }

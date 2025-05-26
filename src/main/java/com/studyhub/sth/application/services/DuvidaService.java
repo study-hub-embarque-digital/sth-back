@@ -9,6 +9,8 @@ import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.repositories.*;
 import com.studyhub.sth.domain.services.IDuvidaService;
 import com.studyhub.sth.libs.mapper.IMapper;
+
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ import java.util.stream.Collectors;
 public class DuvidaService implements IDuvidaService{
     @Autowired
     private IDuvidaRepository duvidaRepository;
+    
+    @Autowired
+    private ISolucaoRepository solucaoRepository;
 
     @Autowired
     private IUsuarioRepository usuarioRepository;
@@ -39,6 +44,8 @@ public class DuvidaService implements IDuvidaService{
                     DuvidaDto dto = this.mapper.map(d, DuvidaDto.class);
                     dto.setNomeUsuario(d.getUsuario().getNome());
                     dto.setTags(d.getTags().stream().map(Tag::getNome).toList());
+                    long quantidade = solucaoRepository.contarSolucoesPorDuvida(d.getDuvidaId());
+                    dto.setQuantidadeSolucoes(quantidade);
                     return dto;
                 })
                 .toList();
@@ -50,6 +57,7 @@ public class DuvidaService implements IDuvidaService{
                 .map(d -> {
                     DuvidaDto duvidaDto = this.mapper.map(d, DuvidaDto.class);
                     duvidaDto.setNomeUsuario(d.getUsuario().getNome());
+                    duvidaDto.setUsuarioId(d.getUsuario().getUsuarioId());
                     duvidaDto.setTags(d.getTags().stream().map(Tag::getNome).toList());
 
                     List<SolucaoDto> solucoesDto = d.getSolucoes().stream()
@@ -97,5 +105,15 @@ public class DuvidaService implements IDuvidaService{
         Duvida duvida = duvidaRepository.findById(duvidaId).orElseThrow(() -> new RuntimeException("Dúvida não encontrada"));
         duvidaRepository.deleteById(duvidaId);
     }
+
+    @Transactional
+    public void marcarComoResolvida(UUID duvidaId) {
+    Duvida duvida = duvidaRepository.findById(duvidaId)
+        .orElseThrow(() -> new EntityNotFoundException("Dúvida não encontrada"));
+
+    duvida.setResolvida(true);
+    duvidaRepository.save(duvida);
+}
+
     
 }
