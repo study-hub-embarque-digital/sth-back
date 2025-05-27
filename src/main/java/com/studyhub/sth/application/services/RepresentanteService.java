@@ -1,8 +1,10 @@
 package com.studyhub.sth.application.services;
 
+import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
 import com.studyhub.sth.application.dtos.representante.RepresentanteCreateDto;
 import com.studyhub.sth.application.dtos.representante.RepresentanteDto;
 import com.studyhub.sth.application.dtos.representante.RepresentanteUpdateDto;
+import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import com.studyhub.sth.domain.entities.Empresa;
 import com.studyhub.sth.domain.entities.Representante;
 import com.studyhub.sth.domain.entities.Role;
@@ -32,7 +34,7 @@ public class RepresentanteService implements IRepresentanteService {
     @Autowired
     private IUsuarioRepository usuarioRepositorio;
     @Autowired
-    private IEmpresaRepository IEmpresaRepository;
+    private IEmpresaRepository empresaRepository;
     @Autowired
     private IMapper mapper;
     @Autowired
@@ -44,7 +46,7 @@ public class RepresentanteService implements IRepresentanteService {
 
     @Override
     @Transactional
-    public String criarRepresentante(RepresentanteCreateDto dto) throws Exception {
+    public RepresentanteDto criarRepresentante(RepresentanteCreateDto dto) throws Exception {
         Optional<Usuario> usuarioExiste = usuarioRepositorio.findByEmail(dto.getNovoUsuarioDto().getEmail());
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
@@ -58,28 +60,50 @@ public class RepresentanteService implements IRepresentanteService {
         usuario.setSenha(passwordEncoder.encode(dto.getNovoUsuarioDto().getSenha()));
         this.usuarioRepositorio.save(usuario);
 
-        Empresa empresa = this.IEmpresaRepository.findById(dto.getEmpresaId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Empresa não encontrada"));
+        Empresa empresa = this.empresaRepository.findById(dto.getEmpresaId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Empresa não encontrada"));
 
         Representante representante = new Representante();
         representante.setUsuario(usuario);
         representante.setEmpresa(empresa);
 
         this.representanteRepository.save(representante);
-        return tokenService.generateToken(usuario);
+
+        RepresentanteDto representanteDto = this.mapper.map(representante,RepresentanteDto.class);
+        UsuarioDto usuarioDTO = this.mapper.map(representante.getUsuario(), UsuarioDto.class);
+        EmpresaDto empresaDto = this.mapper.map(representante.getEmpresa(), EmpresaDto.class);
+
+        representanteDto.setEmpresaDto(empresaDto);
+        representanteDto.setUsuarioDto(usuarioDTO);
+
+        return representanteDto;
     }
 
     @Override
     @Transactional
     public List<RepresentanteDto> listarRepresentantes() {
         var lista = this.representanteRepository.findAll();
-        return lista.stream().map(representante -> this.mapper.map(representante,RepresentanteDto.class)).collect(Collectors.toList());
+        return lista.stream().map(representante -> {
+            RepresentanteDto representanteDto = this.mapper.map(representante,RepresentanteDto.class);
+            UsuarioDto usuarioDTO = this.mapper.map(representante.getUsuario(), UsuarioDto.class);
+            EmpresaDto empresaDto = this.mapper.map(representante.getEmpresa(), EmpresaDto.class);
+
+            representanteDto.setEmpresaDto(empresaDto);
+            representanteDto.setUsuarioDto(usuarioDTO);
+            return representanteDto;
+        }).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public RepresentanteDto obterRepresentantePorId(UUID id) {
         var representante = this.representanteRepository.findById(id).orElseThrow(() -> new RuntimeException("Representante não encontrado"));
-        return this.mapper.map(representante,RepresentanteDto.class);
+        RepresentanteDto representanteDto = this.mapper.map(representante,RepresentanteDto.class);
+        UsuarioDto usuarioDTO = this.mapper.map(representante.getUsuario(), UsuarioDto.class);
+        EmpresaDto empresaDto = this.mapper.map(representante.getEmpresa(), EmpresaDto.class);
+
+        representanteDto.setEmpresaDto(empresaDto);
+        representanteDto.setUsuarioDto(usuarioDTO);
+        return representanteDto;
     }
 
     @Override
