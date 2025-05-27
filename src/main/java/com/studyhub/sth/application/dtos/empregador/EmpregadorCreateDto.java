@@ -16,9 +16,6 @@ public class  EmpregadorCreateDto{
     private String emailGestor;
     private String nomeEmpresa;
     private String cnpjEmpresa;
-    private TipoVinculo tipoVinculo;
-    private String cargoDetalhado;
-    private  String atividadesDesenvolvidas;
 }
 
 

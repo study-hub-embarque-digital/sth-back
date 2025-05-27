@@ -2,10 +2,14 @@ package com.studyhub.sth.domain.entities;
 
 import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.domain.enums.Ciclo;
+import com.studyhub.sth.domain.enums.Cursos;
 import com.studyhub.sth.domain.enums.Periodo;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "alunos")
@@ -23,7 +27,12 @@ public class Aluno {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    private String curso;
+    @Enumerated(EnumType.STRING)
+    private Cursos curso;
+
+    @Pattern(regexp = "\\d{4}\\.[12]", message = "Formato inválido. Use o padrão AAAA.S, exemplo: 2025.1")
+    @Column(nullable = false, length = 10)
+    private String entrada;
 
     @ManyToOne()
     @JoinColumn(name = "instituicao_ensino_id")
@@ -46,6 +55,9 @@ public class Aluno {
 
     @Column(name = "is_exempted_residence",nullable = true)
     private Boolean isExemptedResidence;
+
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+    private List<Job> jobs = new ArrayList<>();
 
     //lista squads
 

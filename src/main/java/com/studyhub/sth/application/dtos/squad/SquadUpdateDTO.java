@@ -17,4 +17,5 @@ public class SquadUpdateDTO {
     private TipoSquad tipo;
     private UUID mentorId;
     private UUID empresaId;
+    private Boolean selecionadoParaDemoDay;
 }

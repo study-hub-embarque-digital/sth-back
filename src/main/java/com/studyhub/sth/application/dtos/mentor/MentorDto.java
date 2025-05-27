@@ -1,5 +1,6 @@
 package com.studyhub.sth.application.dtos.mentor;
 
+import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import lombok.AllArgsConstructor;
@@ -17,5 +18,6 @@ import java.util.UUID;
 public class MentorDto {
     UUID id;
     UsuarioDto usuarioDto;
+    EmpresaDto empresaDto;
     List<SquadDTO> squadDtos;
 }

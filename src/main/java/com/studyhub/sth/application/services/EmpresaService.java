@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.studyhub.sth.application.dtos.empresas.EmpresaCreateDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
 import com.studyhub.sth.application.dtos.empresas.EmpresaListDto;
+import com.studyhub.sth.application.dtos.graficos.EmpresaPorCicloDTO;
 import com.studyhub.sth.domain.services.IEmpresaService;
 import com.studyhub.sth.libs.mapper.IMapper;
 import jakarta.transaction.Transactional;
@@ -77,6 +78,11 @@ public class EmpresaService implements IEmpresaService {
     public void delete(UUID id) {
         var empresa = this.IEmpresaRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("A empresa não foi encontrada!"));
         IEmpresaRepository.deleteById(id);
+    }
+
+    @Override
+    public List<EmpresaPorCicloDTO> findEmpresasPorCiclo(){
+        return this.IEmpresaRepository.findEmpresasPorCiclo();
     }
 
 }
