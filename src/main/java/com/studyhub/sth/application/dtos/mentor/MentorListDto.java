@@ -1,7 +1,6 @@
 package com.studyhub.sth.application.dtos.mentor;
 
-import com.studyhub.sth.application.dtos.users.UsuarioUpdateDto;
-import jakarta.validation.Valid;
+import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +12,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MentorUpdateDto {
-    @Valid
-    UsuarioUpdateDto usuarioDto;
-    UUID empresaId;
+public class MentorListDto {
+    UUID id;
+    UsuarioDto usuarioDto;
 }

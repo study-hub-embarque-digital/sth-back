@@ -21,9 +21,6 @@ public class EmpregadorListDto {
     private String emailGestor;
     private String nomeEmpresa;
     private String cnpjEmpresa;
-    private TipoVinculo tipoVinculo;
-    private String cargoDetalhado;
-    private  String atividadesDesenvolvidas;
     private List<JobDto> jobDto;
 }
 

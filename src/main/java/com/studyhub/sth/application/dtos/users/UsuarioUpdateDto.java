@@ -19,9 +19,7 @@ public class UsuarioUpdateDto {
     private String nome;
     private String email;
     private String senha;
-    private Ethnicity ethnicity;
     private Boolean isActive;
     private String phone;
     private Gender gender;
-    private Boolean hasJob;
 }

@@ -2,6 +2,7 @@ package com.studyhub.sth.application.dtos.instituicaoEnsino;
 
 import com.studyhub.sth.application.dtos.alunos.AlunoDto;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
+import com.studyhub.sth.domain.entities.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class InstituicaoEnsinoDto {
     private UUID instituicaoEnsinoId;
     private String nome;
-    private String endereco;
+    private Endereco endereco;
     private String coordenador;
     private String razaoSocial;
     private String nomeFantasia;
