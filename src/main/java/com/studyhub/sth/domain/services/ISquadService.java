@@ -1,7 +1,10 @@
 package com.studyhub.sth.domain.services;
 
+import com.studyhub.sth.application.dtos.graficos.EmpresaSquadCountDto;
+import com.studyhub.sth.application.dtos.graficos.SquadsDemodayPorInstituicaoDTO;
 import com.studyhub.sth.application.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
+import com.studyhub.sth.application.dtos.squad.SquadListDTO;
 import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
 
 import java.util.List;
@@ -11,7 +14,7 @@ public interface ISquadService {
 
     List<SquadDTO> findAll();
 
-    SquadDTO findById(UUID id);
+    SquadListDTO findById(UUID id);
 
     SquadDTO save(SquadCreateDTO squadCreateDTO);
 
@@ -20,5 +23,9 @@ public interface ISquadService {
     SquadDTO update(UUID id, SquadUpdateDTO squadUpdateDTO);
 
     SquadDTO findBySquadNomeContainsIgnoreCase(String nome);
+
+    List<EmpresaSquadCountDto> countSquadsPorEmpresa();
+
+    List<SquadsDemodayPorInstituicaoDTO> findSquadsSelecionadosPorInstituicao();
 }
 

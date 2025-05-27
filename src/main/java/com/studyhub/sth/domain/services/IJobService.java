@@ -1,6 +1,7 @@
 package com.studyhub.sth.domain.services;
 
 import com.studyhub.sth.application.dtos.job.JobCreateDto;
+import com.studyhub.sth.application.dtos.job.JobDto;
 import com.studyhub.sth.application.dtos.job.JobListDto;
 import com.studyhub.sth.application.dtos.job.JobUpdateDto;
 
@@ -12,7 +13,7 @@ public interface IJobService {
 
     List<JobListDto> listar();
 
-    JobListDto buscarPorId(UUID id);
+    JobDto buscarPorId(UUID id);
 
     JobListDto atualizar(UUID id, JobUpdateDto dto);
 
