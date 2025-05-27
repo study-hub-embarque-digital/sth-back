@@ -31,13 +31,6 @@ public class Empregador {
     private String nomeEmpresa;
     private String cnpjEmpresa;
 
-
-    @Enumerated(EnumType.STRING)
-    private TipoVinculo tipoVinculo;
-
-    private String cargoDetalhado;
-    private String atividadesDesenvolvidas;
-
     @OneToMany(mappedBy = "empregador")
     private List<Job> jobs = new ArrayList<>();
 }
