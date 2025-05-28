@@ -3,13 +3,16 @@ package com.studyhub.sth.domain.services;
 import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
+import com.studyhub.sth.application.dtos.artigo.CreatedArticleDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
+import com.studyhub.sth.domain.entities.Usuario;
+import com.studyhub.sth.libs.application.ServiceResponse;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface IArtigoService {
-    ArtigoDto criar(ArtigoCreateDto dto);
+    ServiceResponse<CreatedArticleDto> criar(ArtigoCreateDto dto, Usuario usuario);
     ArtigoDto atualizar(UUID id, ArtigoUpdateDto dto);
     List<ArtigoDto> listarArtigos();
     ArtigoDto buscarArtigoPorId(UUID id);

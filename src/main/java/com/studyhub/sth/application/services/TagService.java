@@ -51,17 +51,6 @@ public class TagService implements ITagService {
 
     @Override
     @Transactional
-    public TagDto atualizar(UUID id, TagCreateAndUpdateDTO dto) {
-        var tag = this.tagRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tag não encontrada"));
-        if(dto.getNome() != null){
-            tag.setNome(dto.getNome());
-        }
-        this.tagRepository.save(tag);
-        return this.mapper.map(tag, TagDto.class);
-    }
-
-    @Override
-    @Transactional
     public void deletar(UUID id) {
         var tag = this.tagRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tag não encontrada"));
         this.tagRepository.delete(tag);

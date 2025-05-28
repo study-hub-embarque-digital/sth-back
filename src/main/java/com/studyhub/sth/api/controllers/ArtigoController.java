@@ -3,11 +3,16 @@ package com.studyhub.sth.api.controllers;
 import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
+import com.studyhub.sth.application.dtos.artigo.CreatedArticleDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
+import com.studyhub.sth.domain.annotations.CurrentUser;
+import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.services.IArtigoService;
+import com.studyhub.sth.libs.controller.ControllerBase;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,7 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/artigo")
 @Tag(name = "Artigos Controller")
-public class ArtigoController {
+public class ArtigoController extends ControllerBase {
     @Autowired
     private IArtigoService artigoService;
 
@@ -54,10 +59,9 @@ public class ArtigoController {
     }
 
     @PostMapping
-    public ResponseEntity<ArtigoDto> criarArtigo(@RequestBody ArtigoCreateDto dto){
-        var artigo = this.artigoService.criar(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(artigo.getId()).toUri();
-        return ResponseEntity.created(uri).body(artigo);
+    public ResponseEntity<CreatedArticleDto> criarArtigo(@RequestBody ArtigoCreateDto dto, @CurrentUser Usuario usuario){
+        var response = this.artigoService.criar(dto, usuario);
+        return new ResponseEntity<>(response.getResponse(), HttpStatus.CREATED);
     }
 
 
