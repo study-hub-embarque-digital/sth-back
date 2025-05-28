@@ -56,4 +56,6 @@ public class Duvida {
     {
         this.setAtualizadoEm(new Date());
     }
+
+    private boolean resolvida = false;
 }
