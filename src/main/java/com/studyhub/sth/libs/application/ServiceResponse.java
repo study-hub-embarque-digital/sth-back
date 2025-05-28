@@ -16,17 +16,20 @@ public class ServiceResponse<T> {
         this.validationErrors = new ArrayList<>();
     }
 
-    public void fail(String error, String detail) {
+    public ServiceResponse<T> fail(String error, String detail) {
         this.validationErrors.add(new ValidationError(error, detail));
+        return this;
     }
 
-    public void fail(String error) {
+    public ServiceResponse<T> fail(String error) {
         this.validationErrors.add(new ValidationError(error));
+        return this;
     }
 
-    public void success(T data) {
+    public ServiceResponse<T> success(T data) {
         if (this.validationErrors.isEmpty()) {
             this.response = data;
+            return this;
         }
 
         throw new ValidationException("Houveram problemas de validação!", validationErrors);

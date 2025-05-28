@@ -11,6 +11,5 @@ public interface ITagService {
     List<TagDto> listar();
     TagDto buscarPorId(UUID id);
     TagDto buscarPorNome(String nome);
-    TagDto atualizar(UUID id, TagCreateAndUpdateDTO dto);
     void deletar(UUID id);
 }

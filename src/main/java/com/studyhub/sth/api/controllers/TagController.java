@@ -46,12 +46,6 @@ public class TagController {
         return ResponseEntity.ok(tag);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TagDto> atualizarTag(@RequestBody TagCreateAndUpdateDTO dto, @PathVariable UUID id){
-        var tag = this.tagService.atualizar(id,dto);
-        return ResponseEntity.ok(tag);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity deletarTag(@PathVariable UUID id){
         this.tagService.deletar(id);
