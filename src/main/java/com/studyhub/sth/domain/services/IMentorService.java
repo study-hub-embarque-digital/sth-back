@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IMentorService {
-    String criar(MentorCreateDto dto) throws Exception;
+    MentorDto criar(MentorCreateDto dto) throws Exception;
     List<MentorDto> listar();
     MentorDto buscarPorId(UUID id) throws ElementoNaoEncontradoExcecao;
     void deletarPorId(UUID id) throws ElementoNaoEncontradoExcecao;

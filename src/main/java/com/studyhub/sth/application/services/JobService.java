@@ -1,13 +1,14 @@
 package com.studyhub.sth.application.services;
 
 import com.studyhub.sth.application.dtos.job.JobCreateDto;
+import com.studyhub.sth.application.dtos.job.JobDto;
 import com.studyhub.sth.application.dtos.job.JobListDto;
 import com.studyhub.sth.application.dtos.job.JobUpdateDto;
+import com.studyhub.sth.domain.entities.Aluno;
 import com.studyhub.sth.domain.entities.Empregador;
 import com.studyhub.sth.domain.entities.Job;
-import com.studyhub.sth.domain.entities.Usuario;
+import com.studyhub.sth.domain.repositories.IAlunoRepository;
 import com.studyhub.sth.domain.repositories.IEmpregadorRepository;
-import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.domain.services.IJobService;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IJobRepository;
@@ -30,7 +31,7 @@ public class JobService  implements IJobService {
     private IJobRepository jobRepository;
 
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private IAlunoRepository alunoRepository;
 
     @Autowired
     private IEmpregadorRepository empregadorRepository;
@@ -40,13 +41,13 @@ public class JobService  implements IJobService {
     public JobListDto criar(JobCreateDto dto) {
         Job job = new Job(dto);
 
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+        Aluno aluno = alunoRepository.findById(dto.getAlunoId())
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
         Empregador empregador = empregadorRepository.findById(dto.getEmpregadorId())
                 .orElseThrow(() -> new EntityNotFoundException("Empregador não encontrado"));
 
-        job.setUsuario(usuario);
+        job.setAluno(aluno);
         job.setEmpregador(empregador);
 
         jobRepository.save(job);
@@ -61,9 +62,9 @@ public class JobService  implements IJobService {
     }
 
     @Override
-    public JobListDto buscarPorId(UUID id) {
+    public JobDto buscarPorId(UUID id) {
         var job = this.jobRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Job não encontrado"));
-        return this.mapper.map(job, JobListDto.class);
+        return this.mapper.map(job, JobDto.class);
     }
 
     @Override
@@ -78,6 +79,12 @@ public class JobService  implements IJobService {
         }
         if(dto.getDataTermino() != null){
             job.setDataTermino(dto.getDataTermino());
+        }
+        if(dto.getAtividadesDesenvolvidas() != null){
+            job.setAtividadesDesenvolvidas(dto.getAtividadesDesenvolvidas());
+        }
+        if(dto.getTipoVinculo() != null){
+            job.setTipoVinculo(dto.getTipoVinculo());
         }
         this.jobRepository.save(job);
         return this.mapper.map(job, JobListDto.class);

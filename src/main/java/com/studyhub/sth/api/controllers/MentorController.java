@@ -27,7 +27,7 @@ public class MentorController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<String> criarMentor(@RequestBody MentorCreateDto dto) throws Exception {
+    public ResponseEntity<MentorDto> criarMentor(@RequestBody MentorCreateDto dto) throws Exception {
         return new ResponseEntity<>(this.mentorService.criar(dto), HttpStatus.CREATED);
     }
 

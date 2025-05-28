@@ -1,8 +1,8 @@
 package com.studyhub.sth.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.studyhub.sth.application.dtos.job.JobCreateDto;
+import com.studyhub.sth.domain.enums.TipoVinculo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,12 +33,19 @@ public class Job {
     private Date dataTermino;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "aluno_id")         // antes era usuario_id
+    private Aluno aluno;
+
+    @Enumerated(EnumType.STRING)
+    private TipoVinculo tipoVinculo;
+
+    private String atividadesDesenvolvidas;
 
     public Job(JobCreateDto dto) {
         this.cargo = dto.getCargo();
         this.areaAtuacao = dto.getAreaAtuacao();
         this.dataInicio = dto.getDataInicio();
+        this.tipoVinculo = dto.getTipoVinculo();
+        this.atividadesDesenvolvidas = dto.getAtividadesDesenvolvidas();;
     }
 }

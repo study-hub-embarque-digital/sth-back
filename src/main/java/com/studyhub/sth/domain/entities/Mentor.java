@@ -24,4 +24,7 @@ public class Mentor {
     @OneToMany(mappedBy = "mentor")
     private List<Squad> squads;
 
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
 }

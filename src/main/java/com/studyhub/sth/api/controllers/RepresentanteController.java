@@ -25,7 +25,7 @@ public class RepresentanteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> criarRepresentante(@RequestBody RepresentanteCreateDto dto) throws Exception {
+    public ResponseEntity<RepresentanteDto> criarRepresentante(@RequestBody RepresentanteCreateDto dto) throws Exception {
         return new ResponseEntity<>(representanteService.criarRepresentante(dto), HttpStatus.CREATED);
     }
 

@@ -24,5 +24,4 @@ public class UsuarioCreateDto {
     private String phone;
     private Gender gender;
     private Boolean isActive;
-    private Boolean hasJob;
 }

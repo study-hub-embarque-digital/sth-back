@@ -20,6 +20,7 @@ import com.studyhub.sth.application.dtos.representante.RepresentanteUpdateDto;
 
 import com.studyhub.sth.application.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
+import com.studyhub.sth.application.dtos.squad.SquadListDTO;
 import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
 import com.studyhub.sth.domain.enums.Periodo;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
@@ -31,7 +32,7 @@ import java.util.UUID;
 public interface IAdminService {
 
     // Métodos para Aluno
-    String createAluno(AlunoCreateDto alunoCreateDto) throws Exception;
+    AlunoDto createAluno(AlunoCreateDto alunoCreateDto) throws Exception;
     AlunoDto updateAluno(UUID alunoId, AlunoUpdateDto alunoUpdateDto) throws ElementoNaoEncontradoExcecao, IOException;
     AlunoDto getAlunoById(UUID alunoId) throws ElementoNaoEncontradoExcecao;
     List<AlunoDto> listAlunos();
@@ -39,7 +40,7 @@ public interface IAdminService {
 
     // Métodos para Squad
     List<SquadDTO> listAllSquads();
-    SquadDTO getSquadById(UUID id);
+    SquadListDTO getSquadById(UUID id);
     SquadDTO createSquad(SquadCreateDTO squadCreateDto);
     void deleteSquad(UUID id);
     SquadDTO updateSquad(UUID id, SquadUpdateDTO squadUpdateDto);
@@ -62,7 +63,7 @@ public interface IAdminService {
     void deleteEmpresa(UUID id);
 
     // Métodos para Mentor
-    String createMentor(MentorCreateDto dto) throws Exception;
+    MentorDto createMentor(MentorCreateDto dto) throws Exception;
     List<MentorDto> listMentores();
     MentorDto getMentorById(UUID id) throws ElementoNaoEncontradoExcecao;
     void deleteMentorById(UUID id) throws ElementoNaoEncontradoExcecao;
@@ -71,7 +72,7 @@ public interface IAdminService {
     MentorDto getMentorByName(String nome) throws ElementoNaoEncontradoExcecao;
 
     // Métodos para Representante
-    String createRepresentante(RepresentanteCreateDto dto) throws Exception;
+    RepresentanteDto createRepresentante(RepresentanteCreateDto dto) throws Exception;
     List<RepresentanteDto> listRepresentantes();
     RepresentanteDto getRepresentanteById(UUID id);
     RepresentanteDto updateRepresentante(UUID id, RepresentanteUpdateDto dto);

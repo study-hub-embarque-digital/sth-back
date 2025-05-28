@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IRepresentanteService {
-    public String criarRepresentante(RepresentanteCreateDto dto) throws Exception;
+    public RepresentanteDto criarRepresentante(RepresentanteCreateDto dto) throws Exception;
     public List<RepresentanteDto> listarRepresentantes();
     public RepresentanteDto obterRepresentantePorId(UUID id);
     public RepresentanteDto atualizarRepresentante(UUID id, RepresentanteUpdateDto dto);

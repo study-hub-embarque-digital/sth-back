@@ -20,6 +20,7 @@ import com.studyhub.sth.application.dtos.representante.RepresentanteUpdateDto;
 
 import com.studyhub.sth.application.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
+import com.studyhub.sth.application.dtos.squad.SquadListDTO;
 import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
 import com.studyhub.sth.domain.enums.Periodo;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
@@ -50,7 +51,7 @@ public class AdminService implements IAdminService {
 
     // Métodos para Aluno
     @Override
-    public String createAluno(AlunoCreateDto alunoCreateDto) throws Exception {
+    public AlunoDto createAluno(AlunoCreateDto alunoCreateDto) throws Exception {
         return alunoService.criar(alunoCreateDto);
     }
 
@@ -81,7 +82,7 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public SquadDTO getSquadById(UUID id) {
+    public SquadListDTO getSquadById(UUID id) {
         return squadService.findById(id);
     }
 
@@ -169,7 +170,7 @@ public class AdminService implements IAdminService {
 
     // Métodos para Mentor
     @Override
-    public String createMentor(MentorCreateDto dto) throws Exception {
+    public MentorDto createMentor(MentorCreateDto dto) throws Exception {
         return mentorService.criar(dto);
     }
 
@@ -205,7 +206,7 @@ public class AdminService implements IAdminService {
 
     // Métodos para Representante
     @Override
-    public String createRepresentante(RepresentanteCreateDto dto) throws Exception {
+    public RepresentanteDto createRepresentante(RepresentanteCreateDto dto) throws Exception {
         return representanteService.criarRepresentante(dto);
     }
 
