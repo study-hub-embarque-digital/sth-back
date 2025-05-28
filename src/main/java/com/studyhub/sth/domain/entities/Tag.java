@@ -8,13 +8,13 @@ import java.util.UUID;
 @Entity(name = "tags")
 @Table(name = "tags")
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "tagId")
+@EqualsAndHashCode(of = "nome")
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID tagId;
     private String nome;
+
+    public Tag(String nome) {
+        this.nome = nome;
+    }
 }

@@ -26,7 +26,7 @@ public class AdminController {
 
     // === Aluno ===
     @PostMapping("/alunos")
-    public ResponseEntity<String> createAluno(@RequestBody AlunoCreateDto dto) throws Exception {
+    public ResponseEntity<AlunoDto> createAluno(@RequestBody AlunoCreateDto dto) throws Exception {
         return ResponseEntity.ok(adminService.createAluno(dto));
     }
 
@@ -103,7 +103,7 @@ public class AdminController {
 
     // === Mentor ===
     @PostMapping("/mentores")
-    public ResponseEntity<String> createMentor(@RequestBody MentorCreateDto dto) throws Exception {
+    public ResponseEntity<MentorDto> createMentor(@RequestBody MentorCreateDto dto) throws Exception {
         return ResponseEntity.ok(adminService.createMentor(dto));
     }
 
@@ -135,7 +135,7 @@ public class AdminController {
 
     // === Representante ===
     @PostMapping("/representantes")
-    public ResponseEntity<String> createRepresentante(@RequestBody RepresentanteCreateDto dto) throws Exception {
+    public ResponseEntity<RepresentanteDto> createRepresentante(@RequestBody RepresentanteCreateDto dto) throws Exception {
         return ResponseEntity.ok(adminService.createRepresentante(dto));
     }
 
@@ -172,7 +172,7 @@ public class AdminController {
     }
 
     @GetMapping("/squads/{id}")
-    public ResponseEntity<SquadDTO> getSquad(@PathVariable UUID id) {
+    public ResponseEntity<SquadListDTO> getSquad(@PathVariable UUID id) {
         return ResponseEntity.ok(adminService.getSquadById(id));
     }
 

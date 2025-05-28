@@ -1,20 +1,19 @@
 package com.studyhub.sth.application.services;
 
+import com.studyhub.sth.application.dtos.empresas.EmpresaDto;
 import com.studyhub.sth.application.dtos.mentor.MentorUpdateDto;
 import com.studyhub.sth.application.dtos.mentor.MentorDto;
 import com.studyhub.sth.application.dtos.mentor.MentorCreateDto;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
 import com.studyhub.sth.application.dtos.users.UsuarioDto;
+import com.studyhub.sth.domain.entities.Empresa;
 import com.studyhub.sth.domain.entities.Mentor;
 import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
+import com.studyhub.sth.domain.repositories.*;
 import com.studyhub.sth.domain.services.IMentorService;
-import com.studyhub.sth.domain.repositories.IRoleRepository;
 import com.studyhub.sth.libs.mapper.IMapper;
-import com.studyhub.sth.domain.repositories.IMentorRepository;
-import com.studyhub.sth.domain.repositories.ISquadRepository;
-import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +34,8 @@ public class MentorService implements IMentorService {
     @Autowired
     private ISquadRepository squadRepositorio;
     @Autowired
+    private IEmpresaRepository empresaRepository;
+    @Autowired
     private TokenService tokenService;
     @Autowired
     private IRoleRepository roleRepository;
@@ -42,7 +43,7 @@ public class MentorService implements IMentorService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public String criar(MentorCreateDto dto) throws Exception {
+    public MentorDto criar(MentorCreateDto dto) throws Exception {
         Optional<Usuario> usuarioExiste = usuarioRepositorio.findByEmail(dto.getUsuarioDto().getEmail());
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
@@ -58,10 +59,17 @@ public class MentorService implements IMentorService {
         usuario.setSenha(passwordEncoder.encode(dto.getUsuarioDto().getSenha()));
         this.usuarioRepositorio.save(usuario);
 
+        Empresa empresa = this.empresaRepository.findById(dto.getEmpresaId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Empresa não encontrada"));
+
+        mentor.setEmpresa(empresa);
         mentor.setUsuario(usuario);
         this.mentorRepository.save(mentor);
 
-        return tokenService.generateToken(usuario);
+        MentorDto mentorDto = this.mapper.map(mentor, MentorDto.class);
+        UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);
+        mentorDto.setUsuarioDto(usuarioDTO);
+
+        return mentorDto;
     }
 
 
@@ -71,6 +79,9 @@ public class MentorService implements IMentorService {
         return lista.stream().map(mentor -> {
             MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
             UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);
+            EmpresaDto empresaDto = this.mapper.map(mentor.getEmpresa(), EmpresaDto.class);
+
+            mentorDTO.setEmpresaDto(empresaDto);
             mentorDTO.setUsuarioDto(usuarioDTO);
             return mentorDTO;
         }).collect(Collectors.toList());
@@ -83,6 +94,10 @@ public class MentorService implements IMentorService {
         MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
         UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);
         mentorDTO.setUsuarioDto(usuarioDTO);
+
+        EmpresaDto empresaDto = this.mapper.map(mentor.getEmpresa(), EmpresaDto.class);
+        mentorDTO.setEmpresaDto(empresaDto);
+
         return mentorDTO;
     }
 
@@ -109,8 +124,17 @@ public class MentorService implements IMentorService {
                 mentor.getUsuario().setSenha(dto.getUsuarioDto().getSenha());
             }
         }
+
+        if(dto.getEmpresaId() != null){
+            Empresa empresa = this.empresaRepository.findById(dto.getEmpresaId()).orElseThrow(() -> new ElementoNaoEncontradoExcecao("Empresa não encontrada!"));
+            mentor.setEmpresa(empresa);
+        }
         MentorDto mentorDTO = this.mapper.map(mentor, MentorDto.class);
         UsuarioDto usuarioDTO = this.mapper.map(mentor.getUsuario(), UsuarioDto.class);
+
+        if (mentor.getEmpresa() != null) {
+            mentorDTO.setEmpresaDto(mapper.map(mentor.getEmpresa(), EmpresaDto.class));
+        }
         mentorDTO.setUsuarioDto(usuarioDTO);
         this.mentorRepository.save(mentor);
 

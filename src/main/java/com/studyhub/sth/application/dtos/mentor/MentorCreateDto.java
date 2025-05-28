@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -15,4 +17,6 @@ import lombok.Setter;
 public class MentorCreateDto {
     @Valid
     UsuarioCreateDto usuarioDto;
+    private UUID empresaId;
+
 }

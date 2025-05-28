@@ -11,7 +11,9 @@ import com.studyhub.sth.domain.repositories.IEmpregadorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,15 +62,6 @@ public class EmpregadorService  implements IEmpregadorService {
         if(dto.getEmailGestor() != null){
             empregador.setEmailGestor(dto.getEmailGestor());
         }
-        if(dto.getAtividadesDesenvolvidas() != null){
-            empregador.setAtividadesDesenvolvidas(dto.getAtividadesDesenvolvidas());
-        }
-        if(dto.getTipoVinculo() != null){
-            empregador.setTipoVinculo(dto.getTipoVinculo());
-        }
-        if(dto.getCargoDetalhado() != null){
-            empregador.setCargoDetalhado(dto.getCargoDetalhado());
-        }
         this.empregadorRepository.save(empregador);
         return this.mapper.map(empregador, EmpregadorListDto.class);
     }
@@ -82,9 +75,7 @@ public class EmpregadorService  implements IEmpregadorService {
 
     @Override
     public EmpregadorDTO findEmpregadorByCnpjEmpresa(String cnpjEmpresa) {
-        var empregador = this.empregadorRepository.findEmpregadorByCnpjEmpresa(cnpjEmpresa)
-                .orElseThrow(() -> new EntityNotFoundException("Empregador não encontrado!"));
-
+        var empregador = this.empregadorRepository.findEmpregadorByCnpjEmpresa(cnpjEmpresa).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empregador não encontrado"));
         return this.mapper.map(empregador,EmpregadorDTO.class);
     }
 }

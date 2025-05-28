@@ -3,9 +3,13 @@ package com.studyhub.sth.application.services;
 import com.studyhub.sth.application.dtos.artigo.ArtigoCreateDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoDto;
 import com.studyhub.sth.application.dtos.artigo.ArtigoUpdateDto;
+import com.studyhub.sth.application.dtos.artigo.CreatedArticleDto;
 import com.studyhub.sth.application.dtos.tag.TagDto;
+import com.studyhub.sth.domain.annotations.CurrentUser;
 import com.studyhub.sth.domain.entities.Artigo;
 import com.studyhub.sth.domain.entities.Tag;
+import com.studyhub.sth.domain.entities.Usuario;
+import com.studyhub.sth.libs.application.ServiceResponse;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IArtigoRepository;
 import com.studyhub.sth.domain.repositories.ITagRepository;
@@ -37,10 +41,14 @@ public class ArtigoService implements IArtigoService {
 
     @Override
     @Transactional
-    public ArtigoDto criar(ArtigoCreateDto dto) {
-        Artigo artigo = this.mapper.map(dto, Artigo.class);
+    public ServiceResponse<CreatedArticleDto> criar(ArtigoCreateDto dto, Usuario usuarioAtual) {
+        ServiceResponse<CreatedArticleDto> response = new ServiceResponse<>();
+        List<Tag> tags = this.tagRepository.saveAll(dto.getTags().stream().map(nome -> new Tag(nome)).toList());
+        Artigo artigo = new Artigo(dto.getTitulo(), dto.getConteudo(), usuarioAtual);
+        artigo.addRangeTags(tags);
         this.artigoRepository.save(artigo);
-        return this.mapper.map(artigo, ArtigoDto.class);
+
+        return response.success(new CreatedArticleDto(artigo.getId(), artigo.getTitulo()));
     }
 
     @Override
@@ -79,13 +87,13 @@ public class ArtigoService implements IArtigoService {
     @Transactional
     public ArtigoDto atualizar(UUID id, ArtigoUpdateDto dto) {
         var artigo = this.artigoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Artigo não encontrado"));
-        if (dto.getTitulo() != null){
-            artigo.setTitulo(dto.getTitulo());
-        }
-        if (dto.getConteudo() != null){
-            artigo.setConteudo(dto.getConteudo());
-        }
-        this.artigoRepository.save(artigo);
+//        if (dto.getTitulo() != null){
+//            artigo.setTitulo(dto.getTitulo());
+//        }
+//        if (dto.getConteudo() != null){
+//            artigo.setConteudo(dto.getConteudo());
+//        }
+//        this.artigoRepository.save(artigo);
         return this.mapper.map(artigo, ArtigoDto.class);
     }
 

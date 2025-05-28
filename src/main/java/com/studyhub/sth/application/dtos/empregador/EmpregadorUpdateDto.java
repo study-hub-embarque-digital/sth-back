@@ -14,7 +14,4 @@ public class EmpregadorUpdateDto {
     private String nomeGestor;
     private  String cargoGestor;
     private String emailGestor;
-    private TipoVinculo tipoVinculo;
-    private String cargoDetalhado;
-    private String atividadesDesenvolvidas;
 }

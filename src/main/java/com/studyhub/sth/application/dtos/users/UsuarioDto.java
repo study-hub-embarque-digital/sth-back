@@ -25,7 +25,5 @@ public class UsuarioDto {
     private Gender gender;
     private Ethnicity ethnicity;
     private String fotoPerfil;
-    private List<JobDto> jobs;
     private Date dataNascimento;
-    private Boolean hasJob;
 }

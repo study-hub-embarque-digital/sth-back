@@ -55,13 +55,7 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Job> jobs;
-
     private String fotoPerfil;
-
-    @Column(name = "has_job")
-    private Boolean hasJob;
 
     public Usuario(UUID usuarioId, String nome, String email, String senha, Date dataNascimento, List<Role> roles, Ethnicity ethnicity, String phone, Gender gender, Boolean isActive) {
         this.usuarioId = usuarioId;

@@ -16,6 +16,5 @@ import java.util.List;
 public class ArtigoCreateDto {
     private String titulo;
     private String conteudo;
-    private UsuarioDto autor;
-    private List<TagDto> tags;
+    private List<String> tags;
 }

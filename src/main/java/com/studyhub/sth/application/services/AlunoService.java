@@ -3,7 +3,12 @@ package com.studyhub.sth.application.services;
 import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoCreateDto;
+import com.studyhub.sth.application.dtos.graficos.AlunosAtivosPorInstituicaoDto;
+import com.studyhub.sth.application.dtos.graficos.AlunosPeriodoTrabalhoDto;
+import com.studyhub.sth.application.dtos.graficos.AlunosPorGeneroDto;
+import com.studyhub.sth.application.dtos.graficos.CursoCountDto;
 import com.studyhub.sth.application.dtos.instituicaoEnsino.InstituicaoEnsinoSemReferenciaDto;
+import com.studyhub.sth.application.dtos.job.JobDto;
 import com.studyhub.sth.application.dtos.users.UsuarioDto;
 import com.studyhub.sth.domain.entities.Aluno;
 import com.studyhub.sth.domain.entities.InstituicaoEnsino;
@@ -50,7 +55,7 @@ public class AlunoService implements IAlunoService {
 
     @Override
     @Transactional
-    public String criar(AlunoCreateDto novoAlunoDto) throws Exception {
+    public AlunoDto criar(AlunoCreateDto novoAlunoDto) throws Exception {
         Optional<Usuario> usuarioExiste = usuarioRepositorio.findByEmail(novoAlunoDto.getNovoUsuarioDto().getEmail());
 
         if (usuarioExiste.isPresent()) throw new Exception("Já existe um usuário cadastrado com este email.");
@@ -70,7 +75,11 @@ public class AlunoService implements IAlunoService {
         aluno.setInstituicaoEnsino(instituicaoEnsino);
 
         this.alunoRepositorio.save(aluno);
-        return this.tokenService.generateToken(usuario);
+
+        AlunoDto alunoDto = this.mapper.map(aluno, AlunoDto.class);
+        alunoDto.setUsuarioDto(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
+
+        return alunoDto;
     }
 
     @Override
@@ -97,6 +106,13 @@ public class AlunoService implements IAlunoService {
         alunoDto.setUsuarioDto(this.mapper.map(aluno.getUsuario(), UsuarioDto.class));
         alunoDto.setInstituicaoEnsinoDto(this.mapper.map(aluno.getInstituicaoEnsino(), InstituicaoEnsinoSemReferenciaDto.class));
 
+        List<JobDto> jobsDto = aluno.getJobs()
+                .stream()
+                .map(job -> this.mapper.map(job, JobDto.class))
+                .toList();
+
+        alunoDto.setJobs(jobsDto);
+
         return alunoDto;
     }
 
@@ -120,5 +136,25 @@ public class AlunoService implements IAlunoService {
         List<AlunoDto> alunos = this.alunoRepositorio.findAlunosByPeriodo(periodo).stream().map(aluno -> this.mapper.map(aluno, AlunoDto.class)).toList();
 
         return alunos;
+    }
+
+    @Override
+    public List<CursoCountDto> buscarQuantidadePorCurso() {
+        return this.alunoRepositorio.countAlunosByCurso();
+    }
+
+    @Override
+    public List<AlunosAtivosPorInstituicaoDto> buscarAlunosAtivosPorIes() {
+        return this.alunoRepositorio.buscarAlunosAtivosPorInstituicao();
+    }
+
+    @Override
+    public List<AlunosPeriodoTrabalhoDto> countAlunosPorPeriodoTrabalhando(){
+        return this.alunoRepositorio.countAlunosPorPeriodoComTrabalhando();
+    }
+
+    @Override
+    public List<AlunosPorGeneroDto> countAlunosPorGenero(){
+        return this.alunoRepositorio.countAlunosPorGenero();
     }
 }

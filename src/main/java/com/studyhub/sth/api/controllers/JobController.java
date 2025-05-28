@@ -1,6 +1,7 @@
 package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.job.JobCreateDto;
+import com.studyhub.sth.application.dtos.job.JobDto;
 import com.studyhub.sth.application.dtos.job.JobListDto;
 import com.studyhub.sth.application.dtos.job.JobUpdateDto;
 import com.studyhub.sth.domain.services.IJobService;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/jobs")
+@RequestMapping("api/jobs")
 public class JobController {
 
     @Autowired
@@ -32,8 +33,8 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JobListDto> buscarPorId(@PathVariable UUID id) {
-        JobListDto jobDto = jobService.buscarPorId(id);
+    public ResponseEntity<JobDto> buscarPorId(@PathVariable UUID id) {
+        JobDto jobDto = jobService.buscarPorId(id);
         return ResponseEntity.ok(jobDto);
     }
 

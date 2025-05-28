@@ -2,6 +2,7 @@ package com.studyhub.sth.api.controllers;
 
 import com.studyhub.sth.application.dtos.squad.SquadCreateDTO;
 import com.studyhub.sth.application.dtos.squad.SquadDTO;
+import com.studyhub.sth.application.dtos.squad.SquadListDTO;
 import com.studyhub.sth.application.dtos.squad.SquadUpdateDTO;
 import com.studyhub.sth.domain.services.ISquadService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +28,8 @@ public class SquadController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SquadDTO> getSquadById(@PathVariable UUID id) {
-        SquadDTO squad = squadService.findById(id);
+    public ResponseEntity<SquadListDTO> getSquadById(@PathVariable UUID id) {
+        SquadListDTO squad = squadService.findById(id);
         return ResponseEntity.ok(squad);
     }
 

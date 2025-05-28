@@ -37,6 +37,9 @@ public class Empresa {
     @OneToMany(mappedBy = "empresa")
     private List<Representante> representantes;
 
+    @OneToMany(mappedBy = "empresa")
+    private List<Mentor> mentores;
+
     @ColumnDefault("true")
     private boolean isActive;
 
@@ -53,6 +56,5 @@ public class Empresa {
 
     //lista aluno
 
-    //lista rpresentantes
 
 }
