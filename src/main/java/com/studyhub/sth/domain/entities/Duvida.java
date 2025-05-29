@@ -57,5 +57,6 @@ public class Duvida {
         this.setAtualizadoEm(new Date());
     }
 
+    @Column(name = "resolvida")
     private boolean resolvida = false;
 }
