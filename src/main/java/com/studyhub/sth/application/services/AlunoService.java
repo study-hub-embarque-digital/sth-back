@@ -1,8 +1,8 @@
 package com.studyhub.sth.application.services;
 
-import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
-import com.studyhub.sth.application.dtos.alunos.AlunoDto;
 import com.studyhub.sth.application.dtos.alunos.AlunoCreateDto;
+import com.studyhub.sth.application.dtos.alunos.AlunoDto;
+import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.application.dtos.graficos.AlunosAtivosPorInstituicaoDto;
 import com.studyhub.sth.application.dtos.graficos.AlunosPeriodoTrabalhoDto;
 import com.studyhub.sth.application.dtos.graficos.AlunosPorGeneroDto;
@@ -15,14 +15,15 @@ import com.studyhub.sth.domain.entities.InstituicaoEnsino;
 import com.studyhub.sth.domain.entities.Role;
 import com.studyhub.sth.domain.entities.Usuario;
 import com.studyhub.sth.domain.enums.Periodo;
+import com.studyhub.sth.domain.enums.Turno;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
-import com.studyhub.sth.domain.services.IAlunoService;
-import com.studyhub.sth.domain.repositories.IRoleRepository;
-import com.studyhub.sth.domain.services.IUsuarioService;
-import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IAlunoRepository;
+import com.studyhub.sth.domain.repositories.IRoleRepository;
 import com.studyhub.sth.domain.repositories.IUsuarioRepository;
 import com.studyhub.sth.domain.repositories.InstituicaoEnsinoRepository;
+import com.studyhub.sth.domain.services.IAlunoService;
+import com.studyhub.sth.domain.services.IUsuarioService;
+import com.studyhub.sth.libs.mapper.IMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -149,12 +150,28 @@ public class AlunoService implements IAlunoService {
     }
 
     @Override
-    public List<AlunosPeriodoTrabalhoDto> countAlunosPorPeriodoTrabalhando(){
+    public List<AlunosPeriodoTrabalhoDto> countAlunosPorPeriodoTrabalhando() {
         return this.alunoRepositorio.countAlunosPorPeriodoComTrabalhando();
     }
 
     @Override
-    public List<AlunosPorGeneroDto> countAlunosPorGenero(){
+    public List<AlunosPorGeneroDto> countAlunosPorGenero() {
         return this.alunoRepositorio.countAlunosPorGenero();
     }
+
+    @Override
+    public List<AlunoDto> buscarDisponiveisPorFiltro(UUID instituicaoId, Periodo periodo, Turno turno) {
+        return this.alunoRepositorio.findByInstituicaoEnsino_InstituicaoEnsinoIdAndPeriodoAndTurnoAndSquadIsNull(
+                instituicaoId, periodo, turno
+        ).stream().map(aluno -> {
+            AlunoDto alunoDto = this.mapper.map(aluno, AlunoDto.class);
+            UsuarioDto u = this.mapper.map(aluno.getUsuario(), UsuarioDto.class);
+            InstituicaoEnsinoSemReferenciaDto iesdto = this.mapper.map(aluno.getInstituicaoEnsino(), InstituicaoEnsinoSemReferenciaDto.class);
+            alunoDto.setUsuarioDto(u);
+            alunoDto.setInstituicaoEnsinoDto(iesdto);
+
+            return alunoDto;
+        }).toList();
+    }
+
 }

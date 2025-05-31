@@ -4,6 +4,7 @@ import com.studyhub.sth.application.dtos.alunos.AlunoUpdateDto;
 import com.studyhub.sth.domain.enums.Ciclo;
 import com.studyhub.sth.domain.enums.Cursos;
 import com.studyhub.sth.domain.enums.Periodo;
+import com.studyhub.sth.domain.enums.Turno;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -45,6 +46,9 @@ public class Aluno {
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)
     private Periodo periodo;
+
+    @Enumerated(EnumType.STRING)
+    private Turno turno;
 
     @ManyToOne()
     @JoinColumn(name = "squad_id")

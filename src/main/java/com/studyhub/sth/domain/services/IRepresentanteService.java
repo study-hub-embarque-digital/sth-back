@@ -14,4 +14,5 @@ public interface IRepresentanteService {
     public RepresentanteDto obterRepresentantePorId(UUID id);
     public RepresentanteDto atualizarRepresentante(UUID id, RepresentanteUpdateDto dto);
     public void deletarRepresentante(UUID id);
+    public List<RepresentanteDto> buscarPorEmpresaId(UUID empresaId);
 }

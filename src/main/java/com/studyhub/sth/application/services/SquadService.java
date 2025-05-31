@@ -97,12 +97,19 @@ public class SquadService implements ISquadService {
     @Override
     @Transactional
     public SquadDTO save(SquadCreateDTO dto) {
-        List<Aluno> alunos = alunoRepository.findAllById(dto.getAlunosIds());
-        List<Representante> representantes = representanteRepository.findAllById(dto.getRepresentantesIds());
-        Mentor mentor = this.mentorRepository.findById(dto.getMentorId()).orElseThrow(()-> new EntityNotFoundException("Mentor não encontrado!"));
-        InstituicaoEnsino instituicaoEnsino = this.instituicaoEnsinoRepository.findById(dto.getInstituicaoDeEnsinoId()).orElseThrow(()-> new EntityNotFoundException("IES não encontrada!"));
-        Empresa empresa = this.empresaRepository.findById(dto.getEmpresaId()).orElseThrow(()-> new EntityNotFoundException("Empresa não encontrada!"));
-        Squad squad = new Squad(dto.getNome(),dto.getTipo(),dto.getSemestre(),dto.getCiclo());
+        List<Aluno> alunos = this.alunoRepository.findAllById(dto.getAlunosIds());
+        List<Representante> representantes = this.representanteRepository.findAllById(dto.getRepresentantesIds());
+
+        Mentor mentor = this.mentorRepository.findById(dto.getMentorId())
+                .orElseThrow(() -> new EntityNotFoundException("Mentor não encontrado!"));
+
+        InstituicaoEnsino instituicaoEnsino = this.instituicaoEnsinoRepository.findById(dto.getInstituicaoDeEnsinoId())
+                .orElseThrow(() -> new EntityNotFoundException("IES não encontrada!"));
+
+        Empresa empresa = this.empresaRepository.findById(dto.getEmpresaId())
+                .orElseThrow(() -> new EntityNotFoundException("Empresa não encontrada!"));
+
+        Squad squad = new Squad(dto.getNome(), dto.getTipo(), dto.getSemestre(), dto.getCiclo());
 
         squad.setMentor(mentor);
         squad.setAlunos(alunos);
@@ -110,10 +117,15 @@ public class SquadService implements ISquadService {
         squad.setInstituicaoEnsino(instituicaoEnsino);
         squad.setRepresentantes(representantes);
 
-        this.squadRepository.save(squad);
+        for (Aluno aluno : alunos) {
+            aluno.setSquad(squad);
+        }
+
+       this.squadRepository.save(squad);
 
         return this.mapper.map(squad, SquadDTO.class);
     }
+
 
     @Override
     @Transactional

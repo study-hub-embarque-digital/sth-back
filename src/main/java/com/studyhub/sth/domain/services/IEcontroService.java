@@ -12,4 +12,5 @@ public interface IEcontroService {
     public List<EncontroDto> saveList(Mentoria mentoria);
     public EncontroDto update(UUID id, EncontroCreateAndUpdateDto dto);
     public void deleteById(UUID id);
+    List<EncontroDto> listarPorMentoriaId(UUID mentoriaId);
 }

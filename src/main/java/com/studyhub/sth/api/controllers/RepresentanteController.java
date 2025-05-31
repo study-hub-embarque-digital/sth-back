@@ -49,4 +49,9 @@ public class RepresentanteController {
     public void deletarRepresentante(@PathVariable UUID id) {
         representanteService.deletarRepresentante(id);
     }
+
+    @GetMapping("/empresa/{empresaId}")
+    public ResponseEntity<List<RepresentanteDto>> getByEmpresaId(@PathVariable UUID empresaId) {
+        return ResponseEntity.ok(representanteService.buscarPorEmpresaId(empresaId));
+    }
 }
