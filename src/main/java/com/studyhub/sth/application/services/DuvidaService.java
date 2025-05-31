@@ -41,12 +41,30 @@ public class DuvidaService implements IDuvidaService{
                 .findAll()
                 .stream()
                 .map(d -> {
-                    DuvidaDto dto = this.mapper.map(d, DuvidaDto.class);
+                DuvidaDto dto = new DuvidaDto();
+                dto.setDuvidaId(d.getDuvidaId());
+                dto.setTitulo(d.getTitulo());
+                dto.setDescricao(d.getDescricao());
+                dto.setCriadoEm(d.getCriadoEm());
+                dto.setAtualizadoEm(d.getAtualizadoEm());
+                dto.setResolvida(d.isResolvida());
+
+                if (d.getUsuario() != null) {
                     dto.setNomeUsuario(d.getUsuario().getNome());
-                    dto.setTags(d.getTags().stream().map(Tag::getNome).toList());
-                    long quantidade = solucaoRepository.contarSolucoesPorDuvida(d.getDuvidaId());
-                    dto.setQuantidadeSolucoes(quantidade);
-                    return dto;
+                    dto.setUsuarioId(d.getUsuario().getUsuarioId());
+                }
+
+                if (d.getTags() != null) {
+                    dto.setTags(d.getTags()
+                            .stream()
+                            .map(Tag::getNome)
+                            .toList());
+                }
+
+                long quantidade = solucaoRepository.contarSolucoesPorDuvida(d.getDuvidaId());
+                dto.setQuantidadeSolucoes(quantidade);
+
+                return dto;
                 })
                 .toList();
     } 
