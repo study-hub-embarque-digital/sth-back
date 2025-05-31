@@ -58,6 +58,9 @@ public class Squad {
     @Enumerated(EnumType.STRING)
     private Ciclo ciclo;
 
+    @OneToOne(mappedBy = "squad", cascade = CascadeType.ALL)
+    private Mentoria mentoria;
+
     public Squad(String nome, TipoSquad tipo, String semestre, Ciclo ciclo) {
         this.nome = nome;
         this.tipo = tipo;

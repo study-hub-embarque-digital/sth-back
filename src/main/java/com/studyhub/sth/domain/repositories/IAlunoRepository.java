@@ -6,6 +6,7 @@ import com.studyhub.sth.application.dtos.graficos.AlunosPorGeneroDto;
 import com.studyhub.sth.application.dtos.graficos.CursoCountDto;
 import com.studyhub.sth.domain.entities.Aluno;
 import com.studyhub.sth.domain.enums.Periodo;
+import com.studyhub.sth.domain.enums.Turno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -48,4 +49,10 @@ public interface IAlunoRepository extends JpaRepository<Aluno, UUID> {
         GROUP BY u.gender
     """)
     List<AlunosPorGeneroDto> countAlunosPorGenero();
+
+    List<Aluno> findByInstituicaoEnsino_InstituicaoEnsinoIdAndPeriodoAndTurnoAndSquadIsNull(
+            UUID instituicaoEnsinoId,
+            Periodo periodo,
+            Turno turno
+    );
 }

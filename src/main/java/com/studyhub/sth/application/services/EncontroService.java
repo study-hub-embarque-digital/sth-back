@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EncontroService implements IEcontroService {
@@ -29,8 +30,8 @@ public class EncontroService implements IEcontroService {
     private IMapper mapper;
 
     @Override
-    public EncontroDto save(EncontroCreateAndUpdateDto dto, UUID mentoriaId){
-        var mentoria =  this.mentoriaRepository.findById(mentoriaId).orElseThrow(()-> new EntityNotFoundException("Mentoria não encontrada!"));
+    public EncontroDto save(EncontroCreateAndUpdateDto dto, UUID mentoriaId) {
+        var mentoria = this.mentoriaRepository.findById(mentoriaId).orElseThrow(() -> new EntityNotFoundException("Mentoria não encontrada!"));
         Encontro encontro = this.mapper.map(dto, Encontro.class);
         encontro.setMentoria(mentoria);
         this.encontroRepository.save(encontro);
@@ -38,7 +39,7 @@ public class EncontroService implements IEcontroService {
     }
 
     @Override
-    public List<EncontroDto> saveList(Mentoria mentoria){
+    public List<EncontroDto> saveList(Mentoria mentoria) {
         List<Encontro> encontros = new ArrayList<>();
 
         LocalDate dataAtual = mentoria.getDataInicio();
@@ -53,7 +54,7 @@ public class EncontroService implements IEcontroService {
             dataAtual = dataAtual.plusDays(1);
         }
 
-        var lista = encontros.stream().map( encontro -> {
+        var lista = encontros.stream().map(encontro -> {
             EncontroDto encontroDto = this.mapper.map(encontro, EncontroDto.class);
             return encontroDto;
         }).toList();
@@ -62,29 +63,39 @@ public class EncontroService implements IEcontroService {
     }
 
     @Override
-    public EncontroDto update(UUID id, EncontroCreateAndUpdateDto dto){
-        Encontro encontro = this.encontroRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Econtro não encontrado!"));
-        if (dto.getData() != null){
+    public EncontroDto update(UUID id, EncontroCreateAndUpdateDto dto) {
+        Encontro encontro = this.encontroRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Econtro não encontrado!"));
+        if (dto.getData() != null) {
             encontro.setData(dto.getData());
         }
-        if (dto.getHorario() != null){
+        if (dto.getHorario() != null) {
             encontro.setHorario(dto.getHorario());
         }
-        if (dto.getPlataforma() != null){
+        if (dto.getPlataforma() != null) {
             encontro.setPlataforma(dto.getPlataforma());
         }
-        if (dto.getLinkReuniao() != null){
+        if (dto.getLinkReuniao() != null) {
             encontro.setLinkReuniao(dto.getLinkReuniao());
         }
 
-        return this.mapper.map(encontro,EncontroDto.class);
+        return this.mapper.map(encontro, EncontroDto.class);
     }
 
     @Override
-    public void deleteById(UUID id){
-        Encontro encontro = this.encontroRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Econtro não encontrado!"));
+    public void deleteById(UUID id) {
+        Encontro encontro = this.encontroRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Econtro não encontrado!"));
         this.encontroRepository.delete(encontro);
     }
 
+    @Override
+    public List<EncontroDto> listarPorMentoriaId(UUID mentoriaId) {
+        var encontros = encontroRepository.findByMentoriaId(mentoriaId);
+        return encontros.stream()
+                .map(encontro -> {
+                    EncontroDto encontroDto = this.mapper.map(encontro, EncontroDto.class);
+                    return encontroDto;
+                })
+                .collect(Collectors.toList());
+    }
 
 }

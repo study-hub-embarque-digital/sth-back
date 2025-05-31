@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/mentor")
+@RequestMapping("/api/mentores")
 @Tag(name = "Mentores Controller")
 public class MentorController {
     @Autowired

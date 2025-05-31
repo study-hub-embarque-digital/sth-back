@@ -22,9 +22,9 @@ public class Mentoria {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "squad_id")
-    private Squad squad; // aqui já vem empresa, mentor e representantes, como tu falou
+    private Squad squad;
 
     @Enumerated(EnumType.STRING)
     private DayOfWeek diaDaSemana;

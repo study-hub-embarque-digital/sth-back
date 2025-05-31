@@ -134,4 +134,17 @@ public class RepresentanteService implements IRepresentanteService {
         var representante = this.representanteRepository.findById(id).orElseThrow(() -> new RuntimeException("Representante não encontrado"));
         representanteRepository.delete(representante);
     }
+
+    public List<RepresentanteDto> buscarPorEmpresaId(UUID empresaId) {
+        var lista = representanteRepository.findByEmpresaEmpresaId(empresaId);
+        return lista.stream().map(representante -> {
+            RepresentanteDto representanteDto = this.mapper.map(representante,RepresentanteDto.class);
+            UsuarioDto usuarioDTO = this.mapper.map(representante.getUsuario(), UsuarioDto.class);
+            EmpresaDto empresaDto = this.mapper.map(representante.getEmpresa(), EmpresaDto.class);
+
+            representanteDto.setEmpresaDto(empresaDto);
+            representanteDto.setUsuarioDto(usuarioDTO);
+            return representanteDto;
+        }).collect(Collectors.toList());
+    }
 }
