@@ -18,12 +18,30 @@ public class ConteudoEstudo {
     private UUID conteudoEstudoId;
 
     @Column(length = 350)
-    private String link;
+    private String url;
 
     @Column(length = 350)
-    private String linkEncorporacao;
+    private String imagem;
+
+    @Column(length = 350)
+    private String tipo;
+
+    @Column(length = 350)
+    private String descricao;
+
+    @Column(length = 350)
+    private String titulo;
 
     @ManyToOne()
     @JoinColumn(name = "room_id")
     private Room room;
+
+    public ConteudoEstudo(String url, String imagem, String tipo, String descricao, String titulo, Room room) {
+        this.url = url;
+        this.imagem = imagem;
+        this.tipo = tipo;
+        this.descricao = descricao;
+        this.titulo = titulo;
+        this.room = room;
+    }
 }

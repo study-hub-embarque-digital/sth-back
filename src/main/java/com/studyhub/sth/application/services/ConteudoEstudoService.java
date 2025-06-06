@@ -55,7 +55,7 @@ public class ConteudoEstudoService implements IConteudoEstudoService {
     public ConteudoEstudoDto atualizarConteudoEstudo(UUID id, ConteudoEstudoUpdateDto dto) {
         var conteudoEstudo = this.conteudoEstudoRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Conteúdo de estudo não encontrado"));
         if (dto.getLink() != null){
-            conteudoEstudo.setLink(dto.getLink());
+            conteudoEstudo.setUrl(dto.getLink());
         }
         Room room = roomRepository.findById(dto.getRoomId())
                 .orElseThrow(() -> new RuntimeException("Room não encontrado"));

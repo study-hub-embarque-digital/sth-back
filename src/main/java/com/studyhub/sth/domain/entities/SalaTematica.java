@@ -28,4 +28,10 @@ public class SalaTematica {
     @ManyToOne
     @JoinColumn(name = "topico_id")
     private Topico topico;
+
+    public SalaTematica(Room room, Topico topico) {
+        this.room = room;
+        this.duracao = 0;
+        this.topico = topico;
+    }
 }

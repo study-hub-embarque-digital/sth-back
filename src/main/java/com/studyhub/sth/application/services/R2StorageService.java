@@ -39,5 +39,19 @@ public class R2StorageService {
 
         return BASE_URL + "/" + fileName;
     }
+
+    public String uploadFile(byte[] file, String fileName) throws IOException {
+        String finalFileName = UUID.randomUUID() + "_" + fileName;
+
+
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(this.bucketName)
+                .key(fileName)
+                .build();
+
+        s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file)); // Usar bytes diretamente
+
+        return BASE_URL + "/" + fileName;
+    }
 }
 
