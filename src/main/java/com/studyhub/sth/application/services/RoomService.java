@@ -2,17 +2,23 @@ package com.studyhub.sth.application.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.studyhub.sth.application.dtos.rooms.GeneratedRoomDto;
-import com.studyhub.sth.application.dtos.rooms.RoomCreateDto;
-import com.studyhub.sth.application.dtos.rooms.RoomUpdateDto;
-import com.studyhub.sth.application.dtos.rooms.RoomDto;
+import com.studyhub.sth.application.dtos.conteudoEstudo.GeneratedConteudoEstudoDto;
+import com.studyhub.sth.application.dtos.rooms.*;
+import com.studyhub.sth.application.dtos.topicos.GeneratedTopicoDto;
+import com.studyhub.sth.domain.entities.ConteudoEstudo;
 import com.studyhub.sth.domain.entities.Room;
+import com.studyhub.sth.domain.entities.SalaTematica;
+import com.studyhub.sth.domain.entities.Topico;
+import com.studyhub.sth.domain.enums.Dificuldade;
 import com.studyhub.sth.domain.exceptions.ElementoNaoEncontradoExcecao;
+import com.studyhub.sth.domain.repositories.ISalaTematicaRepository;
+import com.studyhub.sth.domain.repositories.ITopicoRepository;
 import com.studyhub.sth.domain.services.IRoomService;
 import com.studyhub.sth.libs.ai.AIClient;
 import com.studyhub.sth.libs.ai.builders.deepseak.DeepSeakPromptBuilder;
 import com.studyhub.sth.libs.ai.messages.PromptMessage;
 import com.studyhub.sth.libs.ai.messages.PromptMessageRole;
+import com.studyhub.sth.libs.ai.messages.PromptRequest;
 import com.studyhub.sth.libs.ai.messages.PromptResponseFormat;
 import com.studyhub.sth.libs.ai.messages.deepseak.DSPromptMessage;
 import com.studyhub.sth.libs.ai.messages.deepseak.DSPromptResponse;
@@ -20,9 +26,18 @@ import com.studyhub.sth.libs.ai.providers.DeepSeakProvider;
 import com.studyhub.sth.libs.mapper.IMapper;
 import com.studyhub.sth.domain.repositories.IConteudoEstudoRepository;
 import com.studyhub.sth.domain.repositories.IRoomRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,14 +48,29 @@ public class RoomService implements IRoomService {
     @Autowired
     private IRoomRepository roomRepository;
 
+    @Value("${sth.imageforge.baseurl}")
+    private String cardForgeBaseUrl;
+
     @Autowired
     private IConteudoEstudoRepository conteudoEstudoRepository;
+
+    @Autowired
+    private R2StorageService r2StorageService;
+
+    @Autowired
+    private ITopicoRepository topicoRepository;
+
+    @Autowired
+    private ISalaTematicaRepository salaTematicaRepository;
 
     @Autowired
     private IMapper mapper;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Value("${ai.key}")
+    private String deepseakKey;
 
     @Override
     public RoomDto criar(RoomCreateDto novoRoomDto) {
@@ -56,10 +86,10 @@ public class RoomService implements IRoomService {
         if (roomAtualizadaDto.getConteudosRecomendados() != null) {
             var conteudoEstudoDto = roomAtualizadaDto.getConteudosRecomendados();
             var conteudoEstudo = this.roomRepository.findConteudoEstudoByRoomIdAndConteudoEstudoId(
-                            roomId, conteudoEstudoDto.getRoomId())
+                            roomId, conteudoEstudoDto.getConteudoEstudoId())
                     .orElseThrow(() -> new ElementoNaoEncontradoExcecao("Conteúdo de Estudo não encontrado!"));
 
-            conteudoEstudo.setLink(conteudoEstudoDto.getLink());
+            conteudoEstudo.setUrl(conteudoEstudoDto.getUrl());
             this.conteudoEstudoRepository.save(conteudoEstudo);
         }
         if (roomAtualizadaDto.getDescription() != null){
@@ -78,7 +108,8 @@ public class RoomService implements IRoomService {
     @Override
     public RoomDto detalhar(UUID roomId) throws ElementoNaoEncontradoExcecao {
         var room = this.roomRepository.findById(roomId).orElseThrow(()-> new ElementoNaoEncontradoExcecao("O Room não foi encontrado!"));
-        return this.mapper.map(room, RoomDto.class);
+
+        return new RoomDto(room);
     }
 
     @Override
@@ -90,10 +121,11 @@ public class RoomService implements IRoomService {
     @Override
     public List<RoomDto> listar() {
         var lista = this.roomRepository.findAll();
-        return lista.stream().map(room -> this.mapper.map(room, RoomDto.class)).collect(Collectors.toList());
+        return lista.stream().map(RoomDto::new).collect(Collectors.toList());
     }
 
-    public GeneratedRoomDto generateRoom() throws JsonProcessingException {
+    @Transactional
+    public GeneratedRoomDto generateRoom() throws IOException {
         List<Room> rooms = this.roomRepository.findAll();
         List<String> roomsParaExcluir = rooms.stream().map(Room::getTitle).toList();
 
@@ -101,7 +133,7 @@ public class RoomService implements IRoomService {
         messages.add(new DSPromptMessage(systemMesssage(roomsParaExcluir), PromptMessageRole.system));
         messages.add(new DSPromptMessage(userMesssage(), PromptMessageRole.user));
 
-        AIClient client = new AIClient(new DeepSeakProvider("sk-4dba111b2eff4bb5a107479799b2af08"));
+        AIClient client = new AIClient(new DeepSeakProvider(deepseakKey));
 
         DeepSeakPromptBuilder.DeepSeakPromptBuilderBuilder<?, ?> deepSeakPromptBuilder = DeepSeakPromptBuilder.builder()
                 .messages(messages)
@@ -130,7 +162,63 @@ public class RoomService implements IRoomService {
 
         GeneratedRoomDto generatedRoomDto = objectMapper.readValue(json, GeneratedRoomDto.class);
 
+        RoomToGenerateImage request = new RoomToGenerateImage(generatedRoomDto.getNome(), generatedRoomDto.getStack(), generatedRoomDto.getCor(), generatedRoomDto.getCorFonte());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+
+        HttpEntity<RoomToGenerateImage> entity = new HttpEntity<>(request, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<byte[]> responseEntity = restTemplate.exchange(
+                this.cardForgeBaseUrl + "/room-image", HttpMethod.POST, entity, byte[].class);
+
+        String imageUrl = "";
+
+        if (responseEntity.getBody() != null) {
+            imageUrl = r2StorageService.uploadFile(responseEntity.getBody(), UUID.randomUUID().toString() + ".png");
+        }
+
+        Room room = new Room(generatedRoomDto.getDescricao(), generatedRoomDto.getNome(), imageUrl);
+
+        this.roomRepository.save(room);
+
+        for (GeneratedTopicoDto generatedTopico : generatedRoomDto.getTopicos()) {
+            Topico topico = new Topico(room, this.getTopicoDificuldadeByGeneratedTopico(generatedTopico.getDificuldade()), generatedTopico.getTitulo());
+
+            topico.addSubtopicos(generatedTopico.getSubtopicos().stream().map(sub -> new Topico(room, topico, sub)).toList());
+
+            this.topicoRepository.save(topico);
+
+            SalaTematica salaTematica = new SalaTematica(room, topico);
+
+            this.salaTematicaRepository.save(salaTematica);
+        }
+
+        for (GeneratedConteudoEstudoDto conteudoEstudoDto : generatedRoomDto.getBiblioteca()) {
+            ConteudoEstudo conteudoEstudo = new ConteudoEstudo(conteudoEstudoDto.getUrl(), conteudoEstudoDto.getImagem(), conteudoEstudoDto.getTipo(), conteudoEstudoDto.getDescricao(), conteudoEstudoDto.getTitulo(), room);
+
+            this.conteudoEstudoRepository.save(conteudoEstudo);
+        }
+
         return generatedRoomDto;
+    }
+
+    public void teste() {
+        RoomToGenerateImage request = new RoomToGenerateImage("generatedRoomDto.getNome()", "JS", "#3178C6", "#FFFFFF");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+
+        HttpEntity<RoomToGenerateImage> entity = new HttpEntity<>(request, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<byte[]> responseEntity = restTemplate.exchange(
+                this.cardForgeBaseUrl + "/room-image", HttpMethod.POST, entity, byte[].class);
+
+        byte[] t = responseEntity.getBody();
     }
 
     private String userMesssage() {
@@ -139,7 +227,16 @@ public class RoomService implements IRoomService {
 
     private String systemMesssage(List<String> roomsParaNaoRepetir) {
         String roomsToIgnore = String.join(", ", roomsParaNaoRepetir);
-        return "Voce DEVE verificar e validar que todos os links enviados ainda estao utilizaveis e nao estao retornam not found 404 e voce NAO deve fazer os rooms de forma geral como Desenvolvimento Web Moderno, mas sim fazer rooms mais específicos como React.js do Zero ao Avançado ou Javascript: Manipulando o DOM - Além disso, rooms já existentes e que não devem ser repetidos: " + roomsToIgnore;
+        return "Voce DEVE verificar e validar que todos os links enviados ainda estao utilizaveis e nao estao retornam not found 404 e voce NAO deve fazer os rooms de forma geral como Desenvolvimento Web Moderno, mas sim fazer rooms mais específicos como por exemplo React.js do Zero ao Avançado ou Javascript: Manipulando o DOM - Além disso, já existem os seguintes rooms na plataforma, então não devem ser gerados nenhum com os seguintes títulos: " + roomsToIgnore;
     }
 
+    private Dificuldade getTopicoDificuldadeByGeneratedTopico(String dificuldade) {
+        return switch (dificuldade) {
+            case "AVANÇADO" -> Dificuldade.AVANCADO;
+            case "INTERMEDIARIO" -> Dificuldade.INTERMEDIARIO;
+            case "INICIANTE" -> Dificuldade.INICIANTE;
+            default -> Dificuldade.INICIANTE;
+        };
+
+    }
 }

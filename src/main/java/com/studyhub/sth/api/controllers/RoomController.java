@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,8 +60,14 @@ public class RoomController {
     }
 
     @GetMapping("/generate")
-    public ResponseEntity<GeneratedRoomDto> gerarRoom() throws JsonProcessingException {
+    public ResponseEntity<GeneratedRoomDto> gerarRoom() throws IOException {
         return new ResponseEntity<>(this.roomService.generateRoom(), HttpStatus.OK);
+    }
+
+    @GetMapping("/teste")
+    public ResponseEntity teste() throws IOException {
+        this.roomService.teste();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{roomId}")

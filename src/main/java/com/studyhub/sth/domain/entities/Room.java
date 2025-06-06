@@ -20,18 +20,27 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<ConteudoEstudo> conteudosRecomendados;
 
-    private UUID criador;
+    //private UUID criador;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column
+    @Column(length = 450)
     private String title;
 
     @Column
     private String image;
 
-    @ManyToMany()
-    @JoinTable(name = "rooms_topicos")
+    @OneToMany()
     private List<Topico> topicos;
+
+    public Room(String description, String title, String image) {
+        this.description = description;
+        this.title = title;
+        this.image = image;
+    }
+
+    public void addTopicos(List<Topico> topicos) {
+        this.topicos.addAll(topicos);
+    }
 }
