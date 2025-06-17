@@ -54,7 +54,7 @@ public class EmpresaController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{nomeFantasia}")
+    @GetMapping("/nome-fantasia/{nomeFantasia}")
     public ResponseEntity<List<Empresa>> buscarPorNomeFantasia(@PathVariable String nomeFantasia) {
         return ResponseEntity.ok(IEmpresaRepository.findByNomeFantasiaContaining(nomeFantasia));
     }
