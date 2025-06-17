@@ -10,5 +10,4 @@ import lombok.Setter;
 public class JitsiContext {
     private JitsiFeature features;
     private JitsiUser user;
-    private String room;
 }

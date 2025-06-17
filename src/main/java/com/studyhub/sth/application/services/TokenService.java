@@ -156,6 +156,7 @@ public class TokenService {
                     .withAudience("jitsi")
                     .withExpiresAt(generateExpirationTimeJitsi())
                     .withClaim("context", context)
+                    .withClaim("room", room)
                     .sign(algorithm);
 
             return token;
@@ -170,7 +171,6 @@ public class TokenService {
 
     public JitsiContext jitsiContext(Usuario u, String room) {
         JitsiContext jitsiContext = new JitsiContext();
-        jitsiContext.setRoom(room);
 
         JitsiUser jitsiUser = new JitsiUser();
         jitsiUser.setModerator(true);

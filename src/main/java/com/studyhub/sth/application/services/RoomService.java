@@ -190,6 +190,7 @@ public class RoomService implements IRoomService {
             topico.addSubtopicos(generatedTopico.getSubtopicos().stream().map(sub -> new Topico(room, topico, sub)).toList());
 
             this.topicoRepository.save(topico);
+            this.topicoRepository.saveAll(topico.getSubtopicos());
 
             SalaTematica salaTematica = new SalaTematica(room, topico);
 
@@ -232,10 +233,10 @@ public class RoomService implements IRoomService {
 
     private Dificuldade getTopicoDificuldadeByGeneratedTopico(String dificuldade) {
         return switch (dificuldade) {
-            case "AVANÇADO" -> Dificuldade.AVANCADO;
+            case "AVANCADO" -> Dificuldade.AVANCADO;
             case "INTERMEDIARIO" -> Dificuldade.INTERMEDIARIO;
             case "INICIANTE" -> Dificuldade.INICIANTE;
-            default -> Dificuldade.INICIANTE;
+            default -> Dificuldade.INTERMEDIARIO;
         };
 
     }
